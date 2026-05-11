@@ -1,95 +1,314 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Admin Panel - Mi Web Pro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="container">
-        <nav>
-            <a href="/" class="logo">ADMIN CONTROL</a>
-            <div>
-                <a href="/dashboard">Mi Dashboard</a>
-                <a href="/logout">Salir</a>
-            </div>
-        </nav>
+<div class="background"></div>
+<div class="container">
 
-        <h1 style="margin: 40px 0;">Panel de <span>Administración</span></h1>
-
-        <div class="stats">
-            <div class="stat-card">
-                <h3><%= users.length %></h3>
-                <p>Usuarios Totales</p>
-            </div>
-            <div class="stat-card">
-                <h3><%= clients.length %></h3>
-                <p>Clientes Activos</p>
-            </div>
-            <div class="stat-card">
-                <h3><%= tickets.filter(t => t.status === 'Abierto').length %></h3>
-                <p>Tickets Abiertos</p>
-            </div>
+    <nav>
+        <a href="/" class="logo">ADMIN CONTROL</a>
+        <div class="nav-actions">
+            <a href="#leads" class="nav-btn" data-tooltip="Cotizaciones recibidas">Leads</a>
+            <a href="#clientes" class="nav-btn" data-tooltip="Clientes registrados">Clientes</a>
+            <a href="#tickets" class="nav-btn" data-tooltip="Soporte activo">Tickets</a>
+            <a href="#contactos" class="nav-btn" data-tooltip="Mensajes de contacto">Mensajes</a>
+            <a href="/dashboard" class="nav-btn" data-tooltip="Tu panel de control">Dashboard</a>
+            <a href="/logout" class="nav-btn" data-tooltip="Cerrar sesión">Salir</a>
         </div>
+    </nav>
 
-        <div class="card" style="margin-top: 40px; background: rgba(0, 255, 213, 0.02);">
-            <h3>Análisis de Tráfico</h3>
-            <canvas id="visitsChart" data-visits="<%= stats.visits %>" style="max-height: 300px; width: 100%;"></canvas>
+    <h1 style="margin:40px 0 30px;">Panel de <span style="color:#00ffd5;">Administración</span></h1>
+
+    <!-- ── Stats ─────────────────────────────────────────────────────────── -->
+    <div class="stats">
+        <div class="stat-card">
+            <h3><%= users.filter(u => u.role !== 'admin').length %></h3>
+            <p>Clientes</p>
         </div>
-
-        <div class="grid" style="margin-top: 40px;">
-            <div class="card">
-                <h3>Usuarios Registrados</h3>
-                <ul style="list-style: none; margin-top: 15px;">
-                    <% users.forEach(u => { %>
-                        <li style="border-bottom: 1px solid rgba(255,255,255,0.05); padding: 10px 0;">
-                            <%= u.name %> - <small><%= u.email %></small> 
-                            <span style="color: #00ffd5; font-size: 10px; float: right;"><%= u.role || 'user' %></span>
-                        </li>
-                    <% }) %>
-                </ul>
-            </div>
-            
-            <div class="card">
-                <h3>Configuración del Sistema</h3>
-                <p>Estado del Servidor: <span style="color: #00ffd5;">Online</span></p>
-                <button style="background: #ff4b2b; color: white;">Mantenimiento</button>
-            </div>
+        <div class="stat-card stat-card--accent">
+            <h3><%= leads.filter(l => l.status === 'Nuevo').length %></h3>
+            <p>Leads nuevos</p>
+        </div>
+        <div class="stat-card">
+            <h3><%= tickets.filter(t => t.status === 'Abierto').length %></h3>
+            <p>Tickets abiertos</p>
+        </div>
+        <div class="stat-card">
+            <h3><%= tickets.filter(t => t.status === 'Cerrado').length %></h3>
+            <p>Tickets cerrados</p>
+        </div>
+        <div class="stat-card">
+            <h3><%= stats.visits || 0 %></h3>
+            <p>Visitas totales</p>
+        </div>
+        <div class="stat-card stat-card--warn">
+            <h3><%= contacts.filter(c => !c.read).length %></h3>
+            <p>Mensajes nuevos</p>
         </div>
     </div>
 
-    <script>
-        const ctx = document.getElementById('visitsChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Visitas Totales'],
-                datasets: [{
-                    label: 'Interacciones',
-                    data: [Number(document.getElementById('visitsChart').dataset.visits) || 0],
-                    backgroundColor: 'rgba(0, 255, 213, 0.2)',
-                    borderColor: '#00ffd5',
-                    borderWidth: 2,
-                    borderRadius: 10,
-                    barThickness: 50
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#888' }
-                    },
-                    x: { ticks: { color: '#888' } }
-                }
+    <!-- ── Gráfico ────────────────────────────────────────────────────────── -->
+    <div class="card" style="margin-top:40px;">
+        <h3>Análisis de Tráfico</h3>
+        <canvas id="visitsChart" data-visits="<%= stats.visits %>" style="max-height:250px;width:100%;"></canvas>
+    </div>
+
+    <!-- ── LEADS ──────────────────────────────────────────────────────────── -->
+    <section id="leads" style="margin-top:60px;">
+        <h2 style="margin-bottom:20px;">
+            Cotizaciones / <span style="color:#00ffd5;">Leads</span>
+            <% const newLeadsCount = leads.filter(l => l.status === 'Nuevo').length; %>
+            <% if (newLeadsCount > 0) { %>
+                <span class="notif-badge" style="position:static;display:inline-flex;margin-left:10px;"><%= newLeadsCount %></span>
+            <% } %>
+        </h2>
+
+        <% if (leads.length === 0) { %>
+            <div class="card" style="text-align:center;color:#555;padding:40px;">
+                <p>Aún no hay cotizaciones recibidas.</p>
+            </div>
+        <% } else { %>
+            <div class="admin-leads-list">
+                <% leads.slice().reverse().forEach(lead => { %>
+                    <div class="lead-item">
+                        <div class="lead-avatar"><%= lead.name.charAt(0).toUpperCase() %></div>
+                        <div class="lead-info">
+                            <div class="lead-top">
+                                <strong><%= lead.name %></strong>
+                                <span class="lead-tag lead-service"><%= lead.service %></span>
+                                <span class="lead-tag lead-budget"><%= lead.budget %></span>
+                                <% if (lead.deadline && lead.deadline !== '—') { %>
+                                    <span class="lead-tag" style="color:#888;">📅 <%= lead.deadline %></span>
+                                <% } %>
+                            </div>
+                            <div class="lead-contact">
+                                <span>📱 <%= lead.whatsapp %></span>
+                                <span>✉ <%= lead.email %></span>
+                            </div>
+                            <p class="lead-desc"><%= lead.description %></p>
+                        </div>
+                        <div class="lead-actions">
+                            <small style="color:#555;display:block;margin-bottom:8px;text-align:right;"><%= lead.date %></small>
+                            <form action="/admin/leads/status" method="POST">
+                                <input type="hidden" name="leadId" value="<%= lead.id %>">
+                                <select name="status"
+                                    class="lead-status-select status-<%= lead.status.toLowerCase().replace(/ /g,'-') %>"
+                                    onchange="this.form.submit()">
+                                    <% ['Nuevo','Contactado','Propuesta enviada','Cerrado ganado','Cerrado perdido'].forEach(s => { %>
+                                        <option value="<%= s %>" <%= lead.status === s ? 'selected' : '' %>><%= s %></option>
+                                    <% }); %>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </section>
+
+    <!-- ── CLIENTES ───────────────────────────────────────────────────────── -->
+    <section id="clientes" style="margin-top:60px;">
+        <h2 style="margin-bottom:20px;">Clientes <span style="color:#00ffd5;">Registrados</span></h2>
+
+        <% const clientes = users.filter(u => u.role !== 'admin'); %>
+        <% if (clientes.length === 0) { %>
+            <div class="card" style="text-align:center;color:#555;padding:40px;">
+                <p>Aún no hay clientes registrados.</p>
+            </div>
+        <% } else { %>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+                <% clientes.forEach(cliente => { %>
+                    <%
+                        const clientTickets = tickets.filter(t => t.email === cliente.email);
+                        const openTickets   = clientTickets.filter(t => t.status === 'Abierto').length;
+                        const closedTickets = clientTickets.filter(t => t.status === 'Cerrado').length;
+                        const progress      = cliente.projectProgress ?? 0;
+                        const delayed       = cliente.isDelayed ?? false;
+                    %>
+                    <div class="card" style="border:1px solid rgba(255,255,255,0.07);">
+
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                            <div>
+                                <h3 style="margin-bottom:4px;"><%= cliente.name %></h3>
+                                <small style="color:#555;"><%= cliente.email %></small>
+                            </div>
+                            <span style="background:rgba(0,255,213,0.08);border:1px solid rgba(0,255,213,0.2);color:#00ffd5;font-size:0.7rem;padding:4px 10px;border-radius:50px;">
+                                Cliente
+                            </span>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+                            <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:10px;">
+                                <small style="color:#555;display:block;margin-bottom:4px;">Empresa</small>
+                                <span style="font-size:0.9rem;"><%= cliente.company || '—' %></span>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:10px;">
+                                <small style="color:#555;display:block;margin-bottom:4px;">Proyecto</small>
+                                <span style="font-size:0.9rem;"><%= cliente.projectType || '—' %></span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:10px;margin-bottom:16px;">
+                            <div style="flex:1;background:rgba(0,255,213,0.05);border:1px solid rgba(0,255,213,0.15);padding:10px;border-radius:10px;text-align:center;">
+                                <strong style="color:#00ffd5;font-size:1.3rem;"><%= openTickets %></strong>
+                                <small style="display:block;color:#555;font-size:0.75rem;">Tickets abiertos</small>
+                            </div>
+                            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:10px;border-radius:10px;text-align:center;">
+                                <strong style="font-size:1.3rem;"><%= closedTickets %></strong>
+                                <small style="display:block;color:#555;font-size:0.75rem;">Tickets cerrados</small>
+                            </div>
+                        </div>
+
+                        <!-- Control de progreso -->
+                        <form action="/admin/users/progress" method="POST" class="progress-form">
+                            <input type="hidden" name="email" value="<%= cliente.email %>">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                                <small style="color:#555;text-transform:uppercase;letter-spacing:0.8px;font-size:0.72rem;">Progreso del proyecto</small>
+                                <span class="progress-display <%= delayed ? 'delayed-text' : 'completed-text' %>"><%= progress %>%</span>
+                            </div>
+                            <input type="range" name="progress" min="0" max="100" value="<%= progress %>"
+                                class="progress-range"
+                                oninput="this.closest('.progress-form').querySelector('.progress-display').textContent = this.value + '%'">
+                            <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+                                <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:#888;cursor:pointer;flex:1;">
+                                    <input type="checkbox" name="isDelayed" value="true" <%= delayed ? 'checked' : '' %>
+                                        style="width:auto;margin:0;accent-color:#ff4b2b;">
+                                    Retrasado
+                                </label>
+                                <button type="submit" style="width:auto;margin:0;padding:8px 16px;font-size:0.8rem;border-radius:8px;">Guardar</button>
+                            </div>
+                        </form>
+
+                        <% if (cliente.whatsapp) { %>
+                            <a href="https://wa.me/<%= cliente.whatsapp.replace(/\D/g,'') %>" target="_blank"
+                               style="display:block;text-align:center;padding:10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.25);color:#25d366;border-radius:10px;text-decoration:none;font-size:0.85rem;margin-top:12px;">
+                                📲 Contactar por WhatsApp
+                            </a>
+                        <% } %>
+
+                        <form action="/admin/users/delete" method="POST" style="margin-top:10px;"
+                            onsubmit="return confirm('¿Eliminar a <%= cliente.name %>? Esta acción no se puede deshacer.')">
+                            <input type="hidden" name="email" value="<%= cliente.email %>">
+                            <button type="submit" class="btn-delete">Eliminar usuario</button>
+                        </form>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </section>
+
+    <!-- ── TICKETS ────────────────────────────────────────────────────────── -->
+    <section id="tickets" style="margin-top:60px;">
+        <h2 style="margin-bottom:20px;">Tickets de <span style="color:#00ffd5;">Soporte</span></h2>
+        <div class="card">
+            <% if (tickets.length === 0) { %>
+                <p style="color:#555;text-align:center;padding:20px;">No hay tickets aún.</p>
+            <% } else { %>
+                <ul style="list-style:none;">
+                    <% tickets.forEach(t => { %>
+                        <li style="border-bottom:1px solid rgba(255,255,255,0.05);padding:15px 0;">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                                <div>
+                                    <strong><%= t.id %></strong>
+                                    <span style="color:#555;font-size:0.85rem;margin-left:10px;"><%= t.user %> · <%= t.email || '' %></span>
+                                </div>
+                                <span style="font-size:0.75rem;color:<%= t.status === 'Abierto' ? '#00ffd5' : '#555' %>;">
+                                    <%= t.status %>
+                                </span>
+                            </div>
+                            <p style="font-size:0.9rem;color:#aaa;margin:8px 0 0;"><strong><%= t.subject %>:</strong> <%= t.message || '' %></p>
+                            <% if (t.status === 'Abierto') { %>
+                                <form action="/admin/tickets/respond" method="POST" style="margin-top:12px;">
+                                    <input type="hidden" name="ticketId" value="<%= t.id %>">
+                                    <textarea name="response" placeholder="Escribe tu respuesta..." required
+                                        style="width:100%;background:#111827;border:1px solid #333;color:white;padding:10px;border-radius:8px;font-size:0.85rem;resize:vertical;min-height:70px;margin:0;"></textarea>
+                                    <button type="submit" style="width:auto;padding:8px 18px;font-size:0.8rem;margin-top:8px;">Responder y cerrar</button>
+                                </form>
+                            <% } else { %>
+                                <p style="font-size:0.85rem;color:#00ffd5;background:rgba(0,255,213,0.05);padding:10px;border-radius:8px;margin-top:10px;">
+                                    <strong>R:</strong> <%= t.adminResponse %>
+                                </p>
+                            <% } %>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- ── MENSAJES DE CONTACTO ───────────────────────────────────────────── -->
+    <section id="contactos" style="margin-top:60px;margin-bottom:80px;">
+        <h2 style="margin-bottom:20px;">
+            Mensajes de <span style="color:#00ffd5;">Contacto</span>
+            <% const unreadCount = contacts.filter(c => !c.read).length; %>
+            <% if (unreadCount > 0) { %>
+                <span class="notif-badge" style="position:static;display:inline-flex;margin-left:10px;background:#ffb800;"><%= unreadCount %></span>
+            <% } %>
+        </h2>
+        <% if (contacts.length === 0) { %>
+            <div class="card" style="text-align:center;color:#555;padding:40px;">
+                <p>No hay mensajes de contacto aún.</p>
+            </div>
+        <% } else { %>
+            <div class="card">
+                <ul style="list-style:none;">
+                    <% contacts.slice().reverse().forEach(c => { %>
+                        <li style="border-bottom:1px solid rgba(255,255,255,0.05);padding:18px 0;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <div>
+                                    <strong><%= c.name %></strong>
+                                    <span style="color:#555;font-size:0.85rem;margin-left:10px;"><%= c.email %></span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    <% if (!c.read) { %>
+                                        <span style="font-size:0.7rem;background:rgba(255,184,0,0.12);color:#ffb800;border:1px solid rgba(255,184,0,0.3);padding:3px 8px;border-radius:50px;">Nuevo</span>
+                                    <% } %>
+                                    <small style="color:#555;"><%= c.date %></small>
+                                </div>
+                            </div>
+                            <p style="font-size:0.85rem;color:#00ffd5;margin-bottom:6px;font-weight:600;"><%= c.subject %></p>
+                            <p style="font-size:0.9rem;color:#aaa;line-height:1.6;"><%= c.message %></p>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+    </section>
+
+</div>
+
+<script>
+    // Chart
+    const ctx = document.getElementById('visitsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Visitas Totales'],
+            datasets: [{
+                label: 'Visitas',
+                data: [Number(document.getElementById('visitsChart').dataset.visits) || 0],
+                backgroundColor: 'rgba(0,255,213,0.2)',
+                borderColor: '#00ffd5',
+                borderWidth: 2,
+                borderRadius: 10,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
+                x: { ticks: { color: '#888' } }
             }
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 
 <div class="background"></div>
 
-<a class="whatsapp-float" href="https://wa.me/50600000000" target="_blank">
+<a class="whatsapp-float" href="https://wa.me/50663144171" target="_blank">
 💬
 </a>
 
@@ -19,10 +19,10 @@
 <nav>
 <a href="/" class="logo" style="text-decoration: none; color: inherit;">MI WEB PRO</a>
 
-<div>
-<a href="/portafolio">Trabajos</a>
-<a href="/login">Login</a>
-<a href="/register">Registro</a>
+<div class="nav-actions">
+<a href="/portafolio" class="nav-btn" data-tooltip="Ver proyectos terminados">Trabajos</a>
+<a href="/login" class="nav-btn" data-tooltip="Accede a tu cuenta">Login</a>
+<a href="/register" class="nav-btn nav-btn--primary" data-tooltip="Crea tu cuenta gratis">Registro</a>
 </div>
 </nav>
 
@@ -78,7 +78,88 @@ Portal SaaS moderno para clientes, proyectos, hosting y soporte.
 
 </section>
 
+<!-- Formulario de cotización -->
+<section class="quote-section" id="cotizacion">
+
+    <div class="quote-header">
+        <h2>¿Qué necesitas <span>construir?</span></h2>
+        <p>Cuéntanos tu idea y te contactamos en menos de 24 horas.</p>
+    </div>
+
+    <div id="quote-success" class="quote-success" style="display:none;">
+        <div class="quote-success-icon">✓</div>
+        <h3>¡Mensaje recibido!</h3>
+        <p>Te contactaremos pronto. Mientras tanto puedes ver nuestros trabajos.</p>
+        <a href="/portafolio" class="primary-btn" style="display:inline-block;margin-top:20px;text-decoration:none;">Ver portafolio</a>
+    </div>
+
+    <form class="quote-form" id="quote-form" action="/cotizacion" method="POST">
+
+        <div class="quote-row">
+            <div class="quote-field">
+                <label>Nombre completo</label>
+                <input type="text" name="name" placeholder="Tu nombre" required>
+            </div>
+            <div class="quote-field">
+                <label>WhatsApp</label>
+                <input type="tel" name="whatsapp" placeholder="+506 0000 0000" required>
+            </div>
+        </div>
+
+        <div class="quote-row">
+            <div class="quote-field">
+                <label>Correo electrónico</label>
+                <input type="email" name="email" placeholder="tu@email.com" required>
+            </div>
+            <div class="quote-field">
+                <label>Tipo de servicio</label>
+                <select name="service">
+                    <option value="Landing Page">Landing Page</option>
+                    <option value="Tienda Online">Tienda Online</option>
+                    <option value="Pagina Web">Página Web Corporativa</option>
+                    <option value="SaaS">Aplicación SaaS</option>
+                    <option value="Automatizacion">Automatización / IA</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="quote-row">
+            <div class="quote-field">
+                <label>Presupuesto estimado</label>
+                <select name="budget">
+                    <option value="$200 - $500">$200 – $500</option>
+                    <option value="$500 - $1000">$500 – $1,000</option>
+                    <option value="$1000 - $3000">$1,000 – $3,000</option>
+                    <option value="$3000+">$3,000+</option>
+                    <option value="No definido">No definido aún</option>
+                </select>
+            </div>
+            <div class="quote-field">
+                <label>¿Tienes fecha límite?</label>
+                <input type="text" name="deadline" placeholder="Ej: 2 semanas, fin de mes…">
+            </div>
+        </div>
+
+        <div class="quote-field" style="margin-top:18px;">
+            <label>Descripción del proyecto</label>
+            <textarea name="description" placeholder="Cuéntanos qué quieres lograr con tu proyecto…" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="quote-submit">Solicitar cotización →</button>
+
+    </form>
+
+</section>
+
 </div>
+
+<script>
+    if (window.location.search.includes('ok=1')) {
+        document.getElementById('quote-form').style.display = 'none';
+        document.getElementById('quote-success').style.display = 'block';
+    }
+</script>
 
 </body>
 </html>

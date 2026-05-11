@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil - Mi Web Pro</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <nav>
+            <a href="/" class="logo" style="text-decoration:none;color:inherit;">MI WEB PRO</a>
+            <div style="display:flex;gap:16px;align-items:center;">
+                <a href="/dashboard">Dashboard</a>
+                <% if (notifCount > 0) { %>
+                    <a href="/tickets" style="position:relative;">
+                        Soporte <span class="notif-badge"><%= notifCount %></span>
+                    </a>
+                <% } else { %>
+                    <a href="/tickets">Soporte</a>
+                <% } %>
+                <a href="/logout">Salir</a>
+            </div>
+        </nav>
+
+        <div class="auth-container" style="max-width:600px;margin-top:60px;">
+            <h1 style="margin-bottom:6px;">Mi <span style="color:#00ffd5;">Perfil</span></h1>
+            <p style="color:#555;margin-bottom:25px;"><%= user.email %></p>
+
+            <% if (saved) { %>
+                <div style="background:rgba(0,255,213,0.08);border:1px solid rgba(0,255,213,0.3);padding:14px 18px;border-radius:12px;margin-bottom:20px;color:#00ffd5;">
+                    ✓ Perfil actualizado correctamente
+                </div>
+            <% } %>
+            <% if (error) { %>
+                <div style="background:rgba(255,75,43,0.08);border:1px solid rgba(255,75,43,0.3);padding:14px 18px;border-radius:12px;margin-bottom:20px;color:#ff4b2b;">
+                    ✕ <%= error %>
+                </div>
+            <% } %>
+
+            <form action="/perfil" method="POST">
+                <label style="color:#888;font-size:0.85rem;margin-top:15px;display:block;">Nombre</label>
+                <input type="text" name="name" value="<%= user.name %>" required>
+
+                <label style="color:#888;font-size:0.85rem;margin-top:15px;display:block;">Empresa</label>
+                <input type="text" name="company" value="<%= user.company || '' %>">
+
+                <label style="color:#888;font-size:0.85rem;margin-top:15px;display:block;">Tipo de proyecto</label>
+                <input type="text" name="projectType" value="<%= user.projectType || '' %>">
+
+                <label style="color:#888;font-size:0.85rem;margin-top:15px;display:block;">WhatsApp</label>
+                <input type="text" name="whatsapp" value="<%= user.whatsapp || '' %>" placeholder="+506 0000 0000">
+
+                <hr style="border-color:rgba(255,255,255,0.06);margin:25px 0;">
+                <p style="color:#555;font-size:0.85rem;margin-bottom:5px;">Nueva contraseña (dejar en blanco para no cambiar, mínimo 6 caracteres)</p>
+                <input type="password" name="newPassword" placeholder="••••••••">
+
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

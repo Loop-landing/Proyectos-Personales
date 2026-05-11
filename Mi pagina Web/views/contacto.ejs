@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacto - Mi Web Pro</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <nav>
+            <a href="/" class="logo" style="text-decoration:none;color:inherit;">MI WEB PRO</a>
+            <div class="nav-actions">
+                <a href="/portafolio" class="nav-btn" data-tooltip="Ver trabajos realizados">Portafolio</a>
+                <% if (user) { %>
+                    <a href="/dashboard" class="nav-btn nav-btn--primary" data-tooltip="Tu panel de control">Dashboard</a>
+                <% } else { %>
+                    <a href="/login" class="nav-btn" data-tooltip="Accede a tu cuenta">Login</a>
+                    <a href="/register" class="nav-btn nav-btn--primary" data-tooltip="Crea tu cuenta gratis">Registro</a>
+                <% } %>
+            </div>
+        </nav>
+
+        <div class="auth-container" style="max-width:600px;">
+            <h1 style="margin-bottom:8px;">Contáctanos</h1>
+            <p style="color:#888;margin-bottom:25px;">Te responderemos en menos de 24 horas.</p>
+
+            <% if (sent) { %>
+                <div style="background:rgba(0,255,213,0.08);border:1px solid rgba(0,255,213,0.3);padding:20px;border-radius:14px;text-align:center;">
+                    <p style="color:#00ffd5;font-size:1.1rem;">✓ Mensaje enviado correctamente</p>
+                    <p style="color:#888;margin-top:8px;">Pronto nos pondremos en contacto contigo.</p>
+                    <a href="/" class="primary-btn" style="display:inline-block;margin-top:20px;text-decoration:none;">Volver al inicio</a>
+                </div>
+            <% } else { %>
+                <form action="/contacto" method="POST">
+                    <input type="text" name="name" placeholder="Tu nombre" required <% if (user) { %>value="<%= user.name %>"<% } %>>
+                    <input type="email" name="email" placeholder="Tu email" required <% if (user) { %>value="<%= user.email %>"<% } %>>
+                    <input type="text" name="subject" placeholder="Asunto" required style="margin-top:15px;">
+                    <textarea name="message" placeholder="¿En qué podemos ayudarte?" required
+                        style="width:100%;height:130px;background:#111827;border:none;border-radius:12px;padding:15px;color:white;margin-top:15px;resize:vertical;"></textarea>
+                    <button type="submit">Enviar mensaje</button>
+                </form>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

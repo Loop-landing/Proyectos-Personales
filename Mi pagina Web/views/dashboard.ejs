@@ -7,18 +7,36 @@
 <body class="dashboard-body">
     <div class="background"></div>
     <nav>
-        <a href="/" class="logo" style="text-decoration: none; color: inherit;">MI WEB PRO</a>
-        <div>
-            <span>Hola, <%= user %></span>
-            <% if (locals.role === 'admin') { %>
-                <a href="/admin" style="color: #00ffd5; font-weight: bold; margin-left: 20px;">Panel Admin</a>
+        <a href="/" class="logo" style="text-decoration:none;color:inherit;">MI WEB PRO</a>
+        <div class="nav-actions">
+            <span style="color:#888;font-size:0.88rem;padding:0 4px;">Hola, <%= user.name %></span>
+            <a href="/perfil" class="nav-btn" data-tooltip="Edita tu información">Mi perfil</a>
+            <% if (notifCount > 0) { %>
+                <a href="/tickets" class="nav-btn" data-tooltip="<%= notifCount %> respuesta(s) nueva(s)" style="position:relative;">
+                    Soporte <span class="notif-badge"><%= notifCount %></span>
+                </a>
+            <% } else { %>
+                <a href="/tickets" class="nav-btn" data-tooltip="Centro de soporte">Soporte</a>
             <% } %>
-            <a href="/logout" style="margin-left: 20px;">Cerrar Sesión</a>
+            <% if (user.role === 'admin') { %>
+                <a href="/admin" class="nav-btn nav-btn--primary" data-tooltip="Panel de administración">Admin</a>
+            <% } %>
+            <a href="/logout" class="nav-btn" data-tooltip="Cerrar sesión">Salir</a>
         </div>
     </nav>
 
     <div class="container">
-        <h1>Panel de Control</h1>
+        <% if (newResponses && newResponses.length > 0) { %>
+            <div class="notification-banner">
+                <div class="notification-icon">🔔</div>
+                <div class="notification-text">
+                    <strong>¡Tienes una respuesta!</strong> Soporte respondió a <%= newResponses.length %> de tus tickets.
+                </div>
+                <a href="/tickets" class="primary-btn" style="margin:0;padding:8px 16px;font-size:0.85rem;">Ver respuesta</a>
+            </div>
+        <% } %>
+
+        <h1 style="margin:40px 0 30px;">Panel de Control</h1>
         <div class="grid">
             <a href="/portafolio" class="card-link">
                 <div class="card">
@@ -27,7 +45,7 @@
                     <div class="progress-container">
                         <div class="progress-bar <%= isDelayed ? 'delayed' : '' %>" data-progress="<%= projectProgress %>"></div>
                     </div>
-                    <p class="<%= isDelayed ? 'delayed-text' : 'completed-text' %>" style="font-size: 12px; margin-top: 8px;">
+                    <p class="<%= isDelayed ? 'delayed-text' : 'completed-text' %>" style="font-size:12px;margin-top:8px;">
                         <%= projectProgress %>% <%= isDelayed ? 'Retrasado' : 'Completado' %>
                     </p>
                 </div>
@@ -35,27 +53,34 @@
 
             <a href="/tickets" class="card-link">
                 <div class="card">
-                    <h3>Soporte</h3>
-                    <p>Tienes <strong><%= ticketCount %></strong> tickets activos. Haz clic aquí para solicitar ayuda técnica.</p>
+                    <h3>Soporte <% if (notifCount > 0) { %><span class="notif-badge" style="position:static;display:inline-flex;vertical-align:middle;margin-left:6px;"><%= notifCount %></span><% } %></h3>
+                    <p>Tienes <strong><%= ticketCount %></strong> tickets activos.</p>
                 </div>
             </a>
 
-            <div class="card"><h3>Facturación</h3><p>Próximamente: Gestiona tus suscripciones y revisa tus facturas.</p></div>
+            <a href="/perfil" class="card-link">
+                <div class="card">
+                    <h3>Mi Perfil</h3>
+                    <p>Actualiza tu nombre, empresa, WhatsApp y contraseña.</p>
+                </div>
+            </a>
 
-            <% if (locals.role === 'admin') { %>
+            <div class="card"><h3>Facturación</h3><p>Próximamente: gestiona tus suscripciones y facturas.</p></div>
+
+            <% if (user.role === 'admin') { %>
                 <a href="/admin" class="card-link">
-                    <div class="card" style="border: 1px solid #00ffd5; background: rgba(0, 255, 213, 0.05);">
-                        <h3>🛠️ Panel Admin</h3>
-                        <p>Gestión global de usuarios, base de datos de clientes y tickets de soporte.</p>
+                    <div class="card" style="border:1px solid #00ffd5;background:rgba(0,255,213,0.05);">
+                        <h3>Panel Admin</h3>
+                        <p>Gestión global de usuarios, clientes y tickets.</p>
                     </div>
                 </a>
             <% } %>
         </div>
     </div>
+
     <script>
         document.querySelectorAll('.progress-bar[data-progress]').forEach(el => {
-            const progress = Number(el.dataset.progress) || 0;
-            el.style.width = `${progress}%`;
+            el.style.width = `${Number(el.dataset.progress) || 0}%`;
         });
     </script>
 </body>

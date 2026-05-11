@@ -12,6 +12,12 @@
 
 <h1>Crear cuenta</h1>
 
+<% if (error) { %>
+<div style="background:rgba(255,75,43,0.1);border:1px solid rgba(255,75,43,0.4);padding:14px;border-radius:12px;margin-bottom:15px;color:#ff4b2b;font-size:0.9rem;">
+    ✕ <%= error %>
+</div>
+<% } %>
+
 <form method="POST" action="/register">
 
 <input type="text" name="name" placeholder="Nombre completo" required>

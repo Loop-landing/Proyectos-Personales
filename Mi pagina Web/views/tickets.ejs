@@ -9,7 +9,11 @@
     <div class="container">
         <nav>
             <a href="/" class="logo">MI WEB PRO</a>
-            <a href="/dashboard">Panel</a>
+            <div class="nav-actions">
+                <a href="/dashboard" class="nav-btn" data-tooltip="Volver al dashboard">Panel</a>
+                <a href="/perfil" class="nav-btn" data-tooltip="Edita tu información">Mi perfil</a>
+                <a href="/logout" class="nav-btn" data-tooltip="Cerrar sesión">Salir</a>
+            </div>
         </nav>
 
         <h1 style="margin: 40px 0;">Centro de <span>Soporte</span></h1>
@@ -34,6 +38,15 @@
                             <span style="color: #00ffd5; font-size: 12px;"><%= ticket.status %></span>
                         </div>
                         <p style="font-size: 14px; margin-top: 5px;"><%= ticket.subject %></p>
+                        <% if (ticket.message) { %>
+                            <p style="font-size: 13px; color: #aaa; margin: 8px 0;"><%= ticket.message %></p>
+                        <% } %>
+                        <% if (ticket.adminResponse) { %>
+                            <div style="margin: 10px 0; padding: 10px; background: rgba(0, 255, 213, 0.1); border-left: 3px solid #00ffd5; border-radius: 5px;">
+                                <small style="color: #00ffd5; display: block; margin-bottom: 5px; font-weight: bold;">Soporte Mi Web Pro:</small>
+                                <p style="font-size: 13px;"><%= ticket.adminResponse %></p>
+                            </div>
+                        <% } %>
                         <small style="color: #555;"><%= ticket.date %></small>
                     </li>
                     <% }); %>
