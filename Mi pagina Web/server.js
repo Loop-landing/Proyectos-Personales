@@ -62,12 +62,20 @@ const getData = (filename) => {
 };
 
 const saveUsers = (users) => {
-    fs.writeFileSync(USERS_PATH, JSON.stringify(users, null, 2));
+    try {
+        fs.writeFileSync(USERS_PATH, JSON.stringify(users, null, 2));
+    } catch (e) {
+        console.error('Error guardando users:', e);
+    }
 };
 
 const saveData = (filename, data) => {
-    const filePath = path.join(__dirname, 'views', filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    try {
+        const filePath = path.join(__dirname, 'views', filename);
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    } catch (e) {
+        console.error(`Error guardando ${filename}:`, e);
+    }
 };
 
 const { saveRegistro, saveContacto, saveLead } = require('./sheets');
@@ -108,34 +116,42 @@ app.get('/contacto', (req, res) => {
     res.render('contacto', { user: req.session.user || null, sent: false });
 });
 
-app.post('/contacto', (req, res) => {
-    const { name, email, subject, message } = req.body;
-    const contacts = getData('contacts.json');
-    contacts.push({
-        id: `CNT-${Date.now()}`,
-        date: new Date().toISOString().split('T')[0],
-        name, email, subject, message,
-        read: false
-    });
-    saveData('contacts.json', contacts);
-    saveContacto({ name, email, subject, message }).catch(e => console.error('Sheets contacto:', e));
+app.post('/contacto', async (req, res) => {
+    try {
+        const { name, email, subject, message } = req.body;
+        const contacts = getData('contacts.json');
+        contacts.push({
+            id: `CNT-${Date.now()}`,
+            date: new Date().toISOString().split('T')[0],
+            name, email, subject, message,
+            read: false
+        });
+        saveData('contacts.json', contacts);
+        saveContacto({ name, email, subject, message }).catch(e => console.error('Sheets contacto:', e));
+    } catch (e) {
+        console.error('Error /contacto POST:', e);
+    }
     res.render('contacto', { user: req.session.user || null, sent: true });
 });
 
-app.post('/cotizacion', (req, res) => {
-    const { name, whatsapp, email, service, budget, deadline, description } = req.body;
-    const leads = getData('leads.json');
-    leads.push({
-        id: `LEAD-${Date.now()}`,
-        date: new Date().toISOString().split('T')[0],
-        name, whatsapp, email, service, budget,
-        deadline: deadline || '—',
-        description,
-        status: 'Nuevo'
-    });
-    saveData('leads.json', leads);
-    saveLead({ name, whatsapp, email, service, budget, deadline, description })
-        .catch(e => console.error('Sheets lead:', e));
+app.post('/cotizacion', async (req, res) => {
+    try {
+        const { name, whatsapp, email, service, budget, deadline, description } = req.body;
+        const leads = getData('leads.json');
+        leads.push({
+            id: `LEAD-${Date.now()}`,
+            date: new Date().toISOString().split('T')[0],
+            name, whatsapp, email, service, budget,
+            deadline: deadline || '—',
+            description,
+            status: 'Nuevo'
+        });
+        saveData('leads.json', leads);
+        saveLead({ name, whatsapp, email, service, budget, deadline, description })
+            .catch(e => console.error('Sheets lead:', e));
+    } catch (e) {
+        console.error('Error /cotizacion POST:', e);
+    }
     res.redirect('/?ok=1#cotizacion');
 });
 
@@ -165,6 +181,9 @@ app.post('/login', async (req, res) => {
 app.post('/register', async (req, res) => {
     try {
         const { name, email, password, company, projectType } = req.body;
+        if (!name || !email || !password) {
+            return res.render('register', { error: 'Completa todos los campos requeridos' });
+        }
         const users = getUsers();
         if (users.find(u => u.email === email)) {
             return res.render('register', { error: 'El usuario ya existe' });
@@ -175,7 +194,8 @@ app.post('/register', async (req, res) => {
         saveRegistro({ name, email, company, projectType }).catch(e => console.error('Sheets registro:', e));
         res.redirect('/login');
     } catch (e) {
-        res.render('register', { error: 'Error al registrar usuario' });
+        console.error('Error /register POST:', e);
+        res.render('register', { error: 'Error al registrar. Intenta de nuevo.' });
     }
 });
 
@@ -316,6 +336,12 @@ app.post('/admin/users/delete', isAuthenticated, (req, res) => {
     const users = getUsers().filter(u => u.email !== email);
     saveUsers(users);
     res.redirect('/admin#clientes');
+});
+
+// ── Global error handler ──────────────────────────────────────────────────────
+app.use((err, req, res, next) => {
+    console.error('Error no manejado:', err);
+    res.status(500).send('Error interno del servidor. Por favor intenta de nuevo.');
 });
 
 app.listen(PORT, () => {
