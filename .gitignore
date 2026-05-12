@@ -1,0 +1,44 @@
+# ==============================
+# SEGURIDAD — nunca subir
+# ==============================
+*.pem
+*.key
+*.p12
+*.pfx
+*.env
+*.env.*
+Chrome Passwords.csv
+*Passwords*.csv
+*passwords*.csv
+
+# ==============================
+# ARCHIVOS PERSONALES / BASURA
+# ==============================
+Personales/
+jarvis/
+scoped_dir*/
+*.exe
+*.dmg
+*.iso
+y.jpg
+
+# ==============================
+# EDITORES
+# ==============================
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ==============================
+# NODE
+# ==============================
+node_modules/
+npm-debug.log*
+
+# ==============================
+# SISTEMA OPERATIVO
+# ==============================
+.DS_Store
+Thumbs.db
+desktop.ini
