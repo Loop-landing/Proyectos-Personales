@@ -3,163 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Web Pro</title>
+<title>Garett Barrantes — Desarrollo Digital</title>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<div class="background"></div>
+<!-- Code rain canvas -->
+<canvas id="bg-canvas"></canvas>
 
-<a class="whatsapp-float" href="https://wa.me/50663144171" target="_blank">
-💬
-</a>
+<!-- Custom cursor (desktop only) -->
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
 
-<div class="container">
+<!-- WhatsApp float -->
+<a class="whatsapp-float" href="https://wa.me/50663144171" target="_blank" aria-label="WhatsApp">💬</a>
 
-<nav>
-<a href="/" class="logo" style="text-decoration: none; color: inherit;">MI WEB PRO</a>
+<!-- ── Header ─────────────────────────── -->
+<header class="l-header">
+  <div class="landing-wrap">
+    <nav>
+      <a href="/" class="logo" style="text-decoration:none;">
+        <span class="logo-mark">GB</span>
+        <span class="logo-text">Garett Barrantes</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Menú">☰</button>
+      <div class="nav-links">
+        <a href="/portafolio">📁 Trabajos</a>
+        <a href="/contacto">✉️ Contacto</a>
+        <a href="/login">🔐 Login</a>
+        <a href="/register" style="color:#fff;font-weight:600;">📝 Registro</a>
+        <a href="https://wa.me/50663144171" target="_blank">📲 WhatsApp</a>
+        <a href="https://www.instagram.com/garett_barrantes/?hl=es-la" target="_blank">📸 Instagram</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-<div class="nav-actions">
-<a href="/portafolio" class="nav-btn" data-tooltip="Ver proyectos terminados">Trabajos</a>
-<a href="/login" class="nav-btn" data-tooltip="Accede a tu cuenta">Login</a>
-<a href="/register" class="nav-btn nav-btn--primary" data-tooltip="Crea tu cuenta gratis">Registro</a>
-</div>
-</nav>
+<!-- ── Main ───────────────────────────── -->
+<div class="landing-wrap">
 
-<section class="hero">
+  <!-- Hero -->
+  <section class="l-hero reveal">
+    <div class="l-hero-badge">✦ Disponible para proyectos</div>
+    <h1 class="l-hero-title">
+      <span class="line">Construyo</span>
+      <span class="line">ecosistemas</span>
+      <span class="line dim">digitales.</span>
+    </h1>
+    <p class="l-hero-sub">Landing pages, SaaS y automatizaciones que convierten visitantes en clientes reales.</p>
+    <div class="l-hero-actions">
+      <a href="#cotizacion" class="l-btn l-btn-primary magnetic">Empezar proyecto →</a>
+      <a href="/portafolio" class="l-btn l-btn-ghost magnetic">Ver trabajos</a>
+    </div>
+    <div class="l-hero-stats">
+      <div class="l-stat">
+        <span class="l-stat-n">15+</span>
+        <span class="l-stat-l">Proyectos</span>
+      </div>
+      <div class="l-stat">
+        <span class="l-stat-n">3</span>
+        <span class="l-stat-l">Países</span>
+      </div>
+      <div class="l-stat">
+        <span class="l-stat-n">100%</span>
+        <span class="l-stat-l">Satisfacción</span>
+      </div>
+    </div>
+  </section>
 
-<h1>
-Construye tu
-<span>ecosistema digital</span>
-profesional
-</h1>
+  <!-- Services -->
+  <section class="l-services reveal">
+    <div class="l-section-label">Servicios</div>
+    <h2 class="l-section-title">¿Qué construimos?</h2>
+    <div class="l-services-grid">
+      <a href="/portafolio" class="l-card tilt">
+        <span class="l-card-icon">◈</span>
+        <h3>Landing Pages</h3>
+        <p>Diseños modernos y conversores. Rápidos, estéticos y optimizados para resultados.</p>
+        <span class="l-card-arrow">→</span>
+      </a>
+      <div class="l-card tilt">
+        <span class="l-card-icon">⬡</span>
+        <h3>Aplicaciones SaaS</h3>
+        <p>Plataformas web completas con auth, panel admin y gestión de clientes.</p>
+        <span class="l-card-arrow">→</span>
+      </div>
+      <div class="l-card tilt">
+        <span class="l-card-icon">⟁</span>
+        <h3>Automatizaciones IA</h3>
+        <p>Flujos inteligentes que trabajan y generan resultados mientras duermes.</p>
+        <span class="l-card-arrow">→</span>
+      </div>
+    </div>
+  </section>
 
-<p>
-Portal SaaS moderno para clientes, proyectos, hosting y soporte.
-</p>
-
-<div class="hero-buttons">
-<a href="/register" class="primary-btn">Comenzar</a>
-<a href="/login" class="secondary-btn">Ingresar</a>
-</div>
-
-</section>
-
-<section class="welcome">
-<div class="welcome-content">
-<h2>Bienvenido a la nueva era del <span>desarrollo digital</span></h2>
-<p>En Mi Web Pro, no solo creamos sitios; construimos potentes herramientas de negocio diseñadas para escalar. Únete a los emprendedores que ya están centralizando su presencia online con nosotros.</p>
-<a href="#servicios" class="welcome-btn">Saber más</a>
-</div>
-</section>
-
-<section class="grid" id="servicios">
-
-<a href="/clients" class="card-link">
-<div class="card">
-<h3>Clientes</h3>
-<p>Historial y panel privado para cada cliente.</p>
-</div>
-</a>
-
-<a href="/portafolio" class="card-link">
-<div class="card">
-<h3>Proyectos</h3>
-<p>Gestiona dominios, hosting y desarrollos.</p>
-</div>
-</a>
-
-<a href="/tickets" class="card-link">
-<div class="card">
-<h3>Tickets</h3>
-<p>Soporte profesional y comunicación centralizada.</p>
-</div>
-</a>
-
-</section>
-
-<!-- Formulario de cotización -->
-<section class="quote-section" id="cotizacion">
+  <!-- Quote form -->
+  <section class="quote-section reveal" id="cotizacion">
 
     <div class="quote-header">
-        <h2>¿Qué necesitas <span>construir?</span></h2>
-        <p>Cuéntanos tu idea y te contactamos en menos de 24 horas.</p>
+      <h2>¿Qué necesitas <span>construir?</span></h2>
+      <p>Cuéntanos tu idea y te contactamos en menos de 24 horas.</p>
     </div>
 
     <div id="quote-success" class="quote-success" style="display:none;">
-        <div class="quote-success-icon">✓</div>
-        <h3>¡Mensaje recibido!</h3>
-        <p>Te contactaremos pronto. Mientras tanto puedes ver nuestros trabajos.</p>
-        <a href="/portafolio" class="primary-btn" style="display:inline-block;margin-top:20px;text-decoration:none;">Ver portafolio</a>
+      <div class="quote-success-icon">✓</div>
+      <h3>¡Mensaje recibido!</h3>
+      <p>Te contactaremos pronto. Mientras tanto puedes ver nuestros trabajos.</p>
+      <a href="/portafolio" class="l-btn l-btn-primary" style="margin-top:20px;">Ver portafolio</a>
     </div>
 
     <form class="quote-form" id="quote-form" action="/cotizacion" method="POST">
-
-        <div class="quote-row">
-            <div class="quote-field">
-                <label>Nombre completo</label>
-                <input type="text" name="name" placeholder="Tu nombre" required>
-            </div>
-            <div class="quote-field">
-                <label>WhatsApp</label>
-                <input type="tel" name="whatsapp" placeholder="+506 0000 0000" required>
-            </div>
+      <div class="quote-row">
+        <div class="quote-field">
+          <label>Nombre completo</label>
+          <input type="text" name="name" placeholder="Tu nombre" required>
         </div>
-
-        <div class="quote-row">
-            <div class="quote-field">
-                <label>Correo electrónico</label>
-                <input type="email" name="email" placeholder="tu@email.com" required>
-            </div>
-            <div class="quote-field">
-                <label>Tipo de servicio</label>
-                <select name="service">
-                    <option value="Landing Page">Landing Page</option>
-                    <option value="Tienda Online">Tienda Online</option>
-                    <option value="Pagina Web">Página Web Corporativa</option>
-                    <option value="SaaS">Aplicación SaaS</option>
-                    <option value="Automatizacion">Automatización / IA</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
+        <div class="quote-field">
+          <label>WhatsApp</label>
+          <input type="tel" name="whatsapp" placeholder="+506 0000 0000" required>
         </div>
-
-        <div class="quote-row">
-            <div class="quote-field">
-                <label>Presupuesto estimado</label>
-                <select name="budget">
-                    <option value="$200 - $500">$200 – $500</option>
-                    <option value="$500 - $1000">$500 – $1,000</option>
-                    <option value="$1000 - $3000">$1,000 – $3,000</option>
-                    <option value="$3000+">$3,000+</option>
-                    <option value="No definido">No definido aún</option>
-                </select>
-            </div>
-            <div class="quote-field">
-                <label>¿Tienes fecha límite?</label>
-                <input type="text" name="deadline" placeholder="Ej: 2 semanas, fin de mes…">
-            </div>
+      </div>
+      <div class="quote-row">
+        <div class="quote-field">
+          <label>Correo electrónico</label>
+          <input type="email" name="email" placeholder="tu@email.com" required>
         </div>
-
-        <div class="quote-field" style="margin-top:18px;">
-            <label>Descripción del proyecto</label>
-            <textarea name="description" placeholder="Cuéntanos qué quieres lograr con tu proyecto…" rows="4" required></textarea>
+        <div class="quote-field">
+          <label>Tipo de servicio</label>
+          <select name="service">
+            <option value="Landing Page">Landing Page</option>
+            <option value="Tienda Online">Tienda Online</option>
+            <option value="Pagina Web">Página Web Corporativa</option>
+            <option value="SaaS">Aplicación SaaS</option>
+            <option value="Automatizacion">Automatización / IA</option>
+            <option value="Otro">Otro</option>
+          </select>
         </div>
-
-        <button type="submit" class="quote-submit">Solicitar cotización →</button>
-
+      </div>
+      <div class="quote-row">
+        <div class="quote-field">
+          <label>Presupuesto estimado</label>
+          <select name="budget">
+            <option value="$200 - $500">$200 – $500</option>
+            <option value="$500 - $1000">$500 – $1,000</option>
+            <option value="$1000 - $3000">$1,000 – $3,000</option>
+            <option value="$3000+">$3,000+</option>
+            <option value="No definido">No definido aún</option>
+          </select>
+        </div>
+        <div class="quote-field">
+          <label>¿Tienes fecha límite?</label>
+          <input type="text" name="deadline" placeholder="Ej: 2 semanas, fin de mes…">
+        </div>
+      </div>
+      <div class="quote-field" style="margin-top:16px;">
+        <label>Descripción del proyecto</label>
+        <textarea name="description" placeholder="Cuéntanos qué quieres lograr con tu proyecto…" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="quote-submit">Solicitar cotización →</button>
     </form>
-
-</section>
+  </section>
 
 </div>
 
-<script>
-    if (window.location.search.includes('ok=1')) {
-        document.getElementById('quote-form').style.display = 'none';
-        document.getElementById('quote-success').style.display = 'block';
-    }
-</script>
+<!-- Footer -->
+<footer class="l-footer landing-wrap">
+  <span>© 2025 Garett Barrantes · Costa Rica</span>
+  <div style="display:flex;gap:18px;">
+    <a href="https://www.instagram.com/garett_barrantes/?hl=es-la" target="_blank" class="l-footer-link">Instagram</a>
+    <a href="https://wa.me/50663144171" target="_blank" class="l-footer-link">WhatsApp</a>
+    <a href="/portafolio" class="l-footer-link">Portafolio</a>
+  </div>
+</footer>
 
+<script>
+  if (window.location.search.includes('ok=1')) {
+    document.getElementById('quote-form').style.display = 'none';
+    document.getElementById('quote-success').style.display = 'block';
+  }
+</script>
+<script src="/js/particles.js"></script>
+<script src="/js/interactions.js"></script>
+<script src="/js/menu-toggle.js"></script>
 </body>
 </html>

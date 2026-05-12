@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="dashboard-body">
-    <div class="background"></div>
+    <canvas id="bg-canvas"></canvas>
     <nav>
         <a href="/" class="logo" style="text-decoration:none;color:inherit;">MI WEB PRO</a>
         <div class="nav-actions">
@@ -85,5 +85,6 @@
             el.style.width = `${Number(el.dataset.progress) || 0}%`;
         });
     </script>
+    <script src="/js/particles.js"></script>
 </body>
 </html>

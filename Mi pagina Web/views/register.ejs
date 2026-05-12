@@ -3,50 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registro - Mi Web Pro</title>
+<title>Registro — Mi Web Pro</title>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<canvas id="bg-canvas"></canvas>
 
-<div class="background"></div>
-<div class="auth-container">
-<a href="/" class="logo" style="display: block; margin-bottom: 20px; text-decoration: none; color: inherit; text-align: center; font-weight: bold; font-size: 1.5rem;">MI WEB PRO</a>
+<div class="auth-container" style="max-width:480px;">
 
-<h1>Crear cuenta</h1>
+  <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-bottom:32px;">
+    <span class="logo-mark">GB</span>
+    <span style="font-size:0.95rem;font-weight:700;">Mi Web Pro</span>
+  </a>
 
-<% if (error) { %>
-<div style="background:rgba(255,75,43,0.1);border:1px solid rgba(255,75,43,0.4);padding:14px;border-radius:12px;margin-bottom:15px;color:#ff4b2b;font-size:0.9rem;">
-    ✕ <%= error %>
+  <h1>Crear cuenta</h1>
+  <p style="color:var(--text-2);font-size:0.88rem;margin-top:6px;margin-bottom:8px;">Accede a tu panel de cliente</p>
+
+  <% if (error) { %>
+    <div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);padding:12px 14px;border-radius:var(--radius-sm);margin:16px 0;color:var(--error);font-size:0.85rem;">
+      <%= error %>
+    </div>
+  <% } %>
+
+  <form method="POST" action="/register">
+    <input type="text"     name="name"        placeholder="Nombre completo"         required>
+    <input type="text"     name="company"      placeholder="Empresa o marca">
+    <input type="email"    name="email"        placeholder="Correo electrónico"      required>
+    <input type="password" name="password"     placeholder="Contraseña (mín 6 caracteres)" required>
+    <select name="projectType">
+      <option value="">Tipo de proyecto que necesitas</option>
+      <option value="Landing Page">Landing Page</option>
+      <option value="Pagina Web">Página Web</option>
+      <option value="Tienda Online">Tienda Online</option>
+      <option value="SaaS">Aplicación SaaS</option>
+      <option value="Automatizacion">Automatización / IA</option>
+    </select>
+    <button type="submit">Crear cuenta</button>
+  </form>
+
+  <p style="margin-top:20px;text-align:center;font-size:0.84rem;color:var(--text-3);">
+    ¿Ya tienes cuenta?
+    <a href="/login" style="color:var(--text-2);text-decoration:none;font-weight:500;"> Ingresar →</a>
+  </p>
 </div>
-<% } %>
 
-<form method="POST" action="/register">
-
-<input type="text" name="name" placeholder="Nombre completo" required>
-
-<input type="text" name="company" placeholder="Empresa o marca">
-
-<input type="text" name="whatsapp" placeholder="WhatsApp">
-
-<select name="projectType">
-<option>Landing Page</option>
-<option>Pagina Web</option>
-<option>Tienda Online</option>
-<option>SaaS</option>
-<option>Automatizacion</option>
-</select>
-
-<input type="email" name="email" placeholder="Correo electrónico" required>
-
-<input type="password" name="password" placeholder="Contraseña" required>
-
-<button type="submit">
-Crear cuenta
-</button>
-
-</form>
-
-</div>
-
+<script src="/js/particles.js"></script>
 </body>
 </html>
