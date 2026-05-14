@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Archivos — Mi Web Pro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="container">
+  <nav>
+    <a href="/" class="logo" style="text-decoration:none;color:inherit;">MI WEB PRO</a>
+    <div class="nav-actions">
+      <a href="/dashboard" class="nav-btn">Dashboard</a>
+      <a href="/logout" class="nav-btn">Salir</a>
+    </div>
+  </nav>
+
+  <h1 style="margin:40px 0 8px;">Mis <span>Archivos</span></h1>
+  <p style="color:#666;margin-bottom:32px;">Entregables y documentos de tu proyecto.</p>
+
+  <% if (files.length === 0) { %>
+    <div class="card" style="text-align:center;padding:60px;color:#555;">
+      <p style="font-size:2rem;margin-bottom:12px;">📂</p>
+      <p>Aún no hay archivos disponibles.</p>
+      <p style="font-size:0.85rem;margin-top:8px;">Tu desarrollador los subirá aquí cuando estén listos.</p>
+    </div>
+  <% } else { %>
+    <div class="grid">
+      <% files.forEach(f => { %>
+        <div class="card" style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:2rem;">📄</div>
+          <h3 style="font-size:0.95rem;word-break:break-all;"><%= f.name %></h3>
+          <a href="<%= f.url %>" class="primary-btn" style="text-decoration:none;text-align:center;margin:0;">Descargar</a>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+<script src="/js/particles.js"></script>
+</body>
+</html>

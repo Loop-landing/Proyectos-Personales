@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Página no encontrada</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    .err-wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+    .err-code { font-family: 'Orbitron', sans-serif; font-size: clamp(6rem,18vw,14rem); font-weight: 800; line-height: 1; letter-spacing: -6px; color: transparent; -webkit-text-stroke: 1px rgba(0,210,255,0.25); position: relative; }
+    .err-code::after { content: '404'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.04); font-size: inherit; filter: blur(20px); }
+    .err-title { font-size: clamp(1.2rem,3vw,1.8rem); font-weight: 700; color: var(--text); margin: 16px 0 12px; letter-spacing: -0.5px; }
+    .err-sub { color: var(--text-2); font-size: 0.95rem; max-width: 380px; line-height: 1.7; margin-bottom: 36px; }
+    .err-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="err-wrap">
+    <div class="err-code">404</div>
+    <h1 class="err-title">Página no encontrada</h1>
+    <p class="err-sub">La ruta que buscás no existe o fue movida. Navegá de vuelta al inicio.</p>
+    <div class="err-actions">
+      <a href="/" class="l-btn l-btn-primary">← Volver al inicio</a>
+      <a href="/portafolio" class="l-btn l-btn-ghost">Ver trabajos</a>
+    </div>
+  </div>
+  <script src="/js/particles.js"></script>
+</body>
+</html>

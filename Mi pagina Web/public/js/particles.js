@@ -1,165 +1,225 @@
 (function () {
-  var canvas = document.getElementById('bg-canvas');
+  const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
-  var ctx = canvas.getContext('2d');
-  var W, H, COLS, ROWS;
-  var BS = 22;
-  var grid = [];
-
-  var PIECES = [
-    { cells: [[0,0],[1,0],[2,0],[3,0]], color: '#00ffff' },  // I
-    { cells: [[0,0],[1,0],[0,1],[1,1]], color: '#ffff00' },  // O
-    { cells: [[1,0],[0,1],[1,1],[2,1]], color: '#c792ea' },  // T
-    { cells: [[1,0],[2,0],[0,1],[1,1]], color: '#00ff41' },  // S
-    { cells: [[0,0],[1,0],[1,1],[2,1]], color: '#ff6ac1' },  // Z
-    { cells: [[0,0],[0,1],[1,1],[2,1]], color: '#82aaff' },  // J
-    { cells: [[2,0],[0,1],[1,1],[2,1]], color: '#f78c6c' },  // L
-  ];
-
-  function rotate(cells) {
-    var maxR = 0;
-    for (var i = 0; i < cells.length; i++) if (cells[i][1] > maxR) maxR = cells[i][1];
-    return cells.map(function (c) { return [maxR - c[1], c[0]]; });
-  }
-
-  function initGrid() {
-    COLS = Math.floor(W / BS);
-    ROWS = Math.floor(H / BS);
-    grid = [];
-    for (var r = 0; r < ROWS; r++) grid.push(new Array(COLS).fill(null));
-  }
-
-  var falling = [];
-
-  function spawnPiece(startY) {
-    var p = PIECES[Math.floor(Math.random() * PIECES.length)];
-    var cells = p.cells.map(function (c) { return c.slice(); });
-    var rots = Math.floor(Math.random() * 4);
-    for (var r = 0; r < rots; r++) cells = rotate(cells);
-
-    var maxCol = 0;
-    for (var i = 0; i < cells.length; i++) if (cells[i][0] > maxCol) maxCol = cells[i][0];
-    var col = Math.floor(Math.random() * Math.max(1, COLS - maxCol - 1));
-
-    return {
-      cells: cells,
-      color: p.color,
-      col: col,
-      y: startY !== undefined ? startY : -(4 + Math.floor(Math.random() * 10)) * BS,
-      speed: 0.4 + Math.random() * 0.5,
-      alpha: 0.5 + Math.random() * 0.35,
-    };
-  }
-
-  function willCollide(piece, nextY) {
-    for (var i = 0; i < piece.cells.length; i++) {
-      var gc = piece.col + piece.cells[i][0];
-      var gr = Math.floor((nextY + (piece.cells[i][1] + 1) * BS) / BS);
-      if (gr >= ROWS) return true;
-      if (gc < 0 || gc >= COLS) return true;
-      if (gr >= 0 && gr < ROWS && grid[gr][gc]) return true;
-    }
-    return false;
-  }
-
-  function lockPiece(piece) {
-    for (var i = 0; i < piece.cells.length; i++) {
-      var gc = piece.col + piece.cells[i][0];
-      var gr = Math.round(piece.y / BS) + piece.cells[i][1];
-      gr = Math.max(0, Math.min(ROWS - 1, gr));
-      if (gc >= 0 && gc < COLS) {
-        grid[gr][gc] = { color: piece.color, alpha: piece.alpha };
-      }
-    }
-  }
-
-  function drawBlock(x, y, color, alpha) {
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = color;
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 10;
-    ctx.fillRect(x + 1, y + 1, BS - 2, BS - 2);
-    ctx.shadowBlur = 0;
-
-    // Top-left highlight
-    ctx.globalAlpha = alpha * 0.45;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(x + 2, y + 2, BS - 4, 3);
-    ctx.fillRect(x + 2, y + 2, 3, BS - 4);
-
-    // Bottom-right shadow
-    ctx.globalAlpha = alpha * 0.3;
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(x + 2, y + BS - 5, BS - 4, 3);
-    ctx.fillRect(x + BS - 5, y + 2, 3, BS - 4);
-
-    ctx.globalAlpha = 1;
-  }
+  let W, H, frame = 0;
+  let buildings = [], particles = [], nodes = [], streams = [];
 
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    initGrid();
-    var count = Math.max(4, Math.floor(W / 180));
-    falling = [];
-    for (var i = 0; i < count; i++) {
-      falling.push(spawnPiece(Math.random() * H * 0.5));
-    }
+    init();
   }
 
-  window.addEventListener('resize', resize, { passive: true });
+  function init() {
+    const GROUND = H * 0.66;
+    buildings = [];
+    let x = -30;
+    while (x < W + 120) {
+      const w = 38 + Math.random() * 100;
+      const h = 55 + Math.random() * (GROUND * 0.82);
+      const wins = [];
+      const cols = Math.max(1, Math.floor((w - 10) / 13));
+      const rows = Math.max(1, Math.floor((h - 10) / 15));
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (Math.random() > 0.32) {
+            wins.push({
+              cx: 6 + c * 13 + 5,
+              cy: 8 + r * 15 + 5,
+              lit: Math.random() > 0.22,
+              color: Math.random() > 0.65 ? '0,210,255' : Math.random() > 0.5 ? '160,100,255' : '220,220,255',
+              flicker: Math.random() < 0.12,
+              phase: Math.random() * Math.PI * 2,
+            });
+          }
+        }
+      }
+      buildings.push({ x, w, h, wins, accent: Math.random() > 0.72, antenna: Math.random() > 0.6 });
+      x += w + 2 + Math.random() * 14;
+    }
+
+    particles = Array.from({ length: 80 }, () => mkParticle(true));
+    nodes = Array.from({ length: 9 }, () => ({
+      x: Math.random() * W, y: Math.random() * H * 0.5,
+      vx: (Math.random() - 0.5) * 0.14, vy: (Math.random() - 0.5) * 0.14,
+      r: 1.5 + Math.random() * 2, alpha: 0.25 + Math.random() * 0.45,
+    }));
+    streams = Array.from({ length: 14 }, mkStream);
+  }
+
+  function mkParticle(scatter) {
+    return {
+      x: Math.random() * W, y: scatter ? Math.random() * H : H + 6,
+      vx: (Math.random() - 0.5) * 0.22, vy: -(Math.random() * 0.45 + 0.08),
+      size: Math.random() * 1.3 + 0.2, alpha: Math.random() * 0.35 + 0.05,
+      color: Math.random() > 0.52 ? '0,210,255' : '255,255,255',
+    };
+  }
+
+  function mkStream() {
+    return {
+      x: Math.random() * W, y: -Math.random() * 220,
+      speed: 0.7 + Math.random() * 1.6, len: 35 + Math.random() * 130,
+      alpha: 0.04 + Math.random() * 0.07,
+      color: Math.random() > 0.55 ? '0,210,255' : '160,80,255',
+    };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+    const GROUND = H * 0.66;
+
+    const sky = ctx.createLinearGradient(0, 0, 0, GROUND);
+    sky.addColorStop(0, '#04040a');
+    sky.addColorStop(0.55, '#07070f');
+    sky.addColorStop(1, '#0c0c1a');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, GROUND);
+
+    ctx.fillStyle = '#040407';
+    ctx.fillRect(0, GROUND, W, H - GROUND);
+
+    drawGrid(GROUND);
+
+    const hg = ctx.createLinearGradient(0, GROUND - 70, 0, GROUND + 50);
+    hg.addColorStop(0, 'transparent');
+    hg.addColorStop(0.35, 'rgba(0,180,255,0.022)');
+    hg.addColorStop(0.55, 'rgba(100,20,255,0.028)');
+    hg.addColorStop(1, 'transparent');
+    ctx.fillStyle = hg;
+    ctx.fillRect(0, GROUND - 70, W, 120);
+
+    drawStreams();
+    drawBuildings(GROUND);
+    drawParticles();
+    drawNodes();
+
+    const period = 360, phase = frame % period;
+    if (phase < 220) {
+      const sy = (phase / 220) * H;
+      const sg = ctx.createLinearGradient(0, sy - 4, 0, sy + 4);
+      sg.addColorStop(0, 'transparent');
+      sg.addColorStop(0.5, 'rgba(0,210,255,0.02)');
+      sg.addColorStop(1, 'transparent');
+      ctx.fillStyle = sg;
+      ctx.fillRect(0, sy - 4, W, 8);
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  function drawGrid(horizon) {
+    const VP = W / 2;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, horizon, W, H - horizon);
+    ctx.clip();
+
+    for (let i = 0; i <= 20; i++) {
+      const t = i / 20;
+      const y = horizon + (H - horizon) * (t * t * t);
+      ctx.strokeStyle = `rgba(0,200,255,${0.012 + t * 0.048})`;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+    for (let i = 0; i <= 30; i++) {
+      const t = i / 30;
+      const xB = t * W;
+      const prox = 1 - Math.abs(t - 0.5) * 2;
+      ctx.strokeStyle = `rgba(0,200,255,${0.008 + prox * 0.028})`;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(VP, horizon); ctx.lineTo(xB, H + 10); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawStreams() {
+    streams.forEach(s => {
+      s.y += s.speed;
+      if (s.y - s.len > H) { s.x = Math.random() * W; s.y = -s.len; }
+      const g = ctx.createLinearGradient(s.x, s.y - s.len, s.x, s.y);
+      g.addColorStop(0, 'transparent');
+      g.addColorStop(1, `rgba(${s.color},${s.alpha})`);
+      ctx.strokeStyle = g; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(s.x, s.y - s.len); ctx.lineTo(s.x, s.y); ctx.stroke();
+    });
+  }
+
+  function drawBuildings(ground) {
+    buildings.forEach(b => {
+      const bx = b.x, by = ground - b.h, bw = b.w, bh = b.h;
+
+      ctx.fillStyle = '#07070f';
+      ctx.fillRect(bx, by, bw, bh + 2);
+
+      if (b.accent) {
+        const eg = ctx.createLinearGradient(bx, 0, bx + 5, 0);
+        eg.addColorStop(0, 'rgba(0,210,255,0.14)'); eg.addColorStop(1, 'transparent');
+        ctx.fillStyle = eg; ctx.fillRect(bx, by, 5, bh);
+
+        const tg = ctx.createLinearGradient(0, by, 0, by + 4);
+        tg.addColorStop(0, 'rgba(0,210,255,0.09)'); tg.addColorStop(1, 'transparent');
+        ctx.fillStyle = tg; ctx.fillRect(bx, by, bw, 4);
+      }
+
+      if (b.antenna) {
+        ctx.strokeStyle = 'rgba(0,210,255,0.12)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(bx + bw / 2, by); ctx.lineTo(bx + bw / 2, by - 22); ctx.stroke();
+        if (Math.floor(frame / 40) % 2 === 0) {
+          ctx.beginPath(); ctx.arc(bx + bw / 2, by - 22, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,70,70,0.75)'; ctx.fill();
+        }
+      }
+
+      b.wins.forEach(w => {
+        if (!w.lit) return;
+        if (w.flicker && Math.sin(frame * 0.08 + w.phase) < 0.2) return;
+        const wx = bx + w.cx - 4, wy = by + w.cy - 3;
+        ctx.shadowColor = `rgba(${w.color},0.9)`; ctx.shadowBlur = 5;
+        ctx.fillStyle = `rgba(${w.color},0.22)`;
+        ctx.fillRect(wx, wy, 7, 5);
+        ctx.shadowBlur = 0;
+      });
+    });
+  }
+
+  function drawParticles() {
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.y < -6) Object.assign(p, mkParticle(false));
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha})`; ctx.fill();
+    });
+  }
+
+  function drawNodes() {
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H * 0.58) n.vy *= -1;
+    });
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 210) {
+          ctx.strokeStyle = `rgba(0,210,255,${(1 - d / 210) * 0.055})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n => {
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,210,255,${n.alpha * 0.45})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 2.5, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0,210,255,${n.alpha * 0.15})`; ctx.lineWidth = 0.6; ctx.stroke();
+    });
+  }
+
+  window.addEventListener('resize', resize);
   resize();
-
-  var tick = 0;
-
-  function frame() {
-    tick++;
-
-    if (tick % 2 === 0) {
-      ctx.clearRect(0, 0, W, H);
-
-      // Draw landed pieces and fade them out slowly
-      for (var r = 0; r < ROWS; r++) {
-        for (var c = 0; c < COLS; c++) {
-          var cell = grid[r][c];
-          if (!cell) continue;
-          drawBlock(c * BS, r * BS, cell.color, cell.alpha);
-          cell.alpha -= 0.0008;
-          if (cell.alpha <= 0) grid[r][c] = null;
-        }
-      }
-
-      // Draw and move falling pieces
-      for (var i = falling.length - 1; i >= 0; i--) {
-        var p = falling[i];
-
-        for (var j = 0; j < p.cells.length; j++) {
-          drawBlock(
-            (p.col + p.cells[j][0]) * BS,
-            p.y + p.cells[j][1] * BS,
-            p.color, p.alpha
-          );
-        }
-
-        var nextY = p.y + p.speed;
-
-        if (willCollide(p, nextY)) {
-          lockPiece(p);
-          falling.splice(i, 1);
-        } else {
-          p.y = nextY;
-          if (p.y > H + BS * 6) falling.splice(i, 1);
-        }
-      }
-
-      // Keep pieces flowing from the top
-      var MAX = Math.max(4, Math.floor(W / 180));
-      while (falling.length < MAX) falling.push(spawnPiece());
-    }
-
-    requestAnimationFrame(frame);
-  }
-
-  frame();
 })();

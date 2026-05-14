@@ -67,7 +67,12 @@
                 </div>
             </a>
 
-            <div class="card"><h3>Facturación</h3><p>Próximamente: gestiona tus suscripciones y facturas.</p></div>
+            <a href="/mis-archivos" class="card-link">
+                <div class="card">
+                    <h3>📂 Mis Archivos</h3>
+                    <p>Descargá los entregables y documentos de tu proyecto.</p>
+                </div>
+            </a>
 
             <% if (user.role === 'admin') { %>
                 <a href="/admin" class="card-link">

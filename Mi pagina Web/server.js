@@ -80,6 +80,22 @@ const saveData = (filename, data) => {
 
 const { saveRegistro, saveContacto, saveLead, saveTicket, saveProgresoCliente } = require('./sheets');
 const { notifyNewLead, notifyNewContact } = require('./mailer');
+const multer = require('multer');
+const PDFDocument = require('pdfkit');
+require('./cron');
+
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = path.join(uploadDir, req.body.userEmail || 'general');
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`)
+});
+const upload = multer({ storage, limits: { fileSize: 20 * 1024 * 1024 } });
 
 const isAuthenticated = (req, res, next) => {
     if (req.session.user) return next();
@@ -106,6 +122,10 @@ app.get('/', (req, res) => {
     stats.visits = (stats.visits || 0) + 1;
     saveData('stats.json', stats);
     res.render('index', { user: req.session.user || null, visits: stats.visits });
+});
+
+app.get('/precios', (req, res) => {
+    res.render('precios', { user: req.session.user || null });
 });
 
 app.get('/portafolio', (req, res) => {
@@ -343,12 +363,96 @@ app.post('/admin/users/progress', isAuthenticated, (req, res) => {
     res.redirect('/admin#clientes');
 });
 
+// ── Subir archivo a cliente ───────────────────────────────────────────────────
+app.post('/admin/upload', isAuthenticated, (req, res, next) => {
+    if (req.session.user.role !== 'admin') return res.status(403).send('Acceso denegado');
+    next();
+}, upload.single('file'), (req, res) => {
+    res.redirect('/admin#clientes');
+});
+
+// ── Descargar archivos del cliente ────────────────────────────────────────────
+app.get('/mis-archivos', isAuthenticated, (req, res) => {
+    const dir = path.join(uploadDir, req.session.user.email);
+    let files = [];
+    if (fs.existsSync(dir)) {
+        files = fs.readdirSync(dir).map(f => ({
+            name: f.replace(/^\d+-/, ''),
+            raw: f,
+            url: `/archivos/${encodeURIComponent(req.session.user.email)}/${encodeURIComponent(f)}`
+        }));
+    }
+    res.render('mis-archivos', { user: req.session.user, files });
+});
+
+app.get('/archivos/:email/:file', isAuthenticated, (req, res) => {
+    const email = decodeURIComponent(req.params.email);
+    const file  = decodeURIComponent(req.params.file);
+    if (req.session.user.role !== 'admin' && req.session.user.email !== email)
+        return res.status(403).send('Acceso denegado');
+    const filePath = path.join(uploadDir, email, file);
+    if (!fs.existsSync(filePath)) return res.status(404).send('Archivo no encontrado');
+    res.download(filePath, file.replace(/^\d+-/, ''));
+});
+
+// ── Generar factura PDF ───────────────────────────────────────────────────────
+app.get('/admin/factura/:email', isAuthenticated, (req, res) => {
+    if (req.session.user.role !== 'admin') return res.status(403).send('Acceso denegado');
+    const users  = getUsers();
+    const client = users.find(u => u.email === req.params.email);
+    if (!client) return res.status(404).send('Cliente no encontrado');
+
+    const doc = new PDFDocument({ size: 'A4', margin: 50 });
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=factura-${client.name.replace(/\s/g,'-')}.pdf`);
+    doc.pipe(res);
+
+    doc.fontSize(22).font('Helvetica-Bold').text('GARETT BARRANTES', 50, 50);
+    doc.fontSize(10).font('Helvetica').fillColor('#888').text('Desarrollo Digital · Costa Rica', 50, 78);
+    doc.fillColor('#888').text('garettjohan12@gmail.com  ·  +506 6314-4171', 50, 92);
+
+    doc.moveTo(50, 115).lineTo(545, 115).strokeColor('#333').stroke();
+
+    doc.fillColor('#fff').fontSize(14).font('Helvetica-Bold').text('FACTURA DE SERVICIO', 50, 130);
+    const inv = `INV-${Date.now()}`;
+    doc.fontSize(10).font('Helvetica').fillColor('#aaa').text(`N° ${inv}`, 50, 150);
+    doc.text(`Fecha: ${new Date().toLocaleDateString('es-CR')}`, 50, 165);
+
+    doc.fillColor('#fff').fontSize(12).font('Helvetica-Bold').text('Facturado a:', 50, 200);
+    doc.fontSize(10).font('Helvetica').fillColor('#ccc')
+        .text(client.name, 50, 218)
+        .text(client.email, 50, 233)
+        .text(client.company || '', 50, 248);
+
+    doc.moveTo(50, 280).lineTo(545, 280).strokeColor('#333').stroke();
+    doc.fillColor('#fff').fontSize(10).font('Helvetica-Bold')
+        .text('Descripción', 50, 292).text('Monto', 460, 292);
+    doc.moveTo(50, 308).lineTo(545, 308).strokeColor('#333').stroke();
+
+    doc.fillColor('#ccc').font('Helvetica')
+        .text(client.projectType || 'Servicio de desarrollo web', 50, 320)
+        .text('$___________', 460, 320);
+
+    doc.moveTo(50, 350).lineTo(545, 350).strokeColor('#333').stroke();
+    doc.fillColor('#fff').font('Helvetica-Bold').text('TOTAL:', 380, 365).text('$___________', 460, 365);
+
+    doc.fillColor('#555').fontSize(9).font('Helvetica')
+        .text('Gracias por confiar en Garett Barrantes — Desarrollo Digital.', 50, 680, { align: 'center', width: 495 });
+
+    doc.end();
+});
+
 app.post('/admin/users/delete', isAuthenticated, (req, res) => {
     if (req.session.user.role !== 'admin') return res.status(403).send('Acceso denegado');
     const { email } = req.body;
     const users = getUsers().filter(u => u.email !== email);
     saveUsers(users);
     res.redirect('/admin#clientes');
+});
+
+// ── 404 ───────────────────────────────────────────────────────────────────────
+app.use((req, res) => {
+    res.status(404).render('404', { user: req.session?.user || null });
 });
 
 // ── Global error handler ──────────────────────────────────────────────────────

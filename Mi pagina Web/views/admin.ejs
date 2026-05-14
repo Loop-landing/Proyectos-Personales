@@ -208,6 +208,22 @@
                             </a>
                         <% } %>
 
+                        <!-- Subir archivo -->
+                        <form action="/admin/upload" method="POST" enctype="multipart/form-data" style="margin-top:12px;">
+                            <input type="hidden" name="userEmail" value="<%= cliente.email %>">
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <input type="file" name="file" required
+                                    style="flex:1;font-size:0.78rem;padding:7px 10px;margin:0;cursor:pointer;">
+                                <button type="submit" style="width:auto;margin:0;padding:8px 14px;font-size:0.78rem;border-radius:8px;">Subir</button>
+                            </div>
+                        </form>
+
+                        <!-- Factura PDF -->
+                        <a href="/admin/factura/<%= encodeURIComponent(cliente.email) %>"
+                           style="display:block;text-align:center;padding:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#aaa;border-radius:10px;text-decoration:none;font-size:0.82rem;margin-top:8px;">
+                            🧾 Generar factura PDF
+                        </a>
+
                         <form action="/admin/users/delete" method="POST" style="margin-top:10px;"
                             data-name="<%= cliente.name %>"
                             onsubmit="return confirm('¿Eliminar a ' + this.dataset.name + '? Esta acción no se puede deshacer.')">

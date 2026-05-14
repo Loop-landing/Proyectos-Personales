@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precios — Garett Barrantes</title>
+  <meta name="description" content="Planes y precios para landing pages, SaaS y automatizaciones. Desarrollo digital desde Costa Rica.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); gap: 16px; margin-top: 48px; }
+    .pricing-card { background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px 32px; display: flex; flex-direction: column; gap: 0; transition: border-color .25s, transform .25s; }
+    .pricing-card:hover { border-color: var(--border-2); transform: translateY(-4px); }
+    .pricing-card.featured { border-color: rgba(0,210,255,0.35); background: rgba(0,210,255,0.03); }
+    .pricing-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(0,210,255,0.9); margin-bottom: 14px; display: block; }
+    .pricing-name { font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .pricing-price { font-size: 2.6rem; font-weight: 800; color: var(--text); letter-spacing: -2px; line-height: 1; margin-bottom: 6px; font-family: 'Orbitron', sans-serif; }
+    .pricing-price span { font-size: 1rem; font-weight: 400; color: var(--text-2); letter-spacing: 0; font-family: 'Inter', sans-serif; }
+    .pricing-desc { font-size: 0.88rem; color: var(--text-2); line-height: 1.65; margin: 16px 0 28px; }
+    .pricing-divider { height: 1px; background: var(--border); margin-bottom: 24px; }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1; margin-bottom: 32px; }
+    .pricing-features li { font-size: 0.88rem; color: var(--text-2); display: flex; gap: 10px; align-items: flex-start; }
+    .pricing-features li::before { content: '✓'; color: rgba(0,210,255,0.8); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pricing-features li.dim::before { content: '—'; color: var(--text-3); }
+    .pricing-features li.dim { color: var(--text-3); }
+    .pricing-cta { display: block; text-align: center; padding: 13px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.88rem; font-family: 'Orbitron', sans-serif; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; transition: all .2s; border: 1px solid var(--border-2); color: var(--text-2); }
+    .pricing-cta:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+    .pricing-cta.cta-primary { background: var(--text); color: var(--bg); border-color: var(--text); box-shadow: 0 4px 20px rgba(0,210,255,0.15); }
+    .pricing-cta.cta-primary:hover { background: #e0e0e0; box-shadow: 0 8px 30px rgba(0,210,255,0.25); }
+    .pricing-note { text-align: center; color: var(--text-3); font-size: 0.82rem; margin-top: 48px; line-height: 1.7; }
+    @media (max-width:600px) { .pricing-price { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="landing-wrap">
+
+  <header class="l-header">
+    <div class="landing-wrap">
+      <nav>
+        <a href="/" class="logo" style="text-decoration:none;">
+          <span class="logo-mark">GB</span>
+          <span class="logo-text">Garett Barrantes</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="Menú">☰</button>
+        <div class="nav-links">
+          <a href="/portafolio">📁 Trabajos</a>
+          <a href="/precios">💰 Precios</a>
+          <a href="/contacto">✉️ Contacto</a>
+          <% if (user) { %>
+            <a href="/dashboard">⚡ Dashboard</a>
+          <% } else { %>
+            <a href="/login">🔐 Login</a>
+            <a href="/register" style="color:#fff;font-weight:600;">📝 Registro</a>
+          <% } %>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section style="padding: 100px 0 60px; text-align: center;">
+    <div class="l-section-label">Inversión</div>
+    <h1 class="l-section-title" style="margin-bottom:12px;">Planes y precios</h1>
+    <p style="color:var(--text-2);font-size:1rem;max-width:480px;margin:0 auto;line-height:1.75;">
+      Cada proyecto es diferente. Estos rangos son una guía — cotizamos exacto según tu necesidad.
+    </p>
+  </section>
+
+  <div class="pricing-grid">
+
+    <!-- Plan 1 -->
+    <div class="pricing-card">
+      <span class="pricing-badge">Starter</span>
+      <div class="pricing-name">Landing Page</div>
+      <div class="pricing-price">$200 <span>– $600</span></div>
+      <p class="pricing-desc">Presencia digital profesional lista para captar clientes desde el día 1.</p>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Diseño moderno y responsive</li>
+        <li>Sección hero + servicios + contacto</li>
+        <li>Formulario de contacto / WhatsApp CTA</li>
+        <li>Optimizado para SEO</li>
+        <li>Entrega en 5–7 días hábiles</li>
+        <li class="dim">Panel de administración</li>
+        <li class="dim">Automatizaciones</li>
+      </ul>
+      <a href="/#cotizacion" class="pricing-cta">Solicitar cotización →</a>
+    </div>
+
+    <!-- Plan 2 (featured) -->
+    <div class="pricing-card featured">
+      <span class="pricing-badge">⚡ Más popular</span>
+      <div class="pricing-name">Plataforma Web</div>
+      <div class="pricing-price">$600 <span>– $1,800</span></div>
+      <p class="pricing-desc">Aplicación web completa con login, panel admin y gestión de clientes.</p>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Todo lo del plan Landing</li>
+        <li>Sistema de autenticación (login / registro)</li>
+        <li>Panel de administración</li>
+        <li>Gestión de leads y tickets</li>
+        <li>Integración con Google Sheets</li>
+        <li>Notificaciones por email</li>
+        <li class="dim">Automatizaciones IA</li>
+      </ul>
+      <a href="/#cotizacion" class="pricing-cta cta-primary">Solicitar cotización →</a>
+    </div>
+
+    <!-- Plan 3 -->
+    <div class="pricing-card">
+      <span class="pricing-badge">Enterprise</span>
+      <div class="pricing-name">SaaS Completo</div>
+      <div class="pricing-price">$1,800 <span>– $5,000+</span></div>
+      <p class="pricing-desc">Ecosistema digital completo con IA, automatizaciones y escalabilidad.</p>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Todo lo del plan Plataforma</li>
+        <li>Automatizaciones con IA</li>
+        <li>Integraciones con terceros (CRM, pagos)</li>
+        <li>Sistema de facturación</li>
+        <li>Dashboard con analytics avanzados</li>
+        <li>Soporte técnico prioritario</li>
+        <li>Escalabilidad en la nube</li>
+      </ul>
+      <a href="/#cotizacion" class="pricing-cta">Solicitar cotización →</a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">
+    ¿Tenés un proyecto diferente? <a href="/#cotizacion" style="color:var(--text-2);text-decoration:underline;">Contanos tu idea</a> y armamos una propuesta a medida.<br>
+    Todos los proyectos incluyen 30 días de soporte post-entrega.
+  </p>
+
+</div>
+
+<footer class="l-footer landing-wrap" style="margin-top: 80px;">
+  <span>© 2025 Garett Barrantes · Costa Rica</span>
+  <div style="display:flex;gap:18px;">
+    <a href="/portafolio" class="l-footer-link">Portafolio</a>
+    <a href="https://wa.me/50663144171" target="_blank" class="l-footer-link">WhatsApp</a>
+  </div>
+</footer>
+
+<script src="/js/particles.js"></script>
+<script src="/js/menu-toggle.js"></script>
+</body>
+</html>
