@@ -9,6 +9,8 @@ const compression = require('compression');
 const morgan = require('morgan');
 require('dotenv').config();
 
+const jarvis = require('./jarvis');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
@@ -173,6 +175,7 @@ app.post('/cotizacion', async (req, res) => {
             .catch(e => console.error('Sheets lead:', e));
         notifyNewLead({ name, whatsapp, email, service, budget, description })
             .catch(e => console.error('Mailer lead:', e));
+        jarvis.notifyLead({ name, whatsapp, email, service, budget, deadline: deadline || '—', description });
     } catch (e) {
         console.error('Error /cotizacion POST:', e);
     }
@@ -277,6 +280,7 @@ app.post('/tickets', isAuthenticated, (req, res) => {
     saveData('tickets.json', tickets);
     saveTicket({ user: newTicket.user, email: newTicket.email, subject, message, ticketId: newTicket.id })
         .catch(e => console.error('Sheets ticket:', e));
+    jarvis.notifyTicket({ user: newTicket.user, email: newTicket.email, subject, message });
     res.redirect('/tickets');
 });
 
