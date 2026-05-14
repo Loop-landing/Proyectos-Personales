@@ -30,42 +30,43 @@
       LOOP<span class="lp-logo-accent">-LANDING</span><span class="lp-logo-dim">.COM</span>
     </a>
 
-    <!-- Tech dropdown -->
-    <div class="lp-dropdown-wrap" id="techDropdown">
-      <button class="lp-dropdown-btn" onclick="toggleDropdown()">
-        Stack tecnológico
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      <div class="lp-dropdown" id="techMenu">
-        <p class="lp-drop-label">FRONTEND</p>
-        <div class="lp-drop-grid">
-          <div class="lp-drop-item"><span style="color:#e34c26">⬡</span> HTML5</div>
-          <div class="lp-drop-item"><span style="color:#264de4">⬡</span> CSS3</div>
-          <div class="lp-drop-item"><span style="color:#f7df1e">⬡</span> JavaScript</div>
-        </div>
-        <p class="lp-drop-label" style="margin-top:14px;">BACKEND</p>
-        <div class="lp-drop-grid">
-          <div class="lp-drop-item"><span style="color:#68a063">⬡</span> Node.js</div>
-          <div class="lp-drop-item"><span style="color:#fff">⬡</span> Express.js</div>
-          <div class="lp-drop-item"><span style="color:#aaa">⬡</span> EJS</div>
-        </div>
-        <p class="lp-drop-label" style="margin-top:14px;">INFRAESTRUCTURA & DATOS</p>
-        <div class="lp-drop-grid">
-          <div class="lp-drop-item"><span style="color:#ff9900">⬡</span> AWS S3</div>
-          <div class="lp-drop-item"><span style="color:#34a853">⬡</span> Google Sheets</div>
-          <div class="lp-drop-item"><span style="color:#ea4b71">⬡</span> n8n</div>
-          <div class="lp-drop-item"><span style="color:#ff6384">⬡</span> Chart.js</div>
-          <div class="lp-drop-item"><span style="color:#00d4ff">⬡</span> PDFKit</div>
-          <div class="lp-drop-item"><span style="color:#aaa">⬡</span> Nodemailer</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Nav right -->
+    <!-- Nav + dropdown en una sola línea -->
     <nav class="lp-nav">
       <a href="/portafolio">Proyectos</a>
       <a href="/precios">Precios</a>
+      <a href="#servicios">Servicios</a>
       <a href="#cotizacion">Contacto</a>
+
+      <!-- Dropdown stack -->
+      <div class="lp-dropdown-wrap" id="techDropdown">
+        <button class="lp-dropdown-btn" id="techBtn">
+          Stack ▾
+        </button>
+        <div class="lp-dropdown" id="techMenu">
+          <p class="lp-drop-label">FRONTEND</p>
+          <div class="lp-drop-grid">
+            <div class="lp-drop-item"><span style="color:#e34c26">⬡</span> HTML5</div>
+            <div class="lp-drop-item"><span style="color:#264de4">⬡</span> CSS3</div>
+            <div class="lp-drop-item"><span style="color:#f7df1e">⬡</span> JavaScript</div>
+          </div>
+          <p class="lp-drop-label" style="margin-top:14px;">BACKEND</p>
+          <div class="lp-drop-grid">
+            <div class="lp-drop-item"><span style="color:#68a063">⬡</span> Node.js</div>
+            <div class="lp-drop-item"><span style="color:#fff">⬡</span> Express.js</div>
+            <div class="lp-drop-item"><span style="color:#aaa">⬡</span> EJS</div>
+          </div>
+          <p class="lp-drop-label" style="margin-top:14px;">INFRA & DATOS</p>
+          <div class="lp-drop-grid">
+            <div class="lp-drop-item"><span style="color:#ff9900">⬡</span> AWS S3</div>
+            <div class="lp-drop-item"><span style="color:#34a853">⬡</span> Google Sheets</div>
+            <div class="lp-drop-item"><span style="color:#ea4b71">⬡</span> n8n</div>
+            <div class="lp-drop-item"><span style="color:#ff6384">⬡</span> Chart.js</div>
+            <div class="lp-drop-item"><span style="color:#00d4ff">⬡</span> PDFKit</div>
+            <div class="lp-drop-item"><span style="color:#aaa">⬡</span> Nodemailer</div>
+          </div>
+        </div>
+      </div>
+
       <a href="/login" class="lp-nav-login">Iniciar sesión</a>
       <a href="#cotizacion" class="lp-nav-cta">Get Started →</a>
     </nav>
@@ -73,6 +74,61 @@
     <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Menú">☰</button>
   </div>
 </header>
+
+<!-- ── Tech carousel strip ─────────────────── -->
+<div class="lp-tech-strip">
+  <div class="lp-tech-track">
+    <span><span style="color:#e34c26">⬡</span> HTML5</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#264de4">⬡</span> CSS3</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#f7df1e">⬡</span> JavaScript</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#68a063">⬡</span> Node.js</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#fff">⬡</span> Express.js</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#ff9900">⬡</span> AWS S3</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#34a853">⬡</span> Google Sheets</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#ea4b71">⬡</span> n8n</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#ff6384">⬡</span> Chart.js</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#00d4ff">⬡</span> PDFKit</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#aaa">⬡</span> EJS</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#aaa">⬡</span> Nodemailer</span>
+    <span class="lp-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span><span style="color:#e34c26">⬡</span> HTML5</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#264de4">⬡</span> CSS3</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#f7df1e">⬡</span> JavaScript</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#68a063">⬡</span> Node.js</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#fff">⬡</span> Express.js</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#ff9900">⬡</span> AWS S3</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#34a853">⬡</span> Google Sheets</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#ea4b71">⬡</span> n8n</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#ff6384">⬡</span> Chart.js</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#00d4ff">⬡</span> PDFKit</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#aaa">⬡</span> EJS</span>
+    <span class="lp-sep">·</span>
+    <span><span style="color:#aaa">⬡</span> Nodemailer</span>
+    <span class="lp-sep">·</span>
+  </div>
+</div>
 
 <!-- ════════════════════════════════════════
      HERO — BRIEF INFO
@@ -454,20 +510,35 @@
     document.getElementById('quote-success').style.display = 'block';
   }
 
-  function toggleDropdown() {
+  (function () {
+    var btn  = document.getElementById('techBtn');
     var menu = document.getElementById('techMenu');
     var wrap = document.getElementById('techDropdown');
-    var open = wrap.classList.toggle('open');
-    menu.style.display = open ? 'block' : 'none';
-  }
+    if (!btn || !menu || !wrap) return;
 
-  document.addEventListener('click', function(e) {
-    var wrap = document.getElementById('techDropdown');
-    if (!wrap.contains(e.target)) {
-      wrap.classList.remove('open');
-      document.getElementById('techMenu').style.display = 'none';
+    function open() {
+      menu.classList.add('lp-dropdown--open');
+      wrap.classList.add('open');
     }
-  });
+    function close() {
+      menu.classList.remove('lp-dropdown--open');
+      wrap.classList.remove('open');
+    }
+    function toggle(e) {
+      e.stopPropagation();
+      menu.classList.contains('lp-dropdown--open') ? close() : open();
+    }
+
+    btn.addEventListener('click', toggle);
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  })();
 </script>
 <script src="/js/particles.js"></script>
 <script src="/js/interactions.js"></script>

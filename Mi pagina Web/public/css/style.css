@@ -2283,22 +2283,21 @@ button:hover { background: #e2e2e2; }
 .lp-logo-accent { color: #00d4ff; }
 .lp-logo-dim    { color: rgba(255,255,255,0.25); }
 
-/* Tech dropdown */
+/* Tech dropdown — lives inside .lp-nav */
 .lp-dropdown-wrap {
   position: relative;
-  margin-left: 24px;
 }
 
 .lp-dropdown-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
   color: rgba(255,255,255,0.65);
   font-size: 0.82rem;
   font-weight: 500;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
   font-family: inherit;
@@ -2309,22 +2308,32 @@ button:hover { background: #e2e2e2; }
 .lp-dropdown-btn:hover,
 .lp-dropdown-wrap.open .lp-dropdown-btn {
   background: rgba(255,255,255,0.09);
-  border-color: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.25);
   color: #fff;
 }
 
 .lp-dropdown {
   display: none;
   position: absolute;
-  left: 0;
+  right: 0;
   top: calc(100% + 10px);
-  background: #0c0c0c;
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #0d0d0d;
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 14px;
   padding: 20px 22px;
   min-width: 320px;
   z-index: 999;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+  animation: lp-drop-in 0.18s ease;
+}
+
+.lp-dropdown--open {
+  display: block;
+}
+
+@keyframes lp-drop-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .lp-drop-label {
@@ -2359,24 +2368,26 @@ button:hover { background: #e2e2e2; }
   color: #fff;
 }
 
-/* Nav */
+/* Nav — one line, all items */
 .lp-nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
   margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
-.lp-nav a {
+.lp-nav > a {
   color: rgba(255,255,255,0.5);
   text-decoration: none;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 500;
   transition: color 0.2s;
   white-space: nowrap;
 }
 
-.lp-nav a:hover { color: #fff; }
+.lp-nav > a:hover { color: #fff; }
 
 .lp-nav-login {
   border: 1px solid rgba(255,255,255,0.14) !important;
@@ -2539,6 +2550,66 @@ button:hover { background: #e2e2e2; }
   background: rgba(255,255,255,0.08);
   margin-right: 40px;
   flex-shrink: 0;
+}
+
+/* ── Tech strip carousel (below header) ── */
+.lp-tech-strip {
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.4);
+  padding: 0;
+  position: relative;
+}
+
+.lp-tech-strip::before,
+.lp-tech-strip::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lp-tech-strip::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
+}
+
+.lp-tech-strip::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.9), transparent);
+}
+
+.lp-tech-track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  width: max-content;
+  padding: 10px 0;
+  animation: lp-tech-scroll 28s linear infinite;
+}
+
+.lp-tech-track span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.45);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lp-tech-track .lp-sep {
+  color: rgba(255,255,255,0.12);
+  font-size: 1rem;
+}
+
+@keyframes lp-tech-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ── HR divider ── */
