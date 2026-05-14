@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Loop-Landing — Landing Pages que convierten</title>
 <meta name="description" content="Construimos landing pages, SaaS y automatizaciones IA que convierten visitantes en clientes. Curridabat, Costa Rica.">
-<meta name="keywords" content="landing page, desarrollo web, SaaS, automatización, AWS S3, Costa Rica, freelance">
 <meta property="og:title" content="Loop-Landing — Landing Pages que convierten">
-<meta property="og:description" content="Construimos ecosistemas digitales. Landing pages, SaaS y automatizaciones que generan resultados reales.">
+<meta property="og:description" content="Landing pages, SaaS y automatizaciones IA desde Curridabat, Costa Rica.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://loop-landing.com">
 <meta property="og:image" content="/logo-rflx.png">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -20,228 +18,338 @@
 <canvas id="bg-canvas"></canvas>
 <div class="cursor"></div>
 <div class="cursor-ring"></div>
-<a class="whatsapp-float" href="https://wa.me/50663144171" target="_blank" aria-label="WhatsApp">💬</a>
 
-<!-- ── HEADER ──────────────────────────────────────────── -->
-<header class="g-header">
-  <div class="g-wrap">
-    <a href="/" class="g-logo">LOOP-LANDING<span class="g-logo-dot">.COM</span></a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Menú">☰</button>
-    <nav class="g-nav">
-      <a href="/portafolio">Trabajos</a>
+<!-- ════════════════════════════════════════
+     HEADER
+════════════════════════════════════════ -->
+<header class="lp-header">
+  <div class="lp-header-inner">
+
+    <!-- Logo -->
+    <a href="/" class="lp-logo">
+      LOOP<span class="lp-logo-accent">-LANDING</span><span class="lp-logo-dim">.COM</span>
+    </a>
+
+    <!-- Tech dropdown -->
+    <div class="lp-dropdown-wrap" id="techDropdown">
+      <button class="lp-dropdown-btn" onclick="toggleDropdown()">
+        Stack tecnológico
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="lp-dropdown" id="techMenu">
+        <p class="lp-drop-label">FRONTEND</p>
+        <div class="lp-drop-grid">
+          <div class="lp-drop-item"><span style="color:#e34c26">⬡</span> HTML5</div>
+          <div class="lp-drop-item"><span style="color:#264de4">⬡</span> CSS3</div>
+          <div class="lp-drop-item"><span style="color:#f7df1e">⬡</span> JavaScript</div>
+        </div>
+        <p class="lp-drop-label" style="margin-top:14px;">BACKEND</p>
+        <div class="lp-drop-grid">
+          <div class="lp-drop-item"><span style="color:#68a063">⬡</span> Node.js</div>
+          <div class="lp-drop-item"><span style="color:#fff">⬡</span> Express.js</div>
+          <div class="lp-drop-item"><span style="color:#aaa">⬡</span> EJS</div>
+        </div>
+        <p class="lp-drop-label" style="margin-top:14px;">INFRAESTRUCTURA & DATOS</p>
+        <div class="lp-drop-grid">
+          <div class="lp-drop-item"><span style="color:#ff9900">⬡</span> AWS S3</div>
+          <div class="lp-drop-item"><span style="color:#34a853">⬡</span> Google Sheets</div>
+          <div class="lp-drop-item"><span style="color:#ea4b71">⬡</span> n8n</div>
+          <div class="lp-drop-item"><span style="color:#ff6384">⬡</span> Chart.js</div>
+          <div class="lp-drop-item"><span style="color:#00d4ff">⬡</span> PDFKit</div>
+          <div class="lp-drop-item"><span style="color:#aaa">⬡</span> Nodemailer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav right -->
+    <nav class="lp-nav">
+      <a href="/portafolio">Proyectos</a>
       <a href="/precios">Precios</a>
       <a href="#cotizacion">Contacto</a>
-      <a href="/login" class="g-nav-btn">Acceso</a>
+      <a href="/login" class="lp-nav-login">Iniciar sesión</a>
+      <a href="#cotizacion" class="lp-nav-cta">Get Started →</a>
     </nav>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="Menú">☰</button>
   </div>
 </header>
 
-<!-- ── HERO ────────────────────────────────────────────── -->
-<section class="g-hero g-wrap">
-  <div class="g-hero-label">✦ DISPONIBLE PARA PROYECTOS — 2025</div>
-  <h1 class="g-hero-title">
-    CONSTRUIMOS<br>
-    <span class="g-hero-outline">LANDINGS</span><br>
-    QUE VENDEN.
+<!-- ════════════════════════════════════════
+     HERO — BRIEF INFO
+════════════════════════════════════════ -->
+<section class="lp-hero lp-wrap">
+
+  <div class="lp-hero-badge">
+    <span class="lp-live-dot"></span>
+    Disponible para proyectos · 2025
+  </div>
+
+  <h1 class="lp-hero-title">
+    Construimos<br>
+    <span class="lp-grad-text">Landing Pages</span><br>
+    que venden.
   </h1>
-  <p class="g-hero-sub">
-    Landing pages, SaaS y automatizaciones desde<br>
-    <strong>Curridabat, Costa Rica.</strong>
+
+  <p class="lp-hero-sub">
+    Somos <strong>Loop-Landing.com</strong> — un estudio de desarrollo digital en
+    <strong>Curridabat, Costa Rica</strong>, especializado en landing pages con AWS S3,
+    SaaS y automatizaciones IA que generan resultados reales para tu negocio.
   </p>
-  <div class="g-hero-actions">
-    <a href="#cotizacion" class="g-btn g-btn-primary">Iniciar proyecto →</a>
-    <a href="/portafolio" class="g-btn g-btn-ghost">Ver portafolio</a>
+
+  <div class="lp-hero-actions">
+    <a href="#cotizacion" class="lp-btn lp-btn-grad">Iniciar proyecto →</a>
+    <a href="/portafolio" class="lp-btn lp-btn-ghost">Ver portafolio</a>
+    <a href="https://wa.me/50663144171" target="_blank" class="lp-btn lp-btn-wa">💬 WhatsApp</a>
   </div>
-  <div class="g-hero-stats">
-    <div class="g-stat"><span class="g-stat-n">15+</span><span class="g-stat-l">Proyectos</span></div>
-    <div class="g-stat-div"></div>
-    <div class="g-stat"><span class="g-stat-n">3</span><span class="g-stat-l">Países</span></div>
-    <div class="g-stat-div"></div>
-    <div class="g-stat"><span class="g-stat-n">100%</span><span class="g-stat-l">Satisfacción</span></div>
-  </div>
-</section>
 
-<div class="g-divider"></div>
-
-<!-- ── PROYECTO EN PROCESO (DESTACADO) ─────────────────── -->
-<section class="g-featured g-wrap">
-  <div class="g-section-label">PROYECTO EN PROCESO</div>
-  <div class="g-featured-grid">
-
-    <div class="g-featured-card g-featured-card--main">
-      <div class="g-featured-top">
-        <span class="g-badge g-badge-wip">● EN DESARROLLO</span>
-        <span class="g-featured-cat">SaaS · Panel de gestión</span>
-      </div>
-      <h2 class="g-featured-title">EcoPollo<br>Premium</h2>
-      <p class="g-featured-desc">Sistema de cotización digital, panel de administración y gestión de clientes para distribuidora avícola en Cartago. Incluye progreso en tiempo real, soporte y facturación PDF.</p>
-      <div class="g-tech-pills">
-        <span>Node.js</span><span>AWS S3</span><span>Google Sheets</span><span>Chart.js</span>
-      </div>
-      <a href="/portafolio" class="g-btn g-btn-ghost" style="width:fit-content;margin-top:24px;">Ver portafolio →</a>
+  <div class="lp-hero-stats">
+    <div class="lp-stat">
+      <span class="lp-stat-n lp-grad-text">15+</span>
+      <span class="lp-stat-l">Proyectos</span>
     </div>
-
-    <div class="g-featured-side">
-      <div class="g-featured-card g-featured-card--sm">
-        <div class="g-featured-top">
-          <span class="g-badge g-badge-wip">● EN DESARROLLO</span>
-        </div>
-        <h3>Miss MB Tattoo</h3>
-        <p>Landing de agendamiento para tatuadora. Diseño negro + dorado, integración WhatsApp.</p>
-        <div class="g-tech-pills"><span>HTML5</span><span>CSS3</span><span>JS</span></div>
-      </div>
-
-      <div class="g-featured-card g-featured-card--sm">
-        <div class="g-featured-top">
-          <span class="g-badge g-badge-done">✓ ENTREGADO</span>
-        </div>
-        <h3>ArteVerde Vivero</h3>
-        <p>Presencia digital para vivero boutique con catálogo y WhatsApp directo.</p>
-        <div class="g-tech-pills"><span>Landing</span><span>WA API</span></div>
-      </div>
+    <div class="lp-stat-sep"></div>
+    <div class="lp-stat">
+      <span class="lp-stat-n lp-grad-text">3</span>
+      <span class="lp-stat-l">Países</span>
     </div>
-
-  </div>
-</section>
-
-<div class="g-divider"></div>
-
-<!-- ── TECH CAROUSEL ────────────────────────────────────── -->
-<section class="g-carousel-section">
-  <div class="g-section-label" style="text-align:center;margin-bottom:28px;">STACK TECNOLÓGICO</div>
-  <div class="g-carousel-wrap">
-    <div class="g-carousel-track">
-      <span>HTML5</span><span>·</span>
-      <span>CSS3</span><span>·</span>
-      <span>JavaScript</span><span>·</span>
-      <span>Node.js</span><span>·</span>
-      <span>Express.js</span><span>·</span>
-      <span>AWS S3</span><span>·</span>
-      <span>Google Sheets API</span><span>·</span>
-      <span>n8n</span><span>·</span>
-      <span>EJS</span><span>·</span>
-      <span>Chart.js</span><span>·</span>
-      <span>PDFKit</span><span>·</span>
-      <span>Nodemailer</span><span>·</span>
-      <span>Tawk.to</span><span>·</span>
-      <!-- duplicate for seamless loop -->
-      <span>HTML5</span><span>·</span>
-      <span>CSS3</span><span>·</span>
-      <span>JavaScript</span><span>·</span>
-      <span>Node.js</span><span>·</span>
-      <span>Express.js</span><span>·</span>
-      <span>AWS S3</span><span>·</span>
-      <span>Google Sheets API</span><span>·</span>
-      <span>n8n</span><span>·</span>
-      <span>EJS</span><span>·</span>
-      <span>Chart.js</span><span>·</span>
-      <span>PDFKit</span><span>·</span>
-      <span>Nodemailer</span><span>·</span>
-      <span>Tawk.to</span><span>·</span>
+    <div class="lp-stat-sep"></div>
+    <div class="lp-stat">
+      <span class="lp-stat-n lp-grad-text">100%</span>
+      <span class="lp-stat-l">Satisfacción</span>
+    </div>
+    <div class="lp-stat-sep"></div>
+    <div class="lp-stat">
+      <span class="lp-stat-n" style="color:#10b981;">24/7</span>
+      <span class="lp-stat-l">Soporte</span>
     </div>
   </div>
+
 </section>
 
-<div class="g-divider"></div>
+<div class="lp-hr lp-wrap"></div>
 
-<!-- ── SERVICIOS ────────────────────────────────────────── -->
-<section class="g-services g-wrap">
-  <div class="g-section-label">SERVICIOS</div>
-  <h2 class="g-section-title">¿Qué construimos?</h2>
-  <div class="g-services-grid">
-    <a href="/portafolio" class="g-service-card">
-      <div class="g-service-num">01</div>
+<!-- ════════════════════════════════════════
+     SERVICIOS
+════════════════════════════════════════ -->
+<section class="lp-section lp-wrap" id="servicios">
+  <div class="lp-section-top">
+    <div>
+      <p class="lp-label">SERVICIOS</p>
+      <h2 class="lp-section-title">¿Qué construimos?</h2>
+    </div>
+    <a href="#cotizacion" class="lp-btn lp-btn-ghost" style="align-self:flex-end;">Cotizar →</a>
+  </div>
+
+  <div class="lp-services-grid">
+
+    <div class="lp-scard lp-scard--cyan">
+      <div class="lp-scard-icon">◈</div>
+      <span class="lp-scard-num">01</span>
       <h3>Landing Pages</h3>
-      <p>Diseños modernos y conversores. Rápidos, estéticos y optimizados para resultados reales.</p>
-      <span class="g-service-arrow">→</span>
-    </a>
-    <div class="g-service-card">
-      <div class="g-service-num">02</div>
+      <p>Diseños modernos, rápidos y conversores. Desplegadas en AWS S3 o tu propio servidor. Optimizadas para captar clientes reales.</p>
+      <ul class="lp-scard-list">
+        <li>Diseño responsive</li>
+        <li>SEO básico incluido</li>
+        <li>Formulario de contacto</li>
+        <li>Integración WhatsApp</li>
+      </ul>
+      <a href="/precios" class="lp-scard-link">Ver precios →</a>
+    </div>
+
+    <div class="lp-scard lp-scard--purple">
+      <div class="lp-scard-icon">⬡</div>
+      <span class="lp-scard-num">02</span>
       <h3>Aplicaciones SaaS</h3>
-      <p>Plataformas web completas con autenticación, panel admin y gestión de clientes.</p>
-      <span class="g-service-arrow">→</span>
+      <p>Plataformas web completas con autenticación, panel admin, gestión de clientes, tickets de soporte y facturación PDF.</p>
+      <ul class="lp-scard-list">
+        <li>Login + registro seguro</li>
+        <li>Panel de administración</li>
+        <li>Google Sheets integrado</li>
+        <li>Reportes en Chart.js</li>
+      </ul>
+      <a href="/precios" class="lp-scard-link">Ver precios →</a>
     </div>
-    <div class="g-service-card">
-      <div class="g-service-num">03</div>
+
+    <div class="lp-scard lp-scard--pink">
+      <div class="lp-scard-icon">⟁</div>
+      <span class="lp-scard-num">03</span>
       <h3>Automatizaciones IA</h3>
-      <p>Flujos inteligentes con n8n que trabajan y generan resultados mientras dormís.</p>
-      <span class="g-service-arrow">→</span>
+      <p>Flujos inteligentes con n8n que trabajan 24/7: notificaciones automáticas, captación de leads y seguimiento sin intervención.</p>
+      <ul class="lp-scard-list">
+        <li>Flows con n8n</li>
+        <li>Emails automáticos</li>
+        <li>CRM básico incluido</li>
+        <li>Recordatorios por WA</li>
+      </ul>
+      <a href="/precios" class="lp-scard-link">Ver precios →</a>
     </div>
+
   </div>
 </section>
 
-<div class="g-divider"></div>
+<div class="lp-hr lp-wrap"></div>
 
-<!-- ── PROCESO ──────────────────────────────────────────── -->
-<section class="g-process g-wrap">
-  <div class="g-section-label">EL PROCESO</div>
-  <h2 class="g-section-title">¿Cómo trabajamos?</h2>
-  <div class="g-steps">
-    <div class="g-step">
-      <div class="g-step-n">01</div>
+<!-- ════════════════════════════════════════
+     PROYECTOS
+════════════════════════════════════════ -->
+<section class="lp-section lp-wrap" id="proyectos">
+  <div class="lp-section-top">
+    <div>
+      <p class="lp-label">PORTAFOLIO</p>
+      <h2 class="lp-section-title">Proyectos recientes</h2>
+    </div>
+    <a href="/portafolio" class="lp-btn lp-btn-ghost" style="align-self:flex-end;">Ver todos →</a>
+  </div>
+
+  <div class="lp-projects-grid">
+
+    <div class="lp-proj lp-proj--featured">
+      <div class="lp-proj-head" style="background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(124,58,237,0.15));">
+        <span class="lp-proj-emoji">🐔</span>
+        <span class="lp-badge-wip">● En proceso</span>
+      </div>
+      <div class="lp-proj-body">
+        <span class="lp-proj-cat">SaaS · App Web</span>
+        <h3>EcoPollo Premium</h3>
+        <p>Sistema de cotización con clasificación automática de clientes en 5 segmentos, descuentos por volumen y panel administrativo. Cartago, Costa Rica.</p>
+        <div class="lp-proj-tech">
+          <span>Node.js</span><span>AWS S3</span><span>Google Sheets</span><span>Chart.js</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lp-proj">
+      <div class="lp-proj-head" style="background:linear-gradient(135deg,rgba(0,0,0,0.8),rgba(180,140,60,0.15));">
+        <span class="lp-proj-emoji">🖋</span>
+        <span class="lp-badge-wip">● En proceso</span>
+      </div>
+      <div class="lp-proj-body">
+        <span class="lp-proj-cat">Landing Page</span>
+        <h3>Miss MB Tattoo</h3>
+        <p>Landing de agendamiento para tatuadora. Diseño negro y dorado con integración WhatsApp directa.</p>
+        <div class="lp-proj-tech">
+          <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lp-proj">
+      <div class="lp-proj-head" style="background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(0,100,60,0.2));">
+        <span class="lp-proj-emoji">🌿</span>
+        <span class="lp-badge-done">✓ Entregado</span>
+      </div>
+      <div class="lp-proj-body">
+        <span class="lp-proj-cat">Landing Page</span>
+        <h3>ArteVerde Vivero</h3>
+        <p>Landing boutique con catálogo de variedades, tabla de precios, galería antes/después y agenda de citas vía WhatsApp.</p>
+        <div class="lp-proj-tech">
+          <span>HTML5</span><span>CSS3</span><span>WA API</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lp-proj">
+      <div class="lp-proj-head" style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(236,72,153,0.1));">
+        <span class="lp-proj-emoji">🚀</span>
+        <span class="lp-badge-wip">● En proceso</span>
+      </div>
+      <div class="lp-proj-body">
+        <span class="lp-proj-cat">SaaS</span>
+        <h3>Mi Web Pro</h3>
+        <p>Plataforma SaaS completa para gestión de clientes, proyectos, tickets de soporte y facturación PDF.</p>
+        <div class="lp-proj-tech">
+          <span>Node.js</span><span>Express</span><span>EJS</span><span>PDFKit</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="lp-hr lp-wrap"></div>
+
+<!-- ════════════════════════════════════════
+     PROCESO
+════════════════════════════════════════ -->
+<section class="lp-section lp-wrap">
+  <p class="lp-label">EL PROCESO</p>
+  <h2 class="lp-section-title">¿Cómo trabajamos?</h2>
+  <div class="lp-process-grid">
+    <div class="lp-proc-step">
+      <div class="lp-proc-n lp-grad-text">01</div>
       <h3>Cotizás</h3>
-      <p>Llenás el formulario con tu idea. Te contactamos en menos de 24 horas con una propuesta clara.</p>
+      <p>Llenás el formulario con tu idea. Te contactamos en menos de 24 horas con una propuesta clara y detallada.</p>
     </div>
-    <div class="g-step-line"></div>
-    <div class="g-step">
-      <div class="g-step-n">02</div>
+    <div class="lp-proc-arrow">→</div>
+    <div class="lp-proc-step">
+      <div class="lp-proc-n lp-grad-text">02</div>
       <h3>Nos reunimos</h3>
-      <p>Definimos el alcance, fechas y precio exacto. Sin sorpresas, todo por escrito.</p>
+      <p>Definimos el alcance, fechas y precio exacto. Sin sorpresas, todo por escrito y acordado.</p>
     </div>
-    <div class="g-step-line"></div>
-    <div class="g-step">
-      <div class="g-step-n">03</div>
+    <div class="lp-proc-arrow">→</div>
+    <div class="lp-proc-step">
+      <div class="lp-proc-n lp-grad-text">03</div>
       <h3>Entregamos</h3>
-      <p>Desarrollamos, probamos y entregamos. Seguís el avance en tiempo real desde tu panel.</p>
+      <p>Desarrollamos, probamos y entregamos. Seguís el avance en tiempo real desde tu panel de cliente.</p>
     </div>
   </div>
 </section>
 
-<div class="g-divider"></div>
+<div class="lp-hr lp-wrap"></div>
 
-<!-- ── TESTIMONIOS ──────────────────────────────────────── -->
-<section class="g-testimonials g-wrap">
-  <div class="g-section-label">CLIENTES</div>
-  <h2 class="g-section-title">Lo que dicen de nosotros</h2>
-  <div class="g-tgrid">
-    <div class="g-tcard">
-      <p class="g-tcard-text">"La landing page superó todas mis expectativas. En la primera semana ya tenía clientes nuevos contactándome."</p>
-      <div class="g-tcard-author">
-        <div class="g-tcard-av">MB</div>
+<!-- ════════════════════════════════════════
+     TESTIMONIOS
+════════════════════════════════════════ -->
+<section class="lp-section lp-wrap">
+  <p class="lp-label">CLIENTES</p>
+  <h2 class="lp-section-title">Lo que dicen de nosotros</h2>
+  <div class="lp-tgrid">
+    <div class="lp-tcard">
+      <div class="lp-tcard-stars">★★★★★</div>
+      <p>"La landing page superó todas mis expectativas. En la primera semana ya tenía clientes nuevos contactándome."</p>
+      <div class="lp-tcard-author">
+        <div class="lp-tcard-av" style="background:linear-gradient(135deg,#1a1a1a,#333);">MB</div>
         <div><strong>Miss MB</strong><span>Tatuadora · Costa Rica</span></div>
       </div>
     </div>
-    <div class="g-tcard">
-      <p class="g-tcard-text">"El sistema de cotización nos ahorra horas de trabajo cada semana. El panel admin es exactamente lo que necesitábamos."</p>
-      <div class="g-tcard-author">
-        <div class="g-tcard-av">EP</div>
+    <div class="lp-tcard">
+      <div class="lp-tcard-stars">★★★★★</div>
+      <p>"El sistema de cotización nos ahorra horas de trabajo cada semana. El panel admin es exactamente lo que necesitábamos."</p>
+      <div class="lp-tcard-author">
+        <div class="lp-tcard-av" style="background:linear-gradient(135deg,#0d2b1a,#0a4020);">EP</div>
         <div><strong>EcoPollo</strong><span>Distribuidora · Cartago</span></div>
       </div>
     </div>
-    <div class="g-tcard">
-      <p class="g-tcard-text">"Profesional, rápido y con mucho ojo para el diseño. Mi vivero ahora tiene una presencia digital que me enorgullece."</p>
-      <div class="g-tcard-author">
-        <div class="g-tcard-av">AV</div>
+    <div class="lp-tcard">
+      <div class="lp-tcard-stars">★★★★★</div>
+      <p>"Profesional, rápido y con mucho ojo para el diseño. Mi vivero ahora tiene una presencia digital que me enorgullece."</p>
+      <div class="lp-tcard-author">
+        <div class="lp-tcard-av" style="background:linear-gradient(135deg,#0a2010,#163d20);">AV</div>
         <div><strong>ArteVerde Vivero</strong><span>Vivero boutique · Costa Rica</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="g-divider"></div>
+<div class="lp-hr lp-wrap"></div>
 
-<!-- ── FORM ─────────────────────────────────────────────── -->
-<section class="quote-section g-wrap" id="cotizacion">
-  <div class="quote-header">
-    <h2>¿Qué necesitas <span>construir?</span></h2>
-    <p>Cuéntanos tu idea y te contactamos en menos de 24 horas.</p>
+<!-- ════════════════════════════════════════
+     FORMULARIO
+════════════════════════════════════════ -->
+<section class="lp-section lp-wrap" id="cotizacion">
+  <div class="lp-section-top">
+    <div>
+      <p class="lp-label">CONTACTO</p>
+      <h2 class="lp-section-title">¿Qué necesitas construir?</h2>
+      <p style="color:rgba(255,255,255,0.45);margin:0 0 36px;font-size:0.95rem;">Cuéntanos tu idea y te contactamos en menos de 24 horas.</p>
+    </div>
   </div>
 
   <div id="quote-success" class="quote-success" style="display:none;">
     <div class="quote-success-icon">✓</div>
     <h3>¡Mensaje recibido!</h3>
     <p>Te contactaremos pronto. Mientras tanto podés ver nuestros trabajos.</p>
-    <a href="/portafolio" class="g-btn g-btn-primary" style="margin-top:20px;display:inline-block;">Ver portafolio</a>
+    <a href="/portafolio" class="lp-btn lp-btn-grad" style="margin-top:20px;display:inline-block;">Ver portafolio</a>
   </div>
 
   <form class="quote-form" id="quote-form" action="/cotizacion" method="POST">
@@ -282,27 +390,84 @@
   </form>
 </section>
 
-<!-- ── FOOTER ───────────────────────────────────────────── -->
-<footer class="g-footer g-wrap">
-  <div class="g-footer-left">
-    <span class="g-logo" style="font-size:0.9rem;">LOOP-LANDING<span class="g-logo-dot">.COM</span></span>
-    <span class="g-footer-info">Garett Barrantes Benavides · Curridabat, Costa Rica</span>
-    <span class="g-footer-info" style="color:#333;">© 2025 Loop-Landing. Todos los derechos reservados.</span>
-  </div>
-  <div class="g-footer-links">
-    <a href="https://www.instagram.com/garett_barrantes/?hl=es-la" target="_blank">Instagram</a>
-    <a href="https://wa.me/50663144171" target="_blank">WhatsApp</a>
-    <a href="/portafolio">Portafolio</a>
-    <a href="/precios">Precios</a>
-    <a href="/login">Acceso</a>
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="lp-footer">
+  <div class="lp-wrap">
+
+    <div class="lp-footer-top">
+      <div class="lp-footer-brand">
+        <span class="lp-logo" style="font-size:1.1rem;">LOOP<span class="lp-logo-accent">-LANDING</span><span class="lp-logo-dim">.COM</span></span>
+        <p>Desarrollo digital desde Curridabat, Costa Rica.<br>Landing pages, SaaS y automatizaciones que convierten.</p>
+        <div class="lp-footer-owner">
+          <span>👤 Garett Barrantes Benavides</span>
+          <span>📍 Curridabat, Costa Rica</span>
+        </div>
+      </div>
+
+      <div class="lp-footer-links-col">
+        <strong>Servicios</strong>
+        <a href="/precios">Landing Pages</a>
+        <a href="/precios">Aplicaciones SaaS</a>
+        <a href="/precios">Automatizaciones IA</a>
+        <a href="/precios">Ver precios</a>
+      </div>
+
+      <div class="lp-footer-links-col">
+        <strong>Empresa</strong>
+        <a href="/portafolio">Portafolio</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="/login">Acceso clientes</a>
+        <a href="/register">Registro</a>
+      </div>
+
+      <div class="lp-footer-links-col">
+        <strong>Contacto</strong>
+        <a href="https://wa.me/50663144171" target="_blank">💬 WhatsApp</a>
+        <a href="https://www.instagram.com/garett_barrantes/" target="_blank">📸 Instagram</a>
+        <a href="#cotizacion">✉ Cotización</a>
+        <div class="lp-support-badge">
+          <span class="lp-live-dot" style="background:#10b981;"></span>
+          Atención 24 hrs / 7 días
+        </div>
+      </div>
+    </div>
+
+    <div class="lp-footer-bottom">
+      <span>© 2025 Loop-Landing.com — Todos los derechos reservados.</span>
+      <div style="display:flex;gap:20px;">
+        <a href="https://www.instagram.com/garett_barrantes/" target="_blank">Instagram</a>
+        <a href="https://wa.me/50663144171" target="_blank">WhatsApp</a>
+        <a href="/portafolio">Portafolio</a>
+      </div>
+    </div>
+
   </div>
 </footer>
+
+<a class="whatsapp-float" href="https://wa.me/50663144171" target="_blank" aria-label="WhatsApp">💬</a>
 
 <script>
   if (window.location.search.includes('ok=1')) {
     document.getElementById('quote-form').style.display = 'none';
     document.getElementById('quote-success').style.display = 'block';
   }
+
+  function toggleDropdown() {
+    var menu = document.getElementById('techMenu');
+    var wrap = document.getElementById('techDropdown');
+    var open = wrap.classList.toggle('open');
+    menu.style.display = open ? 'block' : 'none';
+  }
+
+  document.addEventListener('click', function(e) {
+    var wrap = document.getElementById('techDropdown');
+    if (!wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      document.getElementById('techMenu').style.display = 'none';
+    }
+  });
 </script>
 <script src="/js/particles.js"></script>
 <script src="/js/interactions.js"></script>
