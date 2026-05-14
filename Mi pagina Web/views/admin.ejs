@@ -53,10 +53,20 @@
         </div>
     </div>
 
-    <!-- ── Gráfico ────────────────────────────────────────────────────────── -->
-    <div class="card" style="margin-top:40px;">
-        <h3>Análisis de Tráfico</h3>
-        <canvas id="visitsChart" data-visits="<%= stats.visits %>" style="max-height:250px;width:100%;"></canvas>
+    <!-- ── Gráficos ─────────────────────────────────────────────────────── -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;">
+        <div class="card">
+            <h3 style="margin-bottom:16px;">Leads por servicio</h3>
+            <canvas id="leadsServiceChart" style="max-height:220px;"></canvas>
+        </div>
+        <div class="card">
+            <h3 style="margin-bottom:16px;">Leads por estado</h3>
+            <canvas id="leadsStatusChart" style="max-height:220px;"></canvas>
+        </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+        <h3 style="margin-bottom:16px;">Visitas · Leads · Tickets</h3>
+        <canvas id="visitsChart" data-visits="<%= stats.visits %>" style="max-height:200px;width:100%;"></canvas>
     </div>
 
     <!-- ── LEADS ──────────────────────────────────────────────────────────── -->
@@ -105,6 +115,12 @@
                                     <% }); %>
                                 </select>
                             </form>
+                            <% if (lead.whatsapp) { %>
+                                <a href="https://wa.me/<%= lead.whatsapp.replace(/\D/g,'') %>?text=Hola%20<%= encodeURIComponent(lead.name) %>%2C%20vi%20tu%20solicitud%20de%20cotizaci%C3%B3n%20para%20<%= encodeURIComponent(lead.service) %>%20y%20me%20gustar%C3%ADa%20coordinar." target="_blank"
+                                   style="display:block;text-align:center;padding:8px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.25);color:#25d366;border-radius:8px;text-decoration:none;font-size:0.8rem;margin-top:8px;">
+                                    📲 WhatsApp
+                                </a>
+                            <% } %>
                         </div>
                     </div>
                 <% }); %>
@@ -285,30 +301,55 @@
 </div>
 
 <script>
-    // Chart
-    const ctx = document.getElementById('visitsChart').getContext('2d');
-    new Chart(ctx, {
+    const chartDefaults = {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#888', font: { size: 12 } } } },
+        scales: {
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
+            x: { ticks: { color: '#888' }, grid: { display: false } }
+        }
+    };
+
+    // Leads por servicio
+    const leadsRaw = <%- JSON.stringify(leads) %>;
+    const serviceCounts = leadsRaw.reduce((acc, l) => { acc[l.service] = (acc[l.service] || 0) + 1; return acc; }, {});
+    new Chart(document.getElementById('leadsServiceChart'), {
         type: 'bar',
         data: {
-            labels: ['Visitas Totales'],
+            labels: Object.keys(serviceCounts),
+            datasets: [{ label: 'Leads', data: Object.values(serviceCounts),
+                backgroundColor: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.5)',
+                borderWidth: 1, borderRadius: 6 }]
+        },
+        options: { ...chartDefaults, plugins: { legend: { display: false } } }
+    });
+
+    // Leads por estado
+    const statusCounts = leadsRaw.reduce((acc, l) => { acc[l.status] = (acc[l.status] || 0) + 1; return acc; }, {});
+    const statusColors = ['rgba(255,255,255,0.7)','rgba(96,165,250,0.7)','rgba(251,191,36,0.7)','rgba(52,211,153,0.7)','rgba(248,113,113,0.7)'];
+    new Chart(document.getElementById('leadsStatusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(statusCounts),
+            datasets: [{ data: Object.values(statusCounts), backgroundColor: statusColors, borderWidth: 0 }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#888', font: { size: 11 } } } } }
+    });
+
+    // Visitas · Leads · Tickets
+    const ticketsRaw = <%- JSON.stringify(tickets) %>;
+    new Chart(document.getElementById('visitsChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Visitas', 'Leads', 'Tickets'],
             datasets: [{
-                label: 'Visitas',
-                data: [Number(document.getElementById('visitsChart').dataset.visits) || 0],
-                backgroundColor: 'rgba(255,255,255,0.12)',
-                borderColor: 'rgba(255,255,255,0.6)',
-                borderWidth: 2,
-                borderRadius: 10,
-                barThickness: 50
+                data: [Number(document.getElementById('visitsChart').dataset.visits) || 0, leadsRaw.length, ticketsRaw.length],
+                backgroundColor: ['rgba(255,255,255,0.12)','rgba(96,165,250,0.2)','rgba(251,191,36,0.2)'],
+                borderColor: ['rgba(255,255,255,0.5)','rgba(96,165,250,0.7)','rgba(251,191,36,0.7)'],
+                borderWidth: 1, borderRadius: 8
             }]
         },
-        options: {
-            responsive: true,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
-                x: { ticks: { color: '#888' } }
-            }
-        }
+        options: { ...chartDefaults, plugins: { legend: { display: false } } }
     });
 </script>
 <script src="/js/particles.js"></script>

@@ -79,6 +79,7 @@ const saveData = (filename, data) => {
 };
 
 const { saveRegistro, saveContacto, saveLead, saveTicket, saveProgresoCliente } = require('./sheets');
+const { notifyNewLead, notifyNewContact } = require('./mailer');
 
 const isAuthenticated = (req, res, next) => {
     if (req.session.user) return next();
@@ -128,6 +129,7 @@ app.post('/contacto', async (req, res) => {
         });
         saveData('contacts.json', contacts);
         saveContacto({ name, email, subject, message }).catch(e => console.error('Sheets contacto:', e));
+        notifyNewContact({ name, email, subject, message }).catch(e => console.error('Mailer contacto:', e));
     } catch (e) {
         console.error('Error /contacto POST:', e);
     }
@@ -149,6 +151,8 @@ app.post('/cotizacion', async (req, res) => {
         saveData('leads.json', leads);
         saveLead({ name, whatsapp, email, service, budget, deadline, description })
             .catch(e => console.error('Sheets lead:', e));
+        notifyNewLead({ name, whatsapp, email, service, budget, description })
+            .catch(e => console.error('Mailer lead:', e));
     } catch (e) {
         console.error('Error /cotizacion POST:', e);
     }
