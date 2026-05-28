@@ -1,0 +1,727 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300;400;600&family=Quicksand:wght@400;500;600;700&display=swap');
+
+  :root {
+    --sk-cream: #E0C3AE;
+    --sk-peach: #FFAF83;
+    --sk-coral: #FF7671;
+    --sk-brown: #8F6149;
+    --sk-dark: #231F20;
+    --sk-white: #FFFFFF;
+    --sk-bg: #FAF8F5;
+    --sk-border: rgba(143,97,73,0.15);
+  }
+
+  .sk-wrap {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--sk-dark);
+    padding: 0 0 2rem;
+  }
+
+  .sk-hero {
+    background: var(--sk-dark);
+    color: var(--sk-white);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sk-hero::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,175,131,0.12);
+  }
+
+  .sk-hero::after {
+    content: '';
+    position: absolute;
+    right: 30px; bottom: -60px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,118,113,0.1);
+  }
+
+  .sk-eyebrow {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sk-peach);
+    margin-bottom: 10px;
+  }
+
+  .sk-hero h1 {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 1.15;
+    margin: 0 0 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sk-hero h1 em {
+    font-style: italic;
+    color: var(--sk-peach);
+  }
+
+  .sk-hero-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-family: 'Quicksand', monospace;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .sk-meta-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sk-meta-item {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 10px;
+  }
+
+  .sk-meta-label {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .sk-meta-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sk-white);
+  }
+
+  .sk-body {
+    padding: 0 1.5rem;
+  }
+
+  .sk-section {
+    margin-top: 2rem;
+  }
+
+  .sk-section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .sk-num {
+    background: var(--sk-dark);
+    color: var(--sk-white);
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .sk-section-title {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+  }
+
+  .sk-divider {
+    height: 1px;
+    background: var(--sk-border);
+    margin: 1.5rem 0;
+  }
+
+  .sk-card {
+    background: var(--sk-white);
+    border: 1px solid var(--sk-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+
+  .sk-card:hover {
+    border-color: var(--sk-peach);
+  }
+
+  .sk-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .sk-card-icon {
+    font-size: 18px;
+    min-width: 26px;
+    color: var(--sk-coral);
+  }
+
+  .sk-card-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .sk-card-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    border: 1px solid var(--sk-border);
+    color: var(--sk-brown);
+    background: rgba(224,195,174,0.2);
+  }
+
+  .sk-card-badge.hot {
+    border-color: rgba(255,118,113,0.4);
+    color: var(--sk-coral);
+    background: rgba(255,118,113,0.08);
+  }
+
+  .sk-card-body {
+    font-size: 12px;
+    color: var(--sk-brown);
+    line-height: 1.8;
+    padding-left: 36px;
+  }
+
+  .sk-packages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sk-pkg {
+    background: var(--sk-white);
+    border: 1px solid var(--sk-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .sk-pkg.featured {
+    border: 2px solid var(--sk-coral);
+    background: rgba(255,118,113,0.03);
+  }
+
+  .sk-pkg-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .sk-pkg-name {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 3px;
+  }
+
+  .sk-pkg-tag {
+    font-size: 10px;
+    color: var(--sk-coral);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .sk-pkg-price {
+    text-align: right;
+  }
+
+  .sk-pkg-amount {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--sk-dark);
+  }
+
+  .sk-pkg-freq {
+    font-size: 11px;
+    color: var(--sk-brown);
+  }
+
+  .sk-pkg-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .sk-pkg-items li {
+    font-size: 12px;
+    color: var(--sk-brown);
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    line-height: 1.5;
+  }
+
+  .sk-pkg-items li::before {
+    content: '—';
+    color: var(--sk-cream);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .sk-featured-badge {
+    background: var(--sk-coral);
+    color: var(--sk-white);
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .sk-steps {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .sk-steps::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    bottom: 20px;
+    width: 1px;
+    background: var(--sk-border);
+  }
+
+  .sk-step {
+    position: relative;
+    padding: 12px 0;
+  }
+
+  .sk-step-dot {
+    position: absolute;
+    left: -23px;
+    top: 15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sk-cream);
+    border: 1px solid var(--sk-brown);
+  }
+
+  .sk-step-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .sk-step-desc {
+    font-size: 12px;
+    color: var(--sk-brown);
+    line-height: 1.7;
+  }
+
+  .sk-step-time {
+    font-size: 11px;
+    color: var(--sk-coral);
+    margin-top: 3px;
+  }
+
+  .sk-nota {
+    background: rgba(255,175,131,0.08);
+    border-left: 3px solid var(--sk-peach);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--sk-brown);
+    line-height: 1.8;
+    margin-top: 1.5rem;
+  }
+
+  .sk-nota strong {
+    color: var(--sk-dark);
+  }
+
+  .sk-identity-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .sk-id-box {
+    background: var(--sk-white);
+    border: 1px solid var(--sk-border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .sk-id-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--sk-brown);
+    margin-bottom: 8px;
+  }
+
+  .sk-colors {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .sk-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--sk-border);
+    flex-shrink: 0;
+  }
+
+  .sk-font-preview {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--sk-dark);
+    margin-bottom: 2px;
+  }
+
+  .sk-font-body {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12px;
+    color: var(--sk-brown);
+  }
+
+  .sk-archetype-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .sk-arch {
+    background: var(--sk-white);
+    border: 1px solid var(--sk-border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .sk-arch-icon {
+    font-size: 22px;
+    margin-bottom: 6px;
+    color: var(--sk-coral);
+  }
+
+  .sk-arch-name {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .sk-arch-desc {
+    font-size: 11px;
+    color: var(--sk-brown);
+    line-height: 1.6;
+  }
+</style>
+
+<div class="sk-wrap">
+  <div class="sk-hero">
+    <div class="sk-eyebrow">Propuesta comercial · Garett B.B. para</div>
+    <h1>Skindoctors CR<br><em>Weekly Winner Landing</em></h1>
+    <p class="sk-hero-sub">Landing pages de alta conversión · Producto ganador semanal · Mayo 2026</p>
+    <div class="sk-meta-row">
+      <div class="sk-meta-item">
+        <div class="sk-meta-label">Cliente</div>
+        <div class="sk-meta-val">Skindoctors CR</div>
+      </div>
+      <div class="sk-meta-item">
+        <div class="sk-meta-label">Modelo</div>
+        <div class="sk-meta-val">Recurrente semanal</div>
+      </div>
+      <div class="sk-meta-item">
+        <div class="sk-meta-label">Desarrollador</div>
+        <div class="sk-meta-val">Garett B.B.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sk-body">
+
+    <div class="sk-section">
+      <div class="sk-section-head">
+        <span class="sk-num">01</span>
+        <span class="sk-section-title">Identidad de Marca — Leída del Brand Book</span>
+      </div>
+
+      <div class="sk-identity-row">
+        <div class="sk-id-box">
+          <div class="sk-id-label">Paleta oficial</div>
+          <div class="sk-colors">
+            <div class="sk-swatch" style="background:#E0C3AE;" title="#E0C3AE"></div>
+            <div class="sk-swatch" style="background:#FFAF83;" title="#FFAF83"></div>
+            <div class="sk-swatch" style="background:#FF7671;" title="#FF7671"></div>
+            <div class="sk-swatch" style="background:#8F6149;" title="#8F6149"></div>
+            <div class="sk-swatch" style="background:#231F20;" title="#231F20"></div>
+            <div class="sk-swatch" style="background:#FFFFFF; border:1px solid #ddd;" title="#FFFFFF"></div>
+          </div>
+        </div>
+        <div class="sk-id-box">
+          <div class="sk-id-label">Tipografía oficial</div>
+          <div class="sk-font-preview">Noto Serif Display</div>
+          <div class="sk-font-body">Quicksand — cuerpo y UI</div>
+        </div>
+      </div>
+
+      <div class="sk-archetype-row">
+        <div class="sk-arch">
+          <div class="sk-arch-icon"><i class="ti ti-brain" aria-hidden="true"></i></div>
+          <div class="sk-arch-name">El Sabio</div>
+          <div class="sk-arch-desc">Profesional, científico, educativo. Habla desde la autoridad dermatológica.</div>
+        </div>
+        <div class="sk-arch">
+          <div class="sk-arch-icon"><i class="ti ti-wand" aria-hidden="true"></i></div>
+          <div class="sk-arch-name">El Mago</div>
+          <div class="sk-arch-desc">Inspirador, transformador, emocional. Promete cambio real en la piel.</div>
+        </div>
+      </div>
+
+      <div class="sk-nota">
+        <strong>Slogan oficial:</strong> "Ciencia aplicada a la belleza" — Cada landing debe respirar este concepto. Ciencia que se siente, no que se explica.
+      </div>
+    </div>
+
+    <div class="sk-divider"></div>
+
+    <div class="sk-section">
+      <div class="sk-section-head">
+        <span class="sk-num">02</span>
+        <span class="sk-section-title">El Modelo — Weekly Winner Landing</span>
+      </div>
+
+      <div class="sk-card">
+        <div class="sk-card-head">
+          <i class="ti ti-layout-2 sk-card-icon" aria-hidden="true"></i>
+          <span class="sk-card-title">¿Qué es una Weekly Winner Landing?</span>
+        </div>
+        <div class="sk-card-body">
+          Cada semana, Skindoctors elige su producto estrella. Ese producto recibe una landing page dedicada — no una página de catálogo general, sino una página diseñada para VENDER ese producto específico. Hero con foto del producto, ingredientes clave, beneficios científicos, prueba social y un CTA directo a WhatsApp o tienda WooCommerce. Urgencia. Foco. Conversión.
+        </div>
+      </div>
+
+      <div class="sk-card">
+        <div class="sk-card-head">
+          <i class="ti ti-target sk-card-icon" aria-hidden="true"></i>
+          <span class="sk-card-title">¿Por qué funciona para ellos?</span>
+        </div>
+        <div class="sk-card-body">
+          Tienen +50 productos. El sitio WooCommerce es bueno pero genérico. Una landing dedicada le da a cada producto el tratamiento de "estrella de semana" — ideal para campañas de Instagram, TikTok ads, o post de producto ganador. El cliente no tiene que navegar. Llega, lee, compra.
+        </div>
+      </div>
+
+      <div class="sk-card">
+        <div class="sk-card-head">
+          <i class="ti ti-repeat sk-card-icon" aria-hidden="true"></i>
+          <span class="sk-card-title">Estructura reutilizable — tu ventaja</span>
+          <span class="sk-card-badge hot">clave</span>
+        </div>
+        <div class="sk-card-body">
+          Diseñas UN template perfecto con la identidad Skindoctors. Cada semana solo cambias: nombre del producto, imagen, ingredientes, beneficios y precio. De 8 horas de trabajo → a 90 minutos máximo. Eso justifica el precio recurrente.
+        </div>
+      </div>
+    </div>
+
+    <div class="sk-divider"></div>
+
+    <div class="sk-section">
+      <div class="sk-section-head">
+        <span class="sk-num">03</span>
+        <span class="sk-section-title">Estructura de cada Landing</span>
+      </div>
+
+      <div class="sk-card">
+        <div class="sk-card-head">
+          <i class="ti ti-layout-rows sk-card-icon" aria-hidden="true"></i>
+          <span class="sk-card-title">Anatomía de la Weekly Winner Page</span>
+        </div>
+        <div class="sk-card-body">
+          <strong style="color:var(--sk-dark)">Hero:</strong> Foto del producto (fondo cremoso, estilo brand book) + nombre científico + claim de beneficio + CTA principal<br>
+          <strong style="color:var(--sk-dark)">Ingrediente estrella:</strong> 1 ingrediente clave explicado con tono Sabio + Mago. Ej: "Retinol 0.3% — Activa la renovación celular mientras dormís"<br>
+          <strong style="color:var(--sk-dark)">Beneficios en 3:</strong> Tres puntos visuales con íconos minimalistas (estilo brand book)<br>
+          <strong style="color:var(--sk-dark)">Para tu tipo de piel:</strong> Chips o etiquetas (seca, mixta, grasa, sensible) para que el usuario se identifique<br>
+          <strong style="color:var(--sk-dark)">Prueba social:</strong> 1–2 reseñas reales o "Recomendado por dermatólogos"<br>
+          <strong style="color:var(--sk-dark)">CTA doble:</strong> Botón WhatsApp principal + link a tienda secundario
+        </div>
+      </div>
+    </div>
+
+    <div class="sk-divider"></div>
+
+    <div class="sk-section">
+      <div class="sk-section-head">
+        <span class="sk-num">04</span>
+        <span class="sk-section-title">Paquetes y Precios</span>
+      </div>
+
+      <div class="sk-packages">
+
+        <div class="sk-pkg">
+          <div class="sk-pkg-top">
+            <div>
+              <div class="sk-pkg-name">Setup Inicial</div>
+              <div class="sk-pkg-tag">pago único · una sola vez</div>
+            </div>
+            <div class="sk-pkg-price">
+              <div class="sk-pkg-amount">$350</div>
+              <div class="sk-pkg-freq">único</div>
+            </div>
+          </div>
+          <ul class="sk-pkg-items">
+            <li>Template base diseñado 100% con identidad Skindoctors (colores, tipografías, estilo fotográfico)</li>
+            <li>Primera landing page completa — producto que elijan ellos</li>
+            <li>Mobile-first, optimizada para Instagram link en bio</li>
+            <li>CTA WhatsApp con mensaje predefinido por producto</li>
+            <li>Deploy en S3 / link listo para compartir</li>
+          </ul>
+        </div>
+
+        <div class="sk-pkg featured">
+          <div class="sk-featured-badge">Recomendado · Modelo recurrente</div>
+          <div class="sk-pkg-top">
+            <div>
+              <div class="sk-pkg-name">Weekly Winner Mensual</div>
+              <div class="sk-pkg-tag">4 landings por mes · renovación</div>
+            </div>
+            <div class="sk-pkg-price">
+              <div class="sk-pkg-amount">$400</div>
+              <div class="sk-pkg-freq">/mes</div>
+            </div>
+          </div>
+          <ul class="sk-pkg-items">
+            <li>4 landings al mes (una por semana, lunes antes del mediodía)</li>
+            <li>Ellos eligen el producto ganador cada viernes anterior</li>
+            <li>Cambio de producto en ≤2 horas — template ya construido</li>
+            <li>URLs únicas por producto: skindoctors.com/producto o subdominio tuyo</li>
+            <li>Reporte mensual: cuántos clicks generó cada landing</li>
+          </ul>
+        </div>
+
+        <div class="sk-pkg">
+          <div class="sk-pkg-top">
+            <div>
+              <div class="sk-pkg-name">Pro con Ads</div>
+              <div class="sk-pkg-tag">landing + configuración de campaña</div>
+            </div>
+            <div class="sk-pkg-price">
+              <div class="sk-pkg-amount">$600</div>
+              <div class="sk-pkg-freq">/mes</div>
+            </div>
+          </div>
+          <ul class="sk-pkg-items">
+            <li>Todo lo del plan mensual</li>
+            <li>Configuración del pixel Meta en cada landing</li>
+            <li>URL de conversión lista para usar en Instagram/Facebook Ads</li>
+            <li>A/B testing simple: 2 variantes de CTA por landing</li>
+            <li>Recomendación de qué producto escalar según clicks</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="sk-nota">
+        <strong>Estrategia de entrada:</strong> Proponer Setup Inicial ($350) más primer mes mensual ($400) = $750 total. Se cobra 50% al inicio ($375) y 50% al entregar la primera landing. A partir del mes 2 → $400 fijos. 12 meses = $4,750 de un solo cliente serio.
+      </div>
+    </div>
+
+    <div class="sk-divider"></div>
+
+    <div class="sk-section">
+      <div class="sk-section-head">
+        <span class="sk-num">05</span>
+        <span class="sk-section-title">Proceso de Entrega</span>
+      </div>
+
+      <div class="sk-steps">
+        <div class="sk-step">
+          <div class="sk-step-dot"></div>
+          <div class="sk-step-title">Reunión de brief + aprobación propuesta</div>
+          <div class="sk-step-desc">Presentas esta propuesta. Definen el primer producto ganador. Firma de contrato simple + 50% de pago.</div>
+          <div class="sk-step-time">30 min</div>
+        </div>
+        <div class="sk-step">
+          <div class="sk-step-dot"></div>
+          <div class="sk-step-title">Diseño del template base</div>
+          <div class="sk-step-desc">Construís el template con colores, tipografías y estilo fotográfico exacto del brand book 2025. Esto se hace UNA VEZ.</div>
+          <div class="sk-step-time">6–8 horas · semana 1</div>
+        </div>
+        <div class="sk-step">
+          <div class="sk-step-dot"></div>
+          <div class="sk-step-title">Primera landing — producto estrella</div>
+          <div class="sk-step-desc">Ellos te pasan foto del producto + ingrediente clave + precio. Vos armás la landing y mandás preview. Una ronda de revisión.</div>
+          <div class="sk-step-time">3–4 horas · semana 1</div>
+        </div>
+        <div class="sk-step">
+          <div class="sk-step-dot"></div>
+          <div class="sk-step-title">Deploy + link entregado</div>
+          <div class="sk-step-desc">Subís a S3, configurás dominio o subdominio. Le entregás el link para que lo pongan en Instagram bio / historias / ads.</div>
+          <div class="sk-step-time">45 min</div>
+        </div>
+        <div class="sk-step">
+          <div class="sk-step-dot"></div>
+          <div class="sk-step-title">Ciclo semanal — solo cambios de contenido</div>
+          <div class="sk-step-desc">Cada viernes ellos te avisan el producto de la semana siguiente. Cada lunes antes del mediodía entregás la nueva landing.</div>
+          <div class="sk-step-time">90 min/semana</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sk-divider"></div>
+
+    <div class="sk-section">
+      <div class="sk-section-head">
+        <span class="sk-num">06</span>
+        <span class="sk-section-title">Condiciones y Próximos Pasos</span>
+      </div>
+
+      <div class="sk-card">
+        <div class="sk-card-head">
+          <i class="ti ti-file-text sk-card-icon" aria-hidden="true"></i>
+          <span class="sk-card-title">Condiciones estándar</span>
+        </div>
+        <div class="sk-card-body">
+          Ellos entregan foto del producto y texto de ingredientes en máximo 48 horas antes del lunes de entrega. Template es propiedad de Garett B.B. — el cliente tiene licencia de uso mientras mantenga el plan activo. Cancelación con 15 días de aviso.
+        </div>
+      </div>
+
+      <div class="sk-card">
+        <div class="sk-card-head">
+          <i class="ti ti-rocket sk-card-icon" aria-hidden="true"></i>
+          <span class="sk-card-title">Próximos pasos concretos</span>
+          <span class="sk-card-badge hot">acción</span>
+        </div>
+        <div class="sk-card-body">
+          1. Agendar reunión con Skindoctors — mostrar esta propuesta<br>
+          2. Pedir: foto de 3 productos candidatos para primera landing<br>
+          3. Definir dónde va el link — Instagram bio, Stories, Ads<br>
+          4. Cobrar primer 50% → arrancar template
+        </div>
+      </div>
+
+      <div class="sk-nota">
+        <strong>Footer de créditos en cada landing:</strong> "Desarrollado por Loop·Landing — Cartago, Costa Rica" — tu publicidad gratuita en cada cliente. Con +50 productos en cartera, eso son hasta 50 menciones por año.
+      </div>
+    </div>
+
+  </div>
+</div>

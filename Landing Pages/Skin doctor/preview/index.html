@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vista Previa — Landings Skindoctors CR | Apex Cloud Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f5f0;
+  --navy:#1a1a2e;
+  --gold:#C8954A;
+  --earth:#8F6149;
+  --green:#2d6040;
+  --coral:#FF7671;
+  --text:#1a1a2e;
+  --muted:#7a6a5a;
+  --border:#e2d8ce;
+  --surface:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+
+/* Header */
+.header{
+  background:var(--navy);
+  padding:0;
+  position:relative;
+  overflow:hidden;
+}
+.header::before{
+  content:'';
+  position:absolute;
+  top:-80px;right:-80px;
+  width:300px;height:300px;
+  border-radius:50%;
+  border:1px solid rgba(200,149,74,0.12);
+}
+.header::after{
+  content:'';
+  position:absolute;
+  bottom:-60px;left:10%;
+  width:200px;height:200px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.04);
+}
+.header-inner{
+  max-width:880px;
+  margin:0 auto;
+  padding:52px 32px 48px;
+  position:relative;
+  z-index:1;
+}
+.header-tag{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.header-tag::before{
+  content:'';
+  width:28px;height:1px;
+  background:var(--gold);
+  opacity:.6;
+}
+.header-title{
+  font-size:clamp(28px,4vw,42px);
+  font-weight:800;
+  color:#ffffff;
+  line-height:1.1;
+  letter-spacing:-0.5px;
+  margin-bottom:12px;
+}
+.header-title span{color:var(--gold)}
+.header-sub{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  color:rgba(255,255,255,0.4);
+  line-height:1.7;
+  max-width:520px;
+}
+.header-meta{
+  display:flex;
+  gap:24px;
+  margin-top:32px;
+  flex-wrap:wrap;
+}
+.meta-chip{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;
+  padding:8px 16px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(255,255,255,.6);
+}
+.meta-chip strong{color:rgba(255,255,255,.9);font-size:13px;font-weight:500}
+
+/* Main */
+.main{max-width:880px;margin:0 auto;padding:48px 32px 80px}
+
+/* Section label */
+.section-label{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:28px;
+}
+.section-num{
+  background:var(--navy);
+  color:#f8f5f0;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  padding:3px 10px;
+  border-radius:5px;
+  font-weight:500;
+}
+.section-name{
+  font-size:18px;
+  font-weight:700;
+}
+
+/* Landing cards */
+.landing-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:32px;
+  box-shadow:0 4px 32px rgba(0,0,0,.06);
+  transition:box-shadow .3s;
+}
+.landing-card:hover{
+  box-shadow:0 8px 48px rgba(0,0,0,.1);
+}
+
+/* Card header */
+.card-header{
+  padding:28px 32px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.card-header.melasblock{
+  background:linear-gradient(135deg,#2A1A13,#5a3020);
+  border-bottom:1px solid rgba(200,149,74,.2);
+}
+.card-header.cbd{
+  background:linear-gradient(135deg,#0D2116,#1A3A24);
+  border-bottom:1px solid rgba(45,96,64,.3);
+}
+.card-header-left{}
+.card-product-tag{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.4);
+  margin-bottom:8px;
+}
+.card-product-name{
+  font-size:24px;
+  font-weight:800;
+  color:#ffffff;
+  line-height:1.1;
+  margin-bottom:6px;
+}
+.card-product-sub{
+  font-size:12px;
+  color:rgba(255,255,255,.55);
+  font-family:'DM Mono',monospace;
+}
+.card-badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:16px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:50px;
+  padding:4px 12px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  font-weight:500;
+}
+.badge.warm{background:rgba(200,149,74,.18);border:1px solid rgba(200,149,74,.35);color:#e8c080}
+.badge.cool{background:rgba(45,96,64,.25);border:1px solid rgba(74,124,89,.35);color:#7EC897}
+.badge.neutral{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6)}
+.card-status-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:8px;
+  padding:6px 14px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  flex-shrink:0;
+  align-self:flex-start;
+}
+.card-status-badge.live{background:rgba(0,200,83,.15);border:1px solid rgba(0,200,83,.3);color:#00C853}
+.card-status-badge .dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.card-status-badge.draft{background:rgba(255,175,66,.12);border:1px solid rgba(255,175,66,.3);color:#FFB030}
+
+/* Preview frame */
+.preview-frame-wrap{
+  position:relative;
+  background:#f0ece6;
+  padding:20px 20px 0;
+  border-bottom:1px solid var(--border);
+}
+.browser-bar{
+  background:#e8e2da;
+  border-radius:10px 10px 0 0;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.browser-dots{display:flex;gap:5px}
+.dot-r{width:10px;height:10px;border-radius:50%;background:#FF7671}
+.dot-y{width:10px;height:10px;border-radius:50%;background:#FFD600}
+.dot-g{width:10px;height:10px;border-radius:50%;background:#00C853}
+.browser-url{
+  flex:1;
+  background:rgba(255,255,255,.7);
+  border-radius:6px;
+  padding:4px 12px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:#8a7a6a;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.iframe-container{
+  position:relative;
+  width:100%;
+  height:420px;
+  overflow:hidden;
+  border-radius:0;
+  background:#ffffff;
+}
+.iframe-container iframe{
+  width:1200px;
+  height:900px;
+  transform:scale(0.7);
+  transform-origin:top left;
+  border:none;
+  pointer-events:none;
+}
+.iframe-overlay{
+  position:absolute;
+  inset:0;
+  cursor:pointer;
+  z-index:2;
+}
+
+/* Card body */
+.card-body{
+  padding:28px 32px;
+}
+.card-features{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:24px;
+}
+.feature-item{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.feature-item::before{
+  content:'✓';
+  color:var(--gold);
+  font-size:11px;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.feature-item.warn::before{content:'⚠️';font-size:10px}
+
+/* Card actions */
+.card-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border-radius:10px;
+  padding:12px 24px;
+  font-family:'Syne',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  border:none;
+  transition:transform .2s,box-shadow .2s,opacity .2s;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.btn:active{transform:translateY(0)}
+.btn-primary-warm{background:var(--earth);color:#ffffff}
+.btn-primary-cool{background:var(--green);color:#ffffff}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg);border-color:var(--text)}
+
+/* Divider */
+.divider{height:1px;background:var(--border);margin:40px 0}
+
+/* Pendientes box */
+.pending-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:28px 32px;
+  margin-bottom:32px;
+}
+.pending-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.pending-title h3{font-size:16px;font-weight:700}
+.pending-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.pending-item{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding:12px 16px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+}
+.pending-icon{font-size:16px;flex-shrink:0}
+.pending-item strong{color:var(--text);font-weight:500}
+
+/* Reply box */
+.reply-box{
+  background:var(--navy);
+  border-radius:16px;
+  padding:32px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.reply-box::before{
+  content:'';
+  position:absolute;
+  top:-40px;right:-40px;
+  width:180px;height:180px;
+  border-radius:50%;
+  border:1px solid rgba(200,149,74,.12);
+}
+.reply-box h3{
+  font-size:20px;
+  font-weight:800;
+  color:#ffffff;
+  margin-bottom:8px;
+  position:relative;
+}
+.reply-box p{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:rgba(255,255,255,.45);
+  margin-bottom:24px;
+  line-height:1.7;
+  position:relative;
+}
+.reply-box .btn{position:relative}
+.wa-btn{
+  background:#25D366;
+  color:#ffffff;
+  border-radius:50px;
+  padding:14px 32px;
+  font-size:15px;
+}
+.wa-btn:hover{box-shadow:0 8px 28px rgba(37,211,102,.35)}
+
+/* Signature */
+.signature{
+  margin-top:40px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.sig-brand{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
+.sig-brand strong{color:var(--gold)}
+.sig-date{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  opacity:.6;
+}
+
+/* Responsive */
+@media(max-width:640px){
+  .header-inner{padding:36px 20px 32px}
+  .main{padding:32px 20px 60px}
+  .card-header{padding:22px 20px}
+  .card-body{padding:22px 20px}
+  .card-features{grid-template-columns:1fr}
+  .iframe-container{height:280px}
+  .iframe-container iframe{width:900px;height:700px;transform:scale(0.52)}
+  .header-meta{gap:12px}
+  .pending-box{padding:22px 20px}
+  .reply-box{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">Apex Cloud Works · Vista previa cliente</div>
+    <h1 class="header-title">Tus landing pages<br><span>están listas.</span></h1>
+    <p class="header-sub">
+      Preparamos dos propuestas visuales para Skindoctors CR. Ambas están publicadas en AWS y listas para revisión. Los cambios de copy, colores o secciones se aplican de inmediato.
+    </p>
+    <div class="header-meta">
+      <div class="meta-chip">
+        <strong>2</strong>
+        <span>landings desarrolladas</span>
+      </div>
+      <div class="meta-chip">
+        <strong>AWS S3</strong>
+        <span>publicadas en vivo</span>
+      </div>
+      <div class="meta-chip" id="fecha-chip">
+        <strong id="fecha-hoy"></strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- LANDING 1 — Melasblock -->
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <span class="section-name">Melasblock — BB Cream con Protección Solar SPF 50</span>
+  </div>
+
+  <div class="landing-card">
+    <div class="card-header melasblock">
+      <div class="card-header-left">
+        <div class="card-product-tag">Landing Page · Producto confirmado</div>
+        <div class="card-product-name">Melasblock ☀️</div>
+        <div class="card-product-sub">BB Cream · SPF 50 · 7 tonos · ₡25,250 IVA incluido</div>
+        <div class="card-badges">
+          <span class="badge warm">✓ UVB + UVA + Luz visible + IR</span>
+          <span class="badge warm">✓ 7 tonos cálidos / fríos / neutro</span>
+          <span class="badge neutral">✓ Efecto primer siliconado</span>
+          <span class="badge neutral">✓ Formulado en Costa Rica</span>
+        </div>
+      </div>
+      <div class="card-status-badge live"><div class="dot"></div> En vivo</div>
+    </div>
+
+    <div class="preview-frame-wrap">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+        </div>
+        <div class="browser-url">skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/melasblock/</div>
+      </div>
+      <div class="iframe-container" id="frame-melasblock">
+        <iframe
+          src="http://skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/melasblock/"
+          title="Landing Melasblock"
+          loading="lazy"
+          scrolling="no">
+        </iframe>
+        <div class="iframe-overlay" data-href="http://skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/melasblock/" role="link" tabindex="0" aria-label="Abrir landing Melasblock en nueva pestaña"></div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="card-features">
+        <div class="feature-item">Hero con imagen del producto y precio real</div>
+        <div class="feature-item">Los 4 tipos de radiación explicados</div>
+        <div class="feature-item">Selector visual de 7 tonos con guía subtono</div>
+        <div class="feature-item">Modo de uso paso a paso</div>
+        <div class="feature-item">3 reseñas de clientas + stats de confianza</div>
+        <div class="feature-item">FAQ con 5 preguntas frecuentes</div>
+        <div class="feature-item">CTA WhatsApp + link a tienda online</div>
+        <div class="feature-item warn">Foto del producto por insertar (placeholder actual)</div>
+      </div>
+      <div class="card-actions">
+        <a href="http://skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/melasblock/" target="_blank" rel="noopener noreferrer" class="btn btn-primary-warm">
+          👁 Abrir landing completa →
+        </a>
+        <a href="https://wa.me/50663144171?text=Hola!%20Vi%20la%20landing%20del%20Melasblock%20y%20me%20gustaría%20dar%20mi%20feedback" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          💬 Dar feedback por WA
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANDING 2 — CBD Crema -->
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <span class="section-name">Gel CBD Oil Balance — Gel Limpiador Facial</span>
+  </div>
+
+  <div class="landing-card">
+    <div class="card-header cbd">
+      <div class="card-header-left">
+        <div class="card-product-tag">Landing Page · Datos confirmados · Vista previa</div>
+        <div class="card-product-name">CBD Oil Balance 🌿</div>
+        <div class="card-product-sub">Gel Limpiador Facial · BioTolife + AC.Net · ₡24,580 IVA incluido</div>
+        <div class="card-badges">
+          <span class="badge cool">✓ BioTolife · Microbiota cutánea</span>
+          <span class="badge cool">✓ AC.Net · Control de sebo</span>
+          <span class="badge neutral">✓ 0% THC · Sin psicoactividad</span>
+          <span class="badge neutral">✓ Limpia sin resecar</span>
+        </div>
+      </div>
+      <div class="card-status-badge draft"><div class="dot"></div> Prueba</div>
+    </div>
+
+    <div class="preview-frame-wrap">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+        </div>
+        <div class="browser-url">skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/cbd-crema/</div>
+      </div>
+      <div class="iframe-container" id="frame-cbd">
+        <iframe
+          src="http://skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/cbd-crema/"
+          title="Landing CBD Crema"
+          loading="lazy"
+          scrolling="no">
+        </iframe>
+        <div class="iframe-overlay" data-href="http://skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/cbd-crema/" role="link" tabindex="0" aria-label="Abrir landing CBD Oil Balance en nueva pestaña"></div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="card-features">
+        <div class="feature-item">BioTolife + AC.Net — activos explicados con ciencia</div>
+        <div class="feature-item">Sección anti-objeción THC (clave para este producto)</div>
+        <div class="feature-item">Sección "por qué importa la microbiota"</div>
+        <div class="feature-item">Modo de uso AM/PM · Combo con Melasblock</div>
+        <div class="feature-item">3 reseñas + FAQ con 5 preguntas sobre CBD</div>
+        <div class="feature-item">CTA a WhatsApp y tienda online · ₡24,580 con precio antes/después</div>
+        <div class="feature-item warn">Foto del producto por insertar (placeholder activo)</div>
+      </div>
+      <div class="card-actions">
+        <a href="http://skindoctors-cr-landings.s3-website.us-east-2.amazonaws.com/cbd-crema/" target="_blank" rel="noopener noreferrer" class="btn btn-primary-cool">
+          👁 Abrir landing completa →
+        </a>
+        <a href="https://wa.me/50663144171?text=Hola!%20Vi%20la%20landing%20de%20la%20Crema%20CBD%20y%20me%20gustaría%20dar%20mi%20feedback" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          💬 Dar feedback por WA
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Pendientes -->
+  <div class="pending-box">
+    <div class="pending-title">
+      <span style="font-size:18px">📋</span>
+      <h3>Para finalizar ambas landings</h3>
+    </div>
+    <div class="pending-list">
+      <div class="pending-item">
+        <span class="pending-icon">📸</span>
+        <span><strong>Fotos de los productos</strong><br>PNG con fondo blanco o transparente. Una foto principal de cada producto es suficiente para comenzar.</span>
+      </div>
+      <div class="pending-item">
+        <span class="pending-icon">💰</span>
+        <span><strong>Precios confirmados ✓</strong><br>Melasblock: ₡25,250 · Gel CBD Oil Balance: ₡24,580 — ambos con IVA incluido y comparación antes/después de valor.</span>
+      </div>
+      <div class="pending-item">
+        <span class="pending-icon">📱</span>
+        <span><strong>WhatsApp de ventas preferido</strong><br>Actualmente los botones apuntan al +506 7063 6051 que aparece en su sitio web. Confirmar si es correcto o si prefieren otro número.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reply / Contacto -->
+  <div class="reply-box">
+    <h3>¿Tienen feedback?</h3>
+    <p>
+      Cualquier ajuste de colores, textos o secciones lo tenemos listo<br>
+      en menos de 24 horas. Escribinos directamente.
+    </p>
+    <a href="https://wa.me/50663144171?text=Hola%20Garett!%20Vi%20las%20landings%20de%20Skindoctors%20y%20tengo%20feedback%20🌿" target="_blank" rel="noopener noreferrer" class="btn wa-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Escribir al +506 6314-4171
+    </a>
+  </div>
+
+  <!-- Signature -->
+  <div class="signature">
+    <div class="sig-brand">
+      <strong>Apex Cloud Works</strong> · Garett Barrantes · Cartago, Costa Rica · apexcloudworkscompany.com
+    </div>
+    <div class="sig-date" id="sig-date"></div>
+  </div>
+
+</div>
+
+<script>
+// Fecha dinámica — sin hardcode de mes
+const hoy = new Date();
+const opts = { day:'2-digit', month:'long', year:'numeric' };
+const fechaStr = hoy.toLocaleDateString('es-CR', opts);
+const el = document.getElementById('fecha-hoy');
+if(el) el.textContent = fechaStr;
+const sig = document.getElementById('sig-date');
+if(sig) sig.textContent = 'Generado el ' + fechaStr;
+
+// iframe overlays — window.open seguro con noopener
+document.querySelectorAll('.iframe-overlay[data-href]').forEach(overlay=>{
+  function openLanding(){
+    window.open(overlay.dataset.href,'_blank','noopener,noreferrer');
+  }
+  overlay.addEventListener('click',openLanding);
+  overlay.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLanding()}});
+  overlay.style.cursor='pointer';
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orden de Inicio — Apex Cloud Works</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f8f6f1; --surface:#ffffff; --border:#e2ddd6;
+    --accent:#1a1a2e; --accent2:#c8954a;
+    --text:#1a1a2e; --muted:#8a8577; --muted2:#5a5550;
+    --green:#2d6a4f; --red:#c0392b;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;padding:0 0 80px;}
+
+  .cover{
+    background:var(--green);color:#f8f6f1;
+    padding:48px;position:relative;overflow:hidden;
+    display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;
+  }
+  .cover::before{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);}
+  .cover::after{content:'';position:absolute;left:40px;bottom:-80px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,0.04);}
+  .cover-left{position:relative;z-index:1;}
+  .cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(248,246,241,0.6);text-transform:uppercase;margin-bottom:14px;}
+  .cover h1{font-size:38px;font-weight:800;line-height:1.05;margin-bottom:6px;}
+  .cover h1 span{color:rgba(248,246,241,0.5);}
+  .cover-sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(248,246,241,0.4);margin-bottom:36px;}
+  .cover-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .cover-meta-item{border-top:1px solid rgba(255,255,255,0.15);padding-top:10px;}
+  .cover-meta-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;color:rgba(248,246,241,0.4);text-transform:uppercase;margin-bottom:3px;}
+  .cover-meta-val{font-size:13px;font-weight:700;color:#f8f6f1;}
+  .cover-right{position:relative;z-index:1;text-align:right;}
+  .doc-num-label{font-family:'DM Mono',monospace;font-size:11px;color:rgba(248,246,241,0.35);margin-bottom:4px;letter-spacing:1px;}
+  .doc-code{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:rgba(248,246,241,0.9);letter-spacing:2px;}
+  .status-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:99px;padding:5px 12px;font-family:'DM Mono',monospace;font-size:10px;color:#f8f6f1;letter-spacing:1px;text-transform:uppercase;margin-top:10px;}
+  .status-dot{width:5px;height:5px;border-radius:50%;background:#f8f6f1;}
+
+  .container{max-width:780px;margin:0 auto;padding:0 40px;}
+
+  .alert-box{
+    background:rgba(45,106,79,0.06);border:1px solid rgba(45,106,79,0.2);
+    border-left:4px solid var(--green);border-radius:0 10px 10px 0;
+    padding:20px 24px;margin-top:40px;
+    display:flex;gap:16px;align-items:flex-start;
+  }
+  .alert-icon{font-size:24px;flex-shrink:0;}
+  .alert-title{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--green);}
+  .alert-body{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.8;}
+  .alert-body strong{color:var(--text);}
+
+  .parties{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px;}
+  .party-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;}
+  .party-box.provider{border-left:3px solid var(--accent);}
+  .party-box.client{border-left:3px solid var(--accent2);}
+  .party-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .party-name{font-size:16px;font-weight:800;margin-bottom:6px;}
+  .party-detail{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.9;}
+  .party-detail strong{color:var(--text);font-weight:500;}
+
+  .divider{height:1px;background:var(--border);margin:32px 0;}
+
+  .section-label{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .section-num{background:var(--accent);color:#f8f6f1;font-family:'DM Mono',monospace;font-size:10px;padding:3px 9px;border-radius:4px;font-weight:500;}
+  .section-title{font-size:16px;font-weight:700;}
+
+  /* PAGO CONFIRMADO */
+  .payment-confirm{
+    background:var(--surface);border:2px solid rgba(45,106,79,0.3);border-radius:12px;
+    padding:24px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+    margin-bottom:16px;
+  }
+  .pc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .pc-concept{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .pc-detail{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.7;}
+  .pc-amount-wrap{text-align:right;}
+  .pc-amount{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;color:var(--green);line-height:1;}
+  .pc-status{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-top:4px;display:flex;align-items:center;gap:5px;justify-content:flex-end;}
+  .check-icon{font-size:12px;}
+
+  /* TIMELINE */
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{content:'';position:absolute;left:10px;top:16px;bottom:16px;width:1px;background:var(--border);}
+  .tl-item{position:relative;padding:12px 0;}
+  .tl-dot{
+    position:absolute;left:-23px;top:15px;
+    width:10px;height:10px;border-radius:50%;
+    border:2px solid var(--border);background:var(--surface);
+  }
+  .tl-dot.done{background:var(--green);border-color:var(--green);}
+  .tl-dot.active{background:var(--accent2);border-color:var(--accent2);}
+  .tl-dot.pending{background:var(--surface);border-color:var(--muted);}
+  .tl-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:3px;}
+  .tl-title{font-size:13px;font-weight:700;margin-bottom:3px;}
+  .tl-desc{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.7;}
+  .tl-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 8px;border-radius:99px;margin-top:4px;}
+  .tl-badge.done{background:rgba(45,106,79,0.1);color:var(--green);border:1px solid rgba(45,106,79,0.2);}
+  .tl-badge.active{background:rgba(200,149,74,0.1);color:var(--accent2);border:1px solid rgba(200,149,74,0.2);}
+  .tl-badge.pending{background:rgba(138,133,119,0.1);color:var(--muted);border:1px solid var(--border);}
+
+  /* PRIMER PRODUCTO */
+  .product-brief{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:10px;overflow:hidden;
+  }
+  .pb-header{background:var(--accent);color:#f8f6f1;padding:12px 20px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+  .pb-body{padding:20px;}
+  .pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .pb-field label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+  .pb-field input,.pb-field textarea{
+    width:100%;background:var(--bg);border:1px solid var(--border);
+    border-radius:6px;padding:10px 12px;font-family:'DM Mono',monospace;
+    font-size:12px;color:var(--text);resize:none;
+  }
+  .pb-field input:focus,.pb-field textarea:focus{outline:none;border-color:var(--accent2);}
+
+  .nota{background:rgba(200,149,74,0.08);border:1px solid rgba(200,149,74,0.25);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:14px 18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.8;margin-top:20px;}
+  .nota strong{color:var(--accent);}
+
+  .acceptance{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  .sign-block label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:8px;}
+  .sign-line{border-bottom:1px solid var(--accent);height:44px;margin-bottom:8px;}
+  .sign-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:center;}
+
+  .doc-footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .footer-brand{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+  .footer-brand strong{color:var(--accent2);}
+  .print-btn{background:var(--accent);color:#f8f6f1;border:none;border-radius:8px;padding:9px 18px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:opacity 0.2s;}
+  .print-btn:hover{opacity:0.85;}
+
+  @media print{
+    .print-btn,.pb-field input,.pb-field textarea{display:none!important;}
+    .cover{print-color-adjust:exact;-webkit-print-color-adjust:exact;}
+  }
+  @media(max-width:600px){
+    .cover{grid-template-columns:1fr;padding:32px 24px;}
+    .cover h1{font-size:28px;}
+    .cover-meta{grid-template-columns:1fr 1fr;}
+    .parties,.pb-grid,.acceptance{grid-template-columns:1fr;}
+    .payment-confirm{grid-template-columns:1fr;}
+    .container{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-left">
+    <div class="cover-tag">Confirmación de inicio · Apex Cloud Works</div>
+    <h1>Orden<br>de <span>Inicio</span></h1>
+    <p class="cover-sub">El pago fue recibido — el proyecto arranca hoy</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Cliente</div>
+        <div class="cover-meta-val">Skindoctors CR</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Fecha de inicio</div>
+        <div class="cover-meta-val" id="meta-fecha"></div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Primera entrega</div>
+        <div class="cover-meta-val" id="meta-entrega"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-right">
+    <div class="doc-num-label">N° Orden</div>
+    <div class="doc-code" id="order-num">OI-2026-001</div>
+    <div class="status-badge"><div class="status-dot"></div> Proyecto activo</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="alert-box">
+    <div class="alert-icon">✅</div>
+    <div>
+      <div class="alert-title">¡Pago recibido — proyecto en marcha!</div>
+      <div class="alert-body">
+        Este documento confirma que <strong>Apex Cloud Works</strong> ha recibido el adelanto del 50% correspondiente al proyecto <strong>Weekly Winner Landing — Skindoctors CR</strong>.<br>
+        El desarrollo del template base y la primera landing comienzan hoy. Fecha estimada de primera entrega: <strong id="entrega-inline"></strong>.
+      </div>
+    </div>
+  </div>
+
+  <div class="parties">
+    <div class="party-box provider">
+      <div class="party-label">Desarrollador</div>
+      <div class="party-name">Apex Cloud Works</div>
+      <div class="party-detail">
+        <strong>Garett J. Barrantes B.</strong><br>
+        apexcloudworkscompany@gmail.com<br>
+        Cartago, Costa Rica
+      </div>
+    </div>
+    <div class="party-box client">
+      <div class="party-label">Cliente</div>
+      <div class="party-name">Skindoctors CR</div>
+      <div class="party-detail">
+        <strong>Contacto:</strong> ___________________<br>
+        Plaza Cristal, Curridabat<br>
+        Costa Rica
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <span class="section-title">Pago Confirmado</span>
+  </div>
+
+  <div class="payment-confirm">
+    <div>
+      <div class="pc-label">Concepto de pago</div>
+      <div class="pc-concept">Adelanto 50% — Setup Inicial + Mes 1</div>
+      <div class="pc-detail">
+        Ref. Proforma: <span id="pf-ref">PF-2026-001</span> &nbsp;·&nbsp;
+        Método: SINPE / Transferencia<br>
+        Fecha de pago: <span id="pago-fecha"></span>
+      </div>
+    </div>
+    <div class="pc-amount-wrap">
+      <div class="pc-amount">$375</div>
+      <div class="pc-status"><span class="check-icon">✓</span> Recibido</div>
+    </div>
+  </div>
+
+  <div class="payment-confirm" style="border-color:var(--border);">
+    <div>
+      <div class="pc-label">Saldo pendiente</div>
+      <div class="pc-concept">50% restante — Al aprobar diseño final</div>
+      <div class="pc-detail">
+        Se factura al entregar y aprobar la primera landing.<br>
+        Antes del deploy en producción.
+      </div>
+    </div>
+    <div class="pc-amount-wrap">
+      <div class="pc-amount" style="color:var(--muted);">$375</div>
+      <div class="pc-status" style="color:var(--muted);"><span class="check-icon">⏳</span> Pendiente</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <span class="section-title">Timeline del Proyecto</span>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot done"></div>
+      <div class="tl-date" id="tl-d1"></div>
+      <div class="tl-title">Firma del contrato y pago del adelanto</div>
+      <div class="tl-desc">Contrato firmado, adelanto recibido. Proyecto activado.</div>
+      <span class="tl-badge done">✓ Completado</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot active"></div>
+      <div class="tl-date" id="tl-d2"></div>
+      <div class="tl-title">Diseño del template base — En proceso</div>
+      <div class="tl-desc">Template con identidad Skindoctors: colores, tipografías y estilo del Brand Book 2025. Incluye estructura de todas las secciones.</div>
+      <span class="tl-badge active">⚡ En progreso</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot pending"></div>
+      <div class="tl-date" id="tl-d3"></div>
+      <div class="tl-title">Preview de primera landing para revisión</div>
+      <div class="tl-desc">El cliente recibe el link de preview en S3. Hasta 2 rondas de ajuste.</div>
+      <span class="tl-badge pending">Pendiente</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot pending"></div>
+      <div class="tl-date" id="tl-d4"></div>
+      <div class="tl-title">Pago del 50% saldo + Deploy en producción</div>
+      <div class="tl-desc">Al aprobar el diseño, el cliente paga el saldo. Se sube a producción con dominio y HTTPS activo.</div>
+      <span class="tl-badge pending">Pendiente</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot pending"></div>
+      <div class="tl-date" id="tl-d5"></div>
+      <div class="tl-title">Inicio ciclo semanal regular</div>
+      <div class="tl-desc">Cada viernes el cliente designa el producto ganador. Cada lunes se entrega la nueva landing antes del mediodía.</div>
+      <span class="tl-badge pending">Recurrente</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <span class="section-title">Brief del Primer Producto</span>
+  </div>
+
+  <div class="product-brief">
+    <div class="pb-header">Datos del producto ganador — Semana 1</div>
+    <div class="pb-body">
+      <div class="pb-grid">
+        <div class="pb-field">
+          <label>Nombre oficial del producto</label>
+          <input type="text" placeholder="Ej: Melasblock BB Cream SPF50">
+        </div>
+        <div class="pb-field">
+          <label>Precio de venta</label>
+          <input type="text" placeholder="Ej: ₡25,250 · 50ml">
+        </div>
+        <div class="pb-field">
+          <label>Ingrediente o beneficio estrella</label>
+          <input type="text" placeholder="Ej: SPF50+ UVA/UVB · 2 en 1">
+        </div>
+        <div class="pb-field">
+          <label>CTA principal</label>
+          <input type="text" placeholder="Ej: Pedir por WhatsApp">
+        </div>
+        <div class="pb-field" style="grid-column:1/-1">
+          <label>Notas adicionales del producto</label>
+          <textarea rows="2" placeholder="Tipo de piel, restricciones, campaña activa, etc."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Recordatorio:</strong> Para mantener el ciclo semanal, cada viernes antes de las 5:00 PM enviá por WhatsApp: foto del producto, nombre, precio e ingrediente estrella. La landing estará lista el lunes siguiente antes del mediodía.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="acceptance">
+    <div class="sign-block">
+      <label>Confirmación del cliente</label>
+      <div class="sign-line"></div>
+      <div class="sign-sub">Nombre · Fecha · Skindoctors CR</div>
+    </div>
+    <div class="sign-block">
+      <label>Apex Cloud Works</label>
+      <div class="sign-line"></div>
+      <div class="sign-sub">Garett J. Barrantes B. · Desarrollador</div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-brand">
+      <strong>Apex Cloud Works</strong> · Garett Barrantes Benavides · Cartago, Costa Rica · 2026
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+
+<script>
+  const today = new Date();
+  const opts = { day:'2-digit', month:'long', year:'numeric' };
+  const d = (date) => date.toLocaleDateString('es-CR', opts);
+  const addDays = (date, n) => { const r = new Date(date); r.setDate(r.getDate()+n); return r; };
+
+  document.getElementById('meta-fecha').textContent = d(today);
+  const entrega = addDays(today, 5);
+  document.getElementById('meta-entrega').textContent = d(entrega);
+  document.getElementById('entrega-inline').textContent = d(entrega);
+  document.getElementById('pago-fecha').textContent = d(today);
+  document.getElementById('order-num').textContent = `OI-${today.getFullYear()}-001`;
+  document.getElementById('pf-ref').textContent = `PF-${today.getFullYear()}-001`;
+
+  document.getElementById('tl-d1').textContent = d(today);
+  document.getElementById('tl-d2').textContent = `${d(today)} → ${d(addDays(today,3))}`;
+  document.getElementById('tl-d3').textContent = d(addDays(today,4));
+  document.getElementById('tl-d4').textContent = d(addDays(today,5));
+  document.getElementById('tl-d5').textContent = `${d(addDays(today,6))} en adelante`;
+</script>
+</body>
+</html>

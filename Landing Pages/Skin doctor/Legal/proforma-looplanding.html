@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proforma — Apex Cloud Works</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f6f1;
+    --surface: #ffffff;
+    --border: #e2ddd6;
+    --accent: #1a1a2e;
+    --accent2: #c8954a;
+    --text: #1a1a2e;
+    --muted: #8a8577;
+    --muted2: #5a5550;
+    --green: #2d6a4f;
+    --red: #c0392b;
+    --light-gold: rgba(200,149,74,0.08);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    padding: 0 0 80px;
+  }
+
+  /* COVER */
+  .cover {
+    background: var(--accent);
+    color: #f8f6f1;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    right: 60px; bottom: -80px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,149,74,0.15);
+  }
+
+  .cover-left { position: relative; z-index: 1; }
+
+  .cover-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .cover h1 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+
+  .cover h1 span { color: var(--accent2); }
+
+  .cover-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(248,246,241,0.4);
+    margin-bottom: 36px;
+  }
+
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .cover-meta-item {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 10px;
+  }
+
+  .cover-meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: rgba(248,246,241,0.35);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .cover-meta-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f8f6f1;
+  }
+
+  .cover-meta-val.accent { color: var(--accent2); }
+
+  .cover-right {
+    position: relative;
+    z-index: 1;
+    text-align: right;
+  }
+
+  .proforma-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(248,246,241,0.35);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+
+  .proforma-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 2px;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200,149,74,0.15);
+    border: 1px solid rgba(200,149,74,0.3);
+    border-radius: 99px;
+    padding: 5px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  .status-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent2);
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* PARTIES */
+  .parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .party-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .party-box.provider {
+    border-left: 3px solid var(--accent);
+  }
+
+  .party-box.client {
+    border-left: 3px solid var(--accent2);
+  }
+
+  .party-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .party-name {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .party-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.9;
+  }
+
+  .party-detail strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* SECTION HEADER */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .section-num {
+    background: var(--accent);
+    color: #f8f6f1;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* SERVICE TABLE */
+  .service-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .service-table thead tr {
+    background: var(--accent);
+    color: #f8f6f1;
+  }
+
+  .service-table thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  .service-table thead th:last-child,
+  .service-table thead th:nth-child(3) {
+    text-align: right;
+  }
+
+  .service-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .service-table tbody tr:last-child { border-bottom: none; }
+  .service-table tbody tr:hover { background: var(--bg); }
+
+  .service-table td {
+    padding: 14px 16px;
+    vertical-align: top;
+  }
+
+  .service-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .service-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .service-qty {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted2);
+    text-align: center;
+    width: 60px;
+  }
+
+  .service-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted2);
+    text-align: right;
+    white-space: nowrap;
+    width: 100px;
+  }
+
+  .service-total {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: right;
+    white-space: nowrap;
+    width: 110px;
+  }
+
+  .service-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .service-tag.once { border-color: rgba(45,106,79,0.3); color: var(--green); }
+  .service-tag.recurrente { border-color: rgba(200,149,74,0.3); color: var(--accent2); }
+
+  /* TOTALES */
+  .totals-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+    margin-left: auto;
+    width: 320px;
+  }
+
+  .totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 20px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  .totals-row:last-child { border-bottom: none; }
+
+  .totals-row .tl { color: var(--muted2); }
+  .totals-row .tr { color: var(--text); font-weight: 500; }
+
+  .totals-row.grand {
+    background: var(--accent);
+    padding: 14px 20px;
+  }
+
+  .totals-row.grand .tl {
+    color: rgba(248,246,241,0.6);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .totals-row.grand .tr {
+    color: #f8f6f1;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .totals-row.grand .tr span { color: var(--accent2); }
+
+  /* PAYMENT */
+  .payment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 4px;
+  }
+
+  .payment-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .payment-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .payment-card.adelanto::before { background: var(--accent2); }
+  .payment-card.saldo::before { background: var(--green); }
+  .payment-card.mensual::before { background: var(--accent); }
+
+  .payment-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .payment-card-amount {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .payment-card-amount.gold { color: var(--accent2); }
+  .payment-card-amount.green { color: var(--green); }
+  .payment-card-amount.dark { color: var(--accent); }
+
+  .payment-card-when {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CONDITIONS */
+  .conditions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .condition-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.7;
+  }
+
+  .condition-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .condition-item strong { color: var(--text); font-weight: 600; }
+
+  /* VALIDITY */
+  .validity-bar {
+    background: rgba(200,149,74,0.08);
+    border: 1px solid rgba(200,149,74,0.25);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.8;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .validity-bar strong { color: var(--accent); }
+
+  /* ACCEPTANCE */
+  .acceptance {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .sign-block label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .sign-line {
+    border-bottom: 1px solid var(--accent);
+    height: 44px;
+    margin-bottom: 8px;
+  }
+
+  .sign-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* FOOTER */
+  .doc-footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .footer-brand strong { color: var(--accent2); }
+
+  .print-btn {
+    background: var(--accent);
+    color: #f8f6f1;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .print-btn:hover { opacity: 0.85; }
+
+  @media print {
+    .print-btn { display: none !important; }
+    body { padding-bottom: 20px; }
+    .cover { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .service-table thead { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .totals-row.grand { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+
+  @media (max-width: 600px) {
+    .cover { grid-template-columns: 1fr; padding: 32px 24px; }
+    .cover h1 { font-size: 28px; }
+    .cover-meta { grid-template-columns: 1fr 1fr; }
+    .parties { grid-template-columns: 1fr; }
+    .payment-grid { grid-template-columns: 1fr; }
+    .acceptance { grid-template-columns: 1fr; }
+    .container { padding: 0 20px; }
+    .totals-box { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-left">
+    <div class="cover-tag">Documento comercial · Apex Cloud Works</div>
+    <h1>Pro<span>forma</span><br>de Venta</h1>
+    <p class="cover-sub">Landing Pages · Desarrollado por Apex Cloud Works · Cartago, Costa Rica</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Cliente</div>
+        <div class="cover-meta-val" id="meta-cliente">Skindoctors CR</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Fecha</div>
+        <div class="cover-meta-val" id="meta-fecha"></div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Válida hasta</div>
+        <div class="cover-meta-val accent" id="meta-validez"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-right">
+    <div class="proforma-num">N° de Proforma</div>
+    <div class="proforma-code" id="proforma-num">PF-2026-001</div>
+    <div class="status-badge"><div class="status-dot"></div> Pendiente aprobación</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PARTES -->
+  <div class="parties">
+    <div class="party-box provider">
+      <div class="party-label">Proveedor del servicio</div>
+      <div class="party-name">Apex Cloud Works</div>
+      <div class="party-detail">
+        <strong>Desarrollador:</strong> Garett Johan Barrantes B.<br>
+        <strong>Cédula:</strong> 7-0263-0247<br>
+        <strong>Email:</strong> apexcloudworkscompany@gmail.com<br>
+        <strong>WhatsApp:</strong> +506 XXXX-XXXX<br>
+        <strong>Ubicación:</strong> Cartago, Costa Rica
+      </div>
+    </div>
+    <div class="party-box client">
+      <div class="party-label">Cliente</div>
+      <div class="party-name">Skindoctors CR</div>
+      <div class="party-detail">
+        <strong>Contacto:</strong> ___________________<br>
+        <strong>Cédula / RUC:</strong> ___________________<br>
+        <strong>Email:</strong> ___________________<br>
+        <strong>WhatsApp:</strong> ___________________<br>
+        <strong>Ubicación:</strong> Plaza Cristal, Curridabat
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SERVICIOS -->
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <span class="section-title">Descripción de Servicios</span>
+  </div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Servicio</th>
+        <th style="text-align:center;width:60px">Cant.</th>
+        <th style="text-align:right;width:100px">P. Unit.</th>
+        <th style="text-align:right;width:110px">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="service-name">Setup Inicial — Template Weekly Winner</div>
+          <div class="service-desc">
+            Diseño del template base con identidad Skindoctors (colores, tipografías, estilo fotográfico del brand book 2025).<br>
+            Incluye primera landing page completa, deploy en S3, dominio/subdominio configurado y CTA WhatsApp con mensaje predefinido.
+          </div>
+          <span class="service-tag once">pago único</span>
+        </td>
+        <td class="service-qty">1</td>
+        <td class="service-price">$350.00</td>
+        <td class="service-total">$350.00</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="service-name">Plan Trimestral — 1 Landing cada 3 meses</div>
+          <div class="service-desc">
+            1 landing page por trimestre (cada 3 meses). Cliente elige el producto/campaña con al menos 7 días de anticipación.<br>
+            Incluye: diseño completo con identidad Skindoctors, URL única, deploy en S3 con HTTPS y reporte de clicks al cierre del trimestre.
+          </div>
+          <span class="service-tag recurrente">recurrente trimestral</span>
+        </td>
+        <td class="service-qty">1</td>
+        <td class="service-price">$300.00</td>
+        <td class="service-total">$300.00</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="service-name">Dominio personalizado (opcional)</div>
+          <div class="service-desc">
+            Registro de dominio landing.skindoctorscr.com o similar. Configuración DNS + SSL gratuito con AWS ACM.<br>
+            Solo si el cliente no tiene dominio propio disponible.
+          </div>
+          <span class="service-tag">opcional</span>
+        </td>
+        <td class="service-qty">1</td>
+        <td class="service-price">$15.00</td>
+        <td class="service-total">$15.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTALES -->
+  <div class="totals-box">
+    <div class="totals-row">
+      <span class="tl">Subtotal</span>
+      <span class="tr">$650.00</span>
+    </div>
+    <div class="totals-row">
+      <span class="tl">Dominio (opcional)</span>
+      <span class="tr">$15.00</span>
+    </div>
+    <div class="totals-row">
+      <span class="tl">IVA (13% — si aplica)</span>
+      <span class="tr">$0.00</span>
+    </div>
+    <div class="totals-row grand">
+      <span class="tl">Total a cobrar</span>
+      <span class="tr">$<span>650</span>.00</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PLAN DE PAGO -->
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <span class="section-title">Plan de Pagos</span>
+  </div>
+
+  <div class="payment-grid">
+    <div class="payment-card adelanto">
+      <div class="payment-card-label">Adelanto — Al firmar</div>
+      <div class="payment-card-amount gold">$325.00</div>
+      <div class="payment-card-when">50% del total<br>Al aprobar esta proforma<br>Inicia el proyecto</div>
+    </div>
+    <div class="payment-card saldo">
+      <div class="payment-card-label">Saldo — Al entregar</div>
+      <div class="payment-card-amount green">$325.00</div>
+      <div class="payment-card-when">50% restante<br>Al aprobar el diseño final<br>Antes del deploy en vivo</div>
+    </div>
+    <div class="payment-card mensual" style="grid-column: 1 / -1;">
+      <div class="payment-card-label">Plan trimestral — A partir del 2do trimestre</div>
+      <div class="payment-card-amount dark">$300.00 / trimestre</div>
+      <div class="payment-card-when">Cobro al inicio de cada trimestre · 1 landing page por período · Cancelación con 15 días de aviso antes del siguiente trimestre</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONDICIONES -->
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <span class="section-title">Condiciones del Servicio</span>
+  </div>
+
+  <div class="conditions-list">
+    <div class="condition-item">
+      <span class="condition-icon">📦</span>
+      <span><strong>Entregables incluidos:</strong> Template base, primera landing completa, configuración de deploy S3, URL funcional con HTTPS y botón WhatsApp con mensaje personalizado.</span>
+    </div>
+    <div class="condition-item">
+      <span class="condition-icon">📸</span>
+      <span><strong>Contenido del cliente:</strong> El cliente entrega fotos del producto, nombre, precio, descripción e ingredientes clave al menos 7 días antes del inicio del trimestre correspondiente.</span>
+    </div>
+    <div class="condition-item">
+      <span class="condition-icon">🔄</span>
+      <span><strong>Revisiones:</strong> Se incluyen 2 rondas de revisión por landing. Cambios adicionales fuera de alcance se cotizan aparte a $25/hora.</span>
+    </div>
+    <div class="condition-item">
+      <span class="condition-icon">🔒</span>
+      <span><strong>Propiedad del template:</strong> El template base es propiedad de Apex Cloud Works. El cliente tiene licencia de uso mientras mantenga el plan mensual activo.</span>
+    </div>
+    <div class="condition-item">
+      <span class="condition-icon">💳</span>
+      <span><strong>Métodos de pago:</strong> SINPE Móvil · Transferencia bancaria · PayPal. Pago en USD o su equivalente en colones al tipo de cambio del día.</span>
+    </div>
+    <div class="condition-item">
+      <span class="condition-icon">⏱️</span>
+      <span><strong>Tiempo de entrega:</strong> Template base + primera landing en 5 días hábiles a partir del primer pago. Cada landing trimestral posterior: entrega en máximo 5 días hábiles tras recibir el contenido del cliente.</span>
+    </div>
+    <div class="condition-item">
+      <span class="condition-icon">🏷️</span>
+      <span><strong>Créditos:</strong> Cada landing incluye en el footer la leyenda "Desarrollado por Apex Cloud Works — Cartago, Costa Rica". Este es un requisito no negociable del servicio.</span>
+    </div>
+  </div>
+
+  <div class="validity-bar">
+    ⏳ <span><strong>Validez de esta proforma:</strong> 15 días calendario a partir de la fecha de emisión. Pasada esta fecha los precios pueden variar según disponibilidad.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FIRMAS -->
+  <div class="section-label">
+    <span class="section-num">04</span>
+    <span class="section-title">Aceptación y Firma</span>
+  </div>
+
+  <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.8;margin-bottom:32px;">
+    La firma de este documento implica la aceptación de los servicios, precios y condiciones descritas arriba. El adelanto del 50% activa el inicio formal del proyecto.
+  </p>
+
+  <div class="acceptance">
+    <div class="sign-block">
+      <label>Firma y aprobación del cliente</label>
+      <div class="sign-line"></div>
+      <div class="sign-sub" id="sign-cliente">Nombre · Fecha · Skindoctors CR</div>
+    </div>
+    <div class="sign-block">
+      <label>Proveedor del servicio</label>
+      <div class="sign-line"></div>
+      <div class="sign-sub">Garett J. Barrantes B. · Apex Cloud Works</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-brand">
+      <strong>Apex Cloud Works</strong> · Garett Barrantes Benavides · Cartago, Costa Rica · 2026
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+
+</div>
+
+<script>
+  // Fechas automáticas
+  const today = new Date();
+  const opts = { day: '2-digit', month: 'long', year: 'numeric' };
+  document.getElementById('meta-fecha').textContent = today.toLocaleDateString('es-CR', opts);
+
+  const validez = new Date(today);
+  validez.setDate(validez.getDate() + 15);
+  document.getElementById('meta-validez').textContent = validez.toLocaleDateString('es-CR', opts);
+
+  // Número de proforma auto
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  document.getElementById('proforma-num').textContent = `PF-${yyyy}-001`;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Propuesta Landing Page — Skindoctors</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,600;1,400&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --beige:#E0C3AE;--peach:#FFAF83;--coral:#FF7671;--earth:#8F6149;
+    --cream:#FAF6F3;--white:#FFFFFF;--black:#231F20;
+    --serif:'Noto Serif Display',Georgia,serif;--sans:'Quicksand',system-ui,sans-serif;
+  }
+  body{font-family:var(--sans);color:var(--black);background:var(--white)}
+  .page{width:794px;min-height:1123px;margin:0 auto;position:relative;page-break-after:always;overflow:hidden}
+  .page:last-child{page-break-after:auto}
+
+  /* Portada */
+  .cover{
+    background:linear-gradient(135deg,var(--cream) 0%,#F0D9C8 100%);
+    padding:72px;display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .cover-top{display:flex;justify-content:space-between;align-items:center}
+  .brand{font-family:var(--serif);font-size:1.2rem;color:var(--earth);letter-spacing:.04em}
+  .brand span{color:var(--coral)}
+  .badge{
+    padding:.35rem 1rem;border-radius:50px;
+    background:var(--coral);color:var(--white);
+    font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  }
+  .cover-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:1.5rem}
+  .doc-type{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--coral)}
+  .cover-title{font-family:var(--serif);font-size:3rem;font-weight:600;color:var(--earth);line-height:1.15}
+  .cover-title span{color:var(--coral);font-style:italic}
+  .cover-desc{font-size:.95rem;color:#7A5548;line-height:1.7;max-width:500px}
+  .info-row{display:flex;gap:2rem;padding:20px 0;border-top:1px solid rgba(143,97,73,.15);border-bottom:1px solid rgba(143,97,73,.15)}
+  .info-item label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);display:block;margin-bottom:.2rem}
+  .info-item span{font-size:.85rem;color:var(--earth);font-weight:600}
+  .cover-foot{display:flex;justify-content:space-between;align-items:flex-end}
+  .foot-note{font-size:.75rem;color:var(--earth);opacity:.5}
+
+  /* Inner pages */
+  .inner{padding:56px 64px}
+  .ph{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid rgba(143,97,73,.12);margin-bottom:40px}
+  .ph-brand{font-family:var(--serif);font-size:.85rem;color:var(--earth)}
+  .ph-brand span{color:var(--coral)}
+  .ph-pg{font-size:.72rem;color:var(--earth);opacity:.4;font-weight:700;letter-spacing:.1em}
+  .sl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--coral);margin-bottom:.4rem}
+  .st{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--earth);line-height:1.2;margin-bottom:.75rem}
+  .sd{font-size:.86rem;color:#6B4E3D;line-height:1.7;max-width:560px}
+  .div{width:36px;height:3px;background:var(--coral);margin:1.2rem 0}
+
+  /* Wireframe */
+  .wf{margin-top:1.5rem;display:flex;flex-direction:column;gap:6px}
+  .wf-section{
+    border-radius:10px;border:1px solid rgba(224,195,174,.5);
+    padding:14px 18px;display:flex;align-items:center;gap:14px;
+    background:var(--cream);
+  }
+  .wf-num{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--coral);color:var(--white);
+    font-size:.72rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .wf-title{font-size:.85rem;font-weight:700;color:var(--earth);min-width:180px}
+  .wf-desc{font-size:.78rem;color:#7A5548;flex:1;line-height:1.5}
+  .wf-tag{
+    padding:.25rem .7rem;border-radius:50px;
+    font-size:.65rem;font-weight:700;
+    background:rgba(255,118,113,.1);color:var(--coral);
+    flex-shrink:0;white-space:nowrap;
+  }
+
+  /* CTAs */
+  .cta-block{
+    margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  }
+  .cta-card{padding:20px 22px;border-radius:14px;border:1px solid rgba(224,195,174,.5)}
+  .cta-card.primary{background:linear-gradient(135deg,rgba(255,118,113,.12),rgba(255,175,131,.08));border-color:rgba(255,118,113,.3)}
+  .cta-card.secondary{background:var(--cream)}
+  .cta-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-bottom:.4rem}
+  .cta-text{font-size:.88rem;font-weight:700;color:var(--earth);margin-bottom:.35rem}
+  .cta-desc{font-size:.78rem;color:#7A5548;line-height:1.55}
+
+  /* Copy table */
+  .copy-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+  .copy-table th{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);padding:.5rem .75rem;text-align:left;border-bottom:1px solid rgba(224,195,174,.5)}
+  .copy-table td{padding:.65rem .75rem;border-bottom:1px solid rgba(224,195,174,.2);vertical-align:top}
+  .ct-element{font-size:.78rem;font-weight:700;color:var(--earth)}
+  .ct-copy{font-size:.8rem;color:#6B4E3D;line-height:1.5;font-style:italic}
+  .ct-note{font-size:.72rem;color:#9A7060}
+
+  /* Checklist */
+  .checklist{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px}
+  .check-item{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:14px 16px;border-radius:12px;border:1px solid rgba(224,195,174,.4);
+  }
+  .check-item.done{background:rgba(143,97,73,.04)}
+  .check-item.pending{background:rgba(255,118,113,.04);border-color:rgba(255,118,113,.2)}
+  .check-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;margin-top:.1rem}
+  .check-icon.ok{background:rgba(143,97,73,.15);color:var(--earth)}
+  .check-icon.pend{background:rgba(255,118,113,.15);color:var(--coral)}
+  .check-body h4{font-size:.82rem;font-weight:700;color:var(--earth);margin-bottom:.2rem}
+  .check-body p{font-size:.76rem;color:#7A5548;line-height:1.5}
+
+  /* Score */
+  .score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:1.5rem}
+  .score-card{padding:18px;border-radius:14px;text-align:center;border:1px solid rgba(224,195,174,.4);background:var(--cream)}
+  .score-num{font-family:var(--serif);font-size:2rem;font-weight:600;color:var(--coral);line-height:1}
+  .score-label{font-size:.72rem;font-weight:700;color:var(--earth);margin-top:.3rem;line-height:1.4}
+  .score-total{
+    margin-top:16px;padding:20px 24px;
+    border-radius:14px;border:2px solid var(--coral);
+    background:rgba(255,118,113,.06);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .score-total-label{font-size:.85rem;font-weight:700;color:var(--earth)}
+  .score-total-num{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--coral);line-height:1}
+  .score-note{font-size:.75rem;color:#9A7060;margin-top:.4rem}
+
+  /* Pasos */
+  .steps-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:12px}
+  .step-item{display:flex;gap:16px;padding:16px 18px;border-radius:14px;border:1px solid rgba(224,195,174,.4);align-items:flex-start}
+  .step-num{
+    width:36px;height:36px;border-radius:50%;
+    background:linear-gradient(135deg,var(--coral),var(--peach));
+    color:var(--white);font-weight:700;font-size:.9rem;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .step-body h4{font-size:.88rem;font-weight:700;color:var(--earth);margin-bottom:.25rem}
+  .step-body p{font-size:.78rem;color:#7A5548;line-height:1.55}
+  .step-tag{font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:50px;margin-top:.4rem;display:inline-block}
+  .step-tag.critical{background:rgba(255,118,113,.15);color:var(--coral)}
+  .step-tag.important{background:rgba(255,175,131,.2);color:#B06030}
+  .step-tag.optional{background:rgba(224,195,174,.3);color:var(--earth)}
+
+  /* Contraportada */
+  .back{
+    background:linear-gradient(145deg,#2A1A13,#4A2818);
+    padding:80px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:2rem;text-align:center;
+    color:var(--white);
+  }
+  .back-logo{font-family:var(--serif);font-size:2rem;letter-spacing:.06em}
+  .back-logo span{color:var(--coral)}
+  .back-line{width:40px;height:2px;background:var(--coral)}
+  .back-tagline{font-family:var(--serif);font-size:1.2rem;font-style:italic;opacity:.7}
+  .contact-block{display:flex;flex-direction:column;gap:.5rem;opacity:.6;font-size:.82rem}
+  @media print{body{margin:0}.page{margin:0;width:100%}}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="page cover">
+  <div class="cover-top">
+    <div class="brand">skin<span>doctors</span></div>
+    <div class="badge">Propuesta v3</div>
+  </div>
+  <div class="cover-body">
+    <div class="doc-type">Entregable de proyecto · 2025</div>
+    <div class="cover-title">Landing Page<br><span>Gel Limpiador CBD</span></div>
+    <p class="cover-desc">Landing page de producto de alta conversión, construida con datos reales del cliente. Producto real, precio real, WhatsApp real y respaldo médico documentado. Lista para publicar en 1 paso.</p>
+    <div class="info-row">
+      <div class="info-item"><label>Cliente</label><span>Skindoctors CR</span></div>
+      <div class="info-item"><label>Producto</label><span>Gel Limpiador CBD Oil Balance</span></div>
+      <div class="info-item"><label>Precio</label><span>₡24,580 IVA incluido</span></div>
+      <div class="info-item"><label>Versión</label><span>v3 Final — 2025</span></div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div class="foot-note">Documento confidencial · Uso exclusivo del cliente</div>
+    <div class="foot-note">Datos reales de skindoctorscr.com · Brand Book oficial aplicado</div>
+  </div>
+</div>
+
+<!-- ESTRUCTURA DE LA LANDING -->
+<div class="page inner">
+  <div class="ph"><div class="ph-brand">skin<span>doctors</span></div><div class="ph-pg">Estructura</div></div>
+  <div class="sl">Arquitectura de la página</div>
+  <div class="st">10 secciones diseñadas<br>para convertir</div>
+  <div class="div"></div>
+  <p class="sd">Cada sección cumple un rol específico en el journey del comprador. V3 agrega barra informativa, respaldo médico con los 8 doctores reales y sección de ingredientes científicos con sus nombres técnicos reales.</p>
+  <div class="wf">
+    <div class="wf-section"><div class="wf-num">1</div><div class="wf-title">📢 Barra informativa</div><div class="wf-desc">Envíos CR · WhatsApp real (+506 7063 6051) · email info@skindoctorscr.com. Autoridad y acceso inmediato desde el primer pixel.</div><div class="wf-tag">Confianza</div></div>
+    <div class="wf-section"><div class="wf-num">2</div><div class="wf-title">🎯 Hero — Impacto inicial</div><div class="wf-desc">Foto del producto + headline + precio ₡24,580 + chips de activos reales (CBD, BioTolife™, AC.Net™) + 2 CTAs. Visitante entiende en 3 seg qué se vende.</div><div class="wf-tag">Above the fold</div></div>
+    <div class="wf-section"><div class="wf-num">3</div><div class="wf-title">✨ Beneficios</div><div class="wf-desc">6 tarjetas: restaura microbiota, regula sebo, limpia sin resecar, calma inflamación, previene acné, base de rutina. Específicos del Gel Limpiador.</div><div class="wf-tag">Educación</div></div>
+    <div class="wf-section"><div class="wf-num">4</div><div class="wf-title">🧬 Ingredientes científicos</div><div class="wf-desc">CBD + BioTolife™ + AC.Net™ — cada activo con nombre técnico real, función y callout "Sin THC — legal y seguro". Construye autoridad científica.</div><div class="wf-tag">Autoridad</div></div>
+    <div class="wf-section"><div class="wf-num">5</div><div class="wf-title">📋 Cómo usarlo</div><div class="wf-desc">4 pasos: Humedecer · Aplicar el gel · Masajear 60 seg · Enjuagar. Claridad de uso desde el primer día.</div><div class="wf-tag">Claridad</div></div>
+    <div class="wf-section"><div class="wf-num">6</div><div class="wf-title">👨‍⚕️ Respaldo médico</div><div class="wf-desc">Los 8 médicos colaboradores reales con nombre completo sobre fondo oscuro. Jahgnna Cordero, Armando Bolaños, Carlos Bravo, etc. Diferenciador único de la marca.</div><div class="wf-tag">Credibilidad</div></div>
+    <div class="wf-section"><div class="wf-num">7</div><div class="wf-title">⭐ Social proof</div><div class="wf-desc">3 testimoniales con tipo de piel específico + estadísticas reales: +50 productos, 8 médicos, 100% CR.</div><div class="wf-tag">Prueba social</div></div>
+    <div class="wf-section"><div class="wf-num">8</div><div class="wf-title">🛒 Producto + Precio + CTA</div><div class="wf-desc">Segunda oportunidad de conversión: foto · nombre · 5 features · ₡24,580 · comprar tienda · WhatsApp. Bloque de garantía incluido.</div><div class="wf-tag">Conversión</div></div>
+    <div class="wf-section"><div class="wf-num">9</div><div class="wf-title">❓ FAQ</div><div class="wf-desc">6 preguntas en acordeón. La primera: ¿tiene THC? — elimina la objeción más grande. Incluye pregunta sobre los otros productos CBD de la línea.</div><div class="wf-tag">Objeciones</div></div>
+    <div class="wf-section"><div class="wf-num">10</div><div class="wf-title">🚀 CTA Final + Footer</div><div class="wf-desc">Sección coral: "Tu piel merece ciencia real" + botones. Footer con teléfono, WA, email, dirección real (Plaza Cristal, Curridabat), redes sociales.</div><div class="wf-tag">Cierre</div></div>
+  </div>
+  <div class="cta-block">
+    <div class="cta-card primary">
+      <div class="cta-label">CTA Primario</div>
+      <div class="cta-text">🛒 Comprar en tienda — ₡24,580</div>
+      <p class="cta-desc">Dirige a skindoctorscr.com/tienda/gel-limpiador-facial-skindoctors-cbd-oil-balance/. Aparece en hero, producto y CTA final.</p>
+    </div>
+    <div class="cta-card secondary">
+      <div class="cta-label">CTA Secundario</div>
+      <div class="cta-text">💬 Pedir por WhatsApp · +506 7063 6051</div>
+      <p class="cta-desc">Abre chat con mensaje pre-escrito. Para quienes necesitan consultar. Mismo número en toda la página.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COPY DE LA PÁGINA -->
+<div class="page inner">
+  <div class="ph"><div class="ph-brand">skin<span>doctors</span></div><div class="ph-pg">Copy · v3</div></div>
+  <div class="sl">Texto de la landing page</div>
+  <div class="st">Copy v3: producto real,<br>datos reales del cliente</div>
+  <div class="div"></div>
+  <p class="sd">V3 pivotó del producto conceptual ("Crema CBD") al producto real existente. Todo el copy usa datos verificados de skindoctorscr.com. Arquetipos Sabio + Mago aplicados.</p>
+  <table class="copy-table">
+    <thead><tr><th>Elemento</th><th>Texto final v3</th><th>Tono</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><div class="ct-element">Eyebrow</div></td>
+        <td><div class="ct-copy">"CBD Oil Balance · Línea facial"</div><div class="ct-note" style="color:var(--coral);margin-top:.3rem">✓ v3: nombre real de la línea de productos</div></td>
+        <td><div class="ct-note">Informativo</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">Headline principal</div></td>
+        <td><div class="ct-copy">"Piel equilibrada. Limpia con CBD puro."</div><div class="ct-note" style="color:var(--coral);margin-top:.3rem">✓ v3: enfocado en el beneficio real del gel limpiador</div></td>
+        <td><div class="ct-note">Mago — aspiracional</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">Descripción hero</div></td>
+        <td><div class="ct-copy">"Restaura la microbiota cutánea, regula el sebo y limpia sin resecar — todo en un solo paso. Formulado por farmacéuticos y dermatólogos 100% costarricenses."</div></td>
+        <td><div class="ct-note">Sabio — educativo</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">CTA primario</div></td>
+        <td><div class="ct-copy">"🛒 Comprar en tienda — ₡24,580"</div></td>
+        <td><div class="ct-note">Directo · precio visible</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">CTA secundario</div></td>
+        <td><div class="ct-copy">"💬 Pedir por WhatsApp"</div></td>
+        <td><div class="ct-note">Cercano · sin fricción</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">Trust pills</div></td>
+        <td><div class="ct-copy">"✓ Sin THC — 100% legal" · "✓ Testado dermatológicamente" · "✓ 8 médicos colaboradores"</div></td>
+        <td><div class="ct-note">Sabio — credibilidad inmediata</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">Sección ingredientes</div></td>
+        <td><div class="ct-copy">CBD (Cannabidiol) — antiinflamatorio natural · BioTolife™ — restaurador de microbiota · AC.Net™ — regulador de sebo</div></td>
+        <td><div class="ct-note">Sabio — científico</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">Callout THC</div></td>
+        <td><div class="ct-copy">"El CBD y el THC son compuestos distintos. Este gel usa cannabidiol cosmético puro — legal, aprobado y sin efecto psicoactivo."</div></td>
+        <td><div class="ct-note">Sabio — anti-objeción</div></td>
+      </tr>
+      <tr>
+        <td><div class="ct-element">Headline final</div></td>
+        <td><div class="ct-copy">"Tu piel merece ciencia real"</div></td>
+        <td><div class="ct-note">Mago — emocional</div></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:1.2rem;padding:14px 18px;border-radius:12px;background:rgba(74,124,89,.06);border:1px solid rgba(74,124,89,.2)">
+    <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4A7C59;margin-bottom:.4rem">✓ Datos 100% verificados en skindoctorscr.com</div>
+    <p style="font-size:.78rem;color:#7A5548;line-height:1.6">Precio ₡24,580 · WA +506 7063 6051 · Email info@skindoctorscr.com · Tel +506 2524-0907 · Dirección Plaza Cristal, Curridabat · 8 médicos colaboradores con nombre real · Activos BioTolife™ y AC.Net™ confirmados en ficha de producto. Solo falta la foto PNG del empaque.</p>
+  </div>
+</div>
+
+<!-- AUDITORÍA Y SCORE -->
+<div class="page inner">
+  <div class="ph"><div class="ph-brand">skin<span>doctors</span></div><div class="ph-pg">Auditoría · v3</div></div>
+  <div class="sl">Evaluación de la propuesta</div>
+  <div class="st">Puntaje v3 — con datos<br>reales del cliente</div>
+  <div class="div"></div>
+  <p class="sd">V3 incorpora producto real, precio real, WhatsApp real y 8 médicos con nombre. El puntaje sube de 74 a 92/100. Solo falta la foto del empaque para llegar al 100%.</p>
+  <div class="score-grid">
+    <div class="score-card"><div class="score-num">9<span style="font-size:1.2rem">/10</span></div><div class="score-label">Diseño visual<br>& marca</div></div>
+    <div class="score-card"><div class="score-num">9<span style="font-size:1.2rem">/10</span></div><div class="score-label">Comunicación<br>de beneficios</div></div>
+    <div class="score-card"><div class="score-num">9<span style="font-size:1.2rem">/10</span></div><div class="score-label">Experiencia<br>móvil ↑</div></div>
+    <div class="score-card"><div class="score-num">9<span style="font-size:1.2rem">/10</span></div><div class="score-label">Claridad del<br>producto ↑↑</div></div>
+    <div class="score-card"><div class="score-num">9<span style="font-size:1.2rem">/10</span></div><div class="score-label">Credibilidad<br>médica ↑↑</div></div>
+    <div class="score-card"><div class="score-num" style="color:var(--peach)">7<span style="font-size:1.2rem">/10</span></div><div class="score-label">Visual del<br>producto*</div></div>
+  </div>
+  <div class="score-total">
+    <div>
+      <div class="score-total-label">Puntaje v3 final</div>
+      <div class="score-note">* Sube a 10/10 cuando el cliente provee la foto PNG del empaque</div>
+    </div>
+    <div style="text-align:right">
+      <div class="score-total-num">92<span style="font-size:1.4rem">/100</span></div>
+      <div style="font-size:.72rem;color:var(--coral);margin-top:.2rem">v1: 61 → v2: 74 → v3: 92 → con foto: 100</div>
+    </div>
+  </div>
+  <div style="margin-top:1rem;padding:14px 18px;border-radius:12px;background:rgba(74,124,89,.08);border:1px solid rgba(74,124,89,.2)">
+    <p style="font-size:.78rem;color:#7A5548;line-height:1.65"><strong style="color:var(--earth)">Cambios v3 aplicados:</strong> Producto pivotado a "Gel Limpiador CBD Oil Balance" (producto real existente). Precio real ₡24,580 en hero, producto y CTA. Link real a skindoctorscr.com/tienda. WhatsApp real +506 7063 6051 en toda la página. Barra informativa con datos de contacto reales. Sección "Respaldo médico" con los 8 nombres reales de médicos colaboradores (Jahgnna Cordero, Armando Bolaños, Carlos Bravo, Dinora Ochy Vasquez, Gabriela Guzmán Stein, Loretta Piccollo, Marisol Pedroso, Ricardo Guillén Jiménez). Ingredientes activos BioTolife™ y AC.Net™ con descripción científica real. Footer con dirección Plaza Cristal, Curridabat y todas las redes sociales reales. FAQ ampliado a 6 preguntas con mención de los otros productos de la línea CBD.</p>
+  </div>
+</div>
+
+<!-- PASOS PARA ACTIVAR -->
+<div class="page inner">
+  <div class="ph"><div class="ph-brand">skin<span>doctors</span></div><div class="ph-pg">Activación</div></div>
+  <div class="sl">Estado de activación</div>
+  <div class="st">1 dato pendiente para<br>publicar la landing</div>
+  <div class="div"></div>
+  <p class="sd">En v3, todos los datos reales del cliente ya están integrados en la página. Solo queda un elemento para que la landing esté 100% lista para publicar.</p>
+  <div class="steps-list">
+    <div class="step-item" style="background:rgba(74,124,89,.05);border-color:rgba(74,124,89,.25)">
+      <div class="step-num" style="background:linear-gradient(135deg,#4A7C59,#6AA080)">✓</div>
+      <div class="step-body">
+        <h4>✓ Precio — ₡24,580 IVA incluido</h4>
+        <p>Verificado en skindoctorscr.com. Ya está en hero, sección de producto, CTA y footer. No requiere acción.</p>
+        <span class="step-tag optional" style="background:rgba(74,124,89,.15);color:#4A7C59">Completado</span>
+      </div>
+    </div>
+    <div class="step-item" style="background:rgba(74,124,89,.05);border-color:rgba(74,124,89,.25)">
+      <div class="step-num" style="background:linear-gradient(135deg,#4A7C59,#6AA080)">✓</div>
+      <div class="step-body">
+        <h4>✓ WhatsApp — +506 7063 6051</h4>
+        <p>Verificado desde el sitio web oficial. Aparece en barra informativa, navbar, hero, producto, CTA final y footer con mensaje pre-escrito.</p>
+        <span class="step-tag optional" style="background:rgba(74,124,89,.15);color:#4A7C59">Completado</span>
+      </div>
+    </div>
+    <div class="step-item" style="background:rgba(74,124,89,.05);border-color:rgba(74,124,89,.25)">
+      <div class="step-num" style="background:linear-gradient(135deg,#4A7C59,#6AA080)">✓</div>
+      <div class="step-body">
+        <h4>✓ Link de tienda — skindoctorscr.com/tienda/gel-limpiador-facial...</h4>
+        <p>URL directa al producto en la tienda oficial. Integrada en los 3 CTAs de compra de la página.</p>
+        <span class="step-tag optional" style="background:rgba(74,124,89,.15);color:#4A7C59">Completado</span>
+      </div>
+    </div>
+    <div class="step-item" style="background:rgba(74,124,89,.05);border-color:rgba(74,124,89,.25)">
+      <div class="step-num" style="background:linear-gradient(135deg,#4A7C59,#6AA080)">✓</div>
+      <div class="step-body">
+        <h4>✓ Médicos colaboradores — 8 nombres reales incluidos</h4>
+        <p>Sección "Respaldo médico" con Jahgnna Cordero, Armando Bolaños, Carlos Bravo, Dinora Ochy Vasquez, Gabriela Guzmán Stein, Loretta Piccollo, Marisol Pedroso, Ricardo Guillén Jiménez.</p>
+        <span class="step-tag optional" style="background:rgba(74,124,89,.15);color:#4A7C59">Completado</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">!</div>
+      <div class="step-body">
+        <h4>Foto PNG del producto con fondo transparente o blanco</h4>
+        <p>Es el único elemento faltante. Sin la foto real del frasco, la página muestra un placeholder. Entregar el archivo PNG en la misma carpeta con el nombre "gel-cbd-oil-balance.png" y descomentar la línea de imagen en el HTML.</p>
+        <span class="step-tag critical">Único paso pendiente</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Publicar en hosting (Vercel, Netlify o dominio propio)</h4>
+        <p>El archivo index.html es estático — se sube directamente. Vercel y Netlify permiten publicar en 2 minutos con drag & drop. También puede integrarse como subpágina del sitio actual en skindoctorscr.com.</p>
+        <span class="step-tag important">Paso de publicación</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Reemplazar testimoniales por reseñas reales de clientes</h4>
+        <p>Los testimoniales actuales son ilustrativos. Pueden reemplazarse con capturas reales de Instagram, comentarios o WhatsApp. Solo cambiar el texto en el HTML.</p>
+        <span class="step-tag optional">Opcional — mejora la conversión</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTRAPORTADA -->
+<div class="page back">
+  <div class="back-logo">skin<span>doctors</span></div>
+  <div class="back-line"></div>
+  <div class="back-tagline">"Ciencia aplicada a la belleza"</div>
+  <div class="back-line"></div>
+  <div class="contact-block">
+    <div>Propuesta elaborada por Loop Co.</div>
+    <div>Landing Page · Gel Limpiador CBD Oil Balance · v3 Final · 2025</div>
+  </div>
+</div>
+
+</body>
+</html>

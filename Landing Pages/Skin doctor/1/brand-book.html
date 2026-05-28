@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Libro de Marca — Skindoctors 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --beige:#E0C3AE;
+    --peach:#FFAF83;
+    --coral:#FF7671;
+    --earth:#8F6149;
+    --cream:#FAF6F3;
+    --white:#FFFFFF;
+    --black:#231F20;
+    --serif:'Noto Serif Display',Georgia,serif;
+    --sans:'Quicksand',system-ui,sans-serif;
+  }
+  body{font-family:var(--sans);color:var(--black);background:var(--white);line-height:1.6}
+  .page{width:794px;min-height:1123px;margin:0 auto;position:relative;page-break-after:always;overflow:hidden}
+  .page:last-child{page-break-after:auto}
+
+  /* ── PORTADA ── */
+  .cover{
+    background:linear-gradient(145deg,#2A1A13 0%,#4A2818 60%,#8F6149 100%);
+    display:flex;flex-direction:column;
+    justify-content:space-between;
+    padding:80px;
+    color:var(--white);
+  }
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .cover-logo{font-family:var(--serif);font-size:1.4rem;letter-spacing:.06em;opacity:.9}
+  .cover-logo span{color:var(--coral)}
+  .cover-year{font-size:.8rem;font-weight:600;letter-spacing:.15em;opacity:.5;text-transform:uppercase}
+  .cover-center{text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;gap:1.5rem}
+  .cover-circle{
+    width:280px;height:280px;border-radius:50%;
+    background:linear-gradient(135deg,rgba(255,175,131,.3),rgba(224,195,174,.15));
+    border:1px solid rgba(255,255,255,.15);
+    margin:0 auto;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .cover-circle::before{
+    content:'';position:absolute;inset:16px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.1);
+  }
+  .cover-tagline-sm{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;opacity:.5}
+  .cover-title{font-family:var(--serif);font-size:3rem;font-weight:300;line-height:1.15}
+  .cover-title strong{font-weight:600;color:var(--peach)}
+  .cover-subtitle{font-size:.9rem;opacity:.6;letter-spacing:.05em}
+  .cover-bottom{display:flex;justify-content:space-between;align-items:flex-end}
+  .cover-line{width:60px;height:2px;background:var(--coral)}
+  .cover-edition{font-size:.75rem;opacity:.4;letter-spacing:.1em;text-transform:uppercase}
+
+  /* ── PÁGINAS INTERIORES ── */
+  .inner{padding:64px 72px;display:flex;flex-direction:column;gap:0}
+  .page-header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-bottom:20px;border-bottom:1px solid rgba(143,97,73,.15);
+    margin-bottom:48px;
+  }
+  .page-brand{font-family:var(--serif);font-size:.9rem;color:var(--earth);letter-spacing:.04em}
+  .page-brand span{color:var(--coral)}
+  .page-num{font-size:.75rem;color:var(--earth);opacity:.4;font-weight:600;letter-spacing:.1em}
+
+  .section-label{
+    font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;
+    color:var(--coral);margin-bottom:.5rem;
+  }
+  .section-title{
+    font-family:var(--serif);font-size:2.2rem;font-weight:600;
+    color:var(--earth);line-height:1.15;margin-bottom:1rem;
+  }
+  .section-body{font-size:.88rem;line-height:1.75;color:#6B4E3D;max-width:540px}
+  .divider{width:40px;height:3px;background:var(--coral);margin:1.5rem 0}
+
+  /* ── CONTENIDO ESPECÍFICO ── */
+
+  /* Misión / Visión */
+  .mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:2rem}
+  .mv-card{
+    padding:28px;border-radius:16px;
+    background:var(--cream);border:1px solid rgba(224,195,174,.5);
+  }
+  .mv-card h3{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--earth);margin-bottom:.75rem}
+  .mv-card p{font-size:.82rem;line-height:1.7;color:#7A5548}
+
+  /* Valores */
+  .values-list{display:flex;flex-direction:column;gap:16px;margin-top:2rem}
+  .value-item{display:flex;gap:20px;align-items:flex-start;padding:20px 24px;border-radius:12px;border:1px solid rgba(224,195,174,.4)}
+  .value-num{
+    font-family:var(--serif);font-size:1.6rem;font-weight:300;
+    color:var(--beige);min-width:32px;line-height:1;
+  }
+  .value-content h4{font-size:.9rem;font-weight:700;color:var(--earth);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em}
+  .value-content p{font-size:.8rem;line-height:1.65;color:#7A5548}
+
+  /* Colores */
+  .colors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:2rem}
+  .color-card{border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
+  .color-swatch{height:120px}
+  .color-info{padding:16px;background:var(--cream)}
+  .color-name{font-size:.8rem;font-weight:700;color:var(--earth);margin-bottom:.3rem}
+  .color-hex{font-size:1rem;font-family:'Courier New',monospace;color:var(--black);font-weight:700}
+  .color-codes{font-size:.7rem;color:#9A7060;margin-top:.3rem;line-height:1.6}
+  .color-emo{font-size:.72rem;color:var(--earth);opacity:.7;margin-top:.4rem;font-style:italic}
+  .colors-support{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .support-card{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:10px;border:1px solid rgba(224,195,174,.4)}
+  .support-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0}
+  .support-info .color-name{margin-bottom:.1rem}
+  .support-info .color-hex{font-size:.85rem}
+
+  /* Tipografía */
+  .font-showcase{margin-top:2rem}
+  .font-block{margin-bottom:2rem;padding:28px;border-radius:16px;background:var(--cream);border:1px solid rgba(224,195,174,.4)}
+  .font-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--coral);margin-bottom:.75rem}
+  .font-name{font-size:.85rem;font-weight:700;color:var(--earth);margin-bottom:.5rem}
+  .font-sample-serif{font-family:var(--serif);font-size:2.4rem;color:var(--earth);line-height:1.2;margin-bottom:.75rem}
+  .font-sample-sans{font-family:var(--sans);font-size:1.6rem;color:var(--earth);line-height:1.3;margin-bottom:.75rem}
+  .font-weights{display:flex;gap:24px;flex-wrap:wrap}
+  .weight-item{font-size:.85rem;color:#7A5548}
+  .hierarchy-table{width:100%;border-collapse:collapse;margin-top:2rem}
+  .hierarchy-table th{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);padding:.5rem 1rem;text-align:left;border-bottom:1px solid rgba(224,195,174,.5)}
+  .hierarchy-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(224,195,174,.25);vertical-align:middle}
+  .ht-label{font-size:.8rem;font-weight:700;color:var(--earth)}
+  .ht-family{font-size:.78rem;color:#9A7060}
+  .ht-sample-h{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--earth)}
+  .ht-sample-t{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--earth)}
+  .ht-sample-s{font-family:var(--sans);font-size:.95rem;font-weight:700;color:var(--earth)}
+  .ht-sample-b{font-family:var(--sans);font-size:.85rem;font-weight:400;color:var(--earth)}
+
+  /* Logo */
+  .logo-display{
+    display:flex;align-items:center;justify-content:center;
+    padding:60px;background:var(--cream);border-radius:20px;margin-top:2rem;
+    border:1px solid rgba(224,195,174,.5);
+  }
+  .logo-main{font-family:var(--serif);font-size:3.5rem;letter-spacing:.06em;color:var(--earth)}
+  .logo-main span{color:var(--coral)}
+  .logo-rules{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:1.5rem}
+  .logo-rule{padding:16px 20px;border-radius:12px;border:1px solid rgba(224,195,174,.4)}
+  .logo-rule h4{font-size:.78rem;font-weight:700;color:var(--earth);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+  .logo-rule p{font-size:.78rem;color:#7A5548;line-height:1.6}
+  .logo-sizes{margin-top:1.5rem;padding:20px 24px;border-radius:12px;background:rgba(255,118,113,.06);border:1px solid rgba(255,118,113,.2)}
+  .logo-sizes h4{font-size:.78rem;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
+  .sizes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .size-item{font-size:.78rem;color:#7A5548}
+  .size-item strong{display:block;color:var(--earth);font-weight:700;margin-bottom:.2rem}
+
+  /* Voz y tono */
+  .archetype-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2rem}
+  .archetype-card{padding:28px;border-radius:16px;border:1px solid rgba(224,195,174,.4)}
+  .archetype-card.sage{background:linear-gradient(135deg,rgba(224,195,174,.2),rgba(255,175,131,.1))}
+  .archetype-card.magician{background:linear-gradient(135deg,rgba(255,118,113,.08),rgba(255,175,131,.1))}
+  .archetype-icon{font-size:2rem;margin-bottom:.75rem}
+  .archetype-name{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--earth);margin-bottom:.5rem}
+  .archetype-desc{font-size:.8rem;color:#7A5548;line-height:1.65;margin-bottom:1rem}
+  .archetype-traits{display:flex;flex-wrap:wrap;gap:.4rem}
+  .trait{padding:.25rem .7rem;border-radius:50px;font-size:.72rem;font-weight:700;background:rgba(143,97,73,.1);color:var(--earth)}
+  .voice-examples{margin-top:2rem;display:flex;flex-direction:column;gap:12px}
+  .voice-ex{padding:16px 20px;border-radius:12px;border-left:3px solid var(--coral);background:var(--cream)}
+  .voice-ex-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-bottom:.4rem}
+  .voice-ex p{font-size:.82rem;font-style:italic;color:#6B4E3D;line-height:1.6}
+
+  /* Fotografía */
+  .photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2rem}
+  .photo-card{padding:24px;border-radius:16px;border:1px solid rgba(224,195,174,.4);background:var(--cream)}
+  .photo-card h3{font-size:.88rem;font-weight:700;color:var(--earth);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(224,195,174,.5)}
+  .photo-card ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+  .photo-card li{font-size:.78rem;color:#7A5548;line-height:1.5;display:flex;gap:.5rem}
+  .photo-card li::before{content:'—';color:var(--coral);flex-shrink:0}
+  .photo-principles{margin-top:1.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .principle{padding:16px;border-radius:12px;background:rgba(255,118,113,.06);border:1px solid rgba(255,118,113,.15);text-align:center}
+  .principle h4{font-size:.78rem;font-weight:700;color:var(--coral);margin-bottom:.3rem}
+  .principle p{font-size:.73rem;color:#7A5548;line-height:1.5}
+
+  /* Aplicaciones */
+  .apps-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:2rem}
+  .app-card{padding:24px;border-radius:16px;border:1px solid rgba(224,195,174,.4)}
+  .app-icon{font-size:1.6rem;margin-bottom:.75rem}
+  .app-card h3{font-size:.88rem;font-weight:700;color:var(--earth);margin-bottom:.5rem}
+  .app-card p{font-size:.78rem;color:#7A5548;line-height:1.65}
+
+  /* Contraportada */
+  .back-cover{
+    background:var(--cream);
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    text-align:center;gap:2rem;
+    padding:80px;
+  }
+  .back-circle{
+    width:160px;height:160px;border-radius:50%;
+    background:linear-gradient(135deg,var(--beige),var(--peach));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .back-logo{font-family:var(--serif);font-size:1.8rem;color:var(--earth)}
+  .back-logo span{color:var(--coral)}
+  .back-tagline{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:var(--earth);opacity:.8}
+  .back-line{width:40px;height:2px;background:var(--coral)}
+  .back-copy{font-size:.8rem;color:var(--earth);opacity:.6;letter-spacing:.05em}
+  .back-year{font-size:.72rem;color:var(--earth);opacity:.4;letter-spacing:.12em;text-transform:uppercase}
+
+  /* Print */
+  @media print{
+    body{margin:0}
+    .page{margin:0;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ PORTADA ═══ -->
+<div class="page cover">
+  <div class="cover-top">
+    <div class="cover-logo">skin<span>doctors</span></div>
+    <div class="cover-year">2025</div>
+  </div>
+  <div class="cover-center">
+    <div class="cover-tagline-sm">Ciencia aplicada a la belleza</div>
+    <div class="cover-circle">
+      <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="30" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="15" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="5" fill="rgba(255,175,131,0.8)"/>
+        <line x1="50" y1="20" x2="50" y2="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="20" y1="50" x2="80" y2="50" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <circle cx="50" cy="20" r="3" fill="#FF7671"/>
+        <circle cx="80" cy="50" r="3" fill="#FFAF83"/>
+        <circle cx="50" cy="80" r="3" fill="#E0C3AE"/>
+      </svg>
+    </div>
+    <div class="cover-title">Libro de<br><strong>Marca</strong></div>
+    <div class="cover-subtitle">Manual de identidad visual y comunicación · Edición 2025</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-line"></div>
+    <div class="cover-edition">Confidencial · Uso interno y entrega a cliente</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ ÍNDICE ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">Índice</div>
+  </div>
+  <div class="section-label">Contenido</div>
+  <div class="section-title">Lo que encontrarás<br>en este documento</div>
+  <div class="divider"></div>
+  <div style="margin-top:2rem;display:flex;flex-direction:column;gap:.75rem">
+    <style>
+      .idx{display:flex;align-items:center;gap:1.5rem;padding:14px 20px;border-radius:12px;border:1px solid rgba(224,195,174,.3)}
+      .idx-num{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--beige);min-width:36px}
+      .idx-title{font-size:.95rem;font-weight:700;color:var(--earth)}
+      .idx-sub{font-size:.78rem;color:#9A7060;margin-top:.1rem}
+      .idx-pg{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--earth);opacity:.4}
+    </style>
+    <div class="idx"><div class="idx-num">01</div><div><div class="idx-title">Marca — Historia y propósito</div><div class="idx-sub">Origen, misión, visión y posicionamiento</div></div><div class="idx-pg">03</div></div>
+    <div class="idx"><div class="idx-num">02</div><div><div class="idx-title">Valores de marca</div><div class="idx-sub">Los 5 pilares que definen a Skindoctors</div></div><div class="idx-pg">04</div></div>
+    <div class="idx"><div class="idx-num">03</div><div><div class="idx-title">Identidad visual — Logotipo</div><div class="idx-sub">Uso correcto, tamaños y zonas de exclusión</div></div><div class="idx-pg">05</div></div>
+    <div class="idx"><div class="idx-num">04</div><div><div class="idx-title">Paleta de colores</div><div class="idx-sub">Primarios, secundarios y códigos de uso</div></div><div class="idx-pg">06</div></div>
+    <div class="idx"><div class="idx-num">05</div><div><div class="idx-title">Tipografía</div><div class="idx-sub">Familias, pesos y jerarquía tipográfica</div></div><div class="idx-pg">07</div></div>
+    <div class="idx"><div class="idx-num">06</div><div><div class="idx-title">Voz y tono de comunicación</div><div class="idx-sub">Arquetipos, personalidad y ejemplos de copy</div></div><div class="idx-pg">08</div></div>
+    <div class="idx"><div class="idx-num">07</div><div><div class="idx-title">Fotografía e imagen</div><div class="idx-sub">Estilo de producto, lifestyle y principios visuales</div></div><div class="idx-pg">09</div></div>
+    <div class="idx"><div class="idx-num">08</div><div><div class="idx-title">Aplicaciones de marca</div><div class="idx-sub">Web, redes sociales, packaging y papelería</div></div><div class="idx-pg">10</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 01 HISTORIA ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">01 — Historia y propósito</div>
+  </div>
+  <div class="section-label">Quiénes somos</div>
+  <div class="section-title">Ciencia con<br>propósito humano</div>
+  <div class="divider"></div>
+  <p class="section-body">Skindoctors nació de la visión del Dr. Andrés Guzmán: democratizar el acceso a soluciones dermatológicas de alta eficacia para la piel latinoamericana. Con más de 50 productos desarrollados específicamente para el clima, la exposición solar y las características étnicas de la región, la marca actúa con el conocimiento profundo de un médico y la calidez de quien cuida de verdad.</p>
+  <div class="mv-grid">
+    <div class="mv-card">
+      <h3>Misión</h3>
+      <p>Mejorar la salud de la piel de nuestros clientes a través de soluciones innovadoras, seguras y respaldadas por la ciencia. Ofrecemos productos dermatológicos que no solo embellecen, sino que previenen y tratan condiciones dermatológicas, promoviendo el bienestar y la autoestima.</p>
+    </div>
+    <div class="mv-card">
+      <h3>Visión</h3>
+      <p>Consolidarnos como marca de referencia en Centroamérica y expandirnos al mercado mexicano en los próximos 5 años. Democratizar el acceso a la información dermatológica y a productos de alta eficacia, manteniendo la innovación en salud cutánea como bandera.</p>
+    </div>
+    <div class="mv-card" style="grid-column:span 2">
+      <h3>Posicionamiento</h3>
+      <p>Skindoctors es la marca dermocosmetica creada específicamente para la piel latinoamericana. A diferencia de marcas importadas que no consideran las condiciones locales, nuestros productos están formulados para el sol intenso, el calor y las características étnicas de nuestra región. <strong style="color:var(--earth)">Somos doctores de la piel, no solo fabricantes de cosméticos.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 02 VALORES ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">02 — Valores de marca</div>
+  </div>
+  <div class="section-label">Lo que nos define</div>
+  <div class="section-title">5 pilares que guían<br>cada decisión</div>
+  <div class="divider"></div>
+  <div class="values-list">
+    <div class="value-item">
+      <div class="value-num">01</div>
+      <div class="value-content">
+        <h4>Compromiso</h4>
+        <p>Dedicación apasionada a resolver problemas dermatológicos con la mejor calidad. Cada producto es el resultado de un compromiso genuino con la salud de la piel de nuestros clientes.</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-num">02</div>
+      <div class="value-content">
+        <h4>Responsabilidad</h4>
+        <p>Garantizamos soluciones seguras y efectivas con atención constante al bienestar del cliente. La responsabilidad guía desde la formulación hasta la comunicación de cada producto.</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-num">03</div>
+      <div class="value-content">
+        <h4>Valentía</h4>
+        <p>Nos atrevemos a ir más allá de lo establecido, enfrentando los desafíos del mercado con determinación y respaldo científico. La valentía es innovar cuando otros replican.</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-num">04</div>
+      <div class="value-content">
+        <h4>Coherencia</h4>
+        <p>Alineación entre lo que decimos y lo que hacemos. Comunicación clara y productos que cumplen sus promesas. La coherencia construye la confianza que una marca de salud necesita.</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-num">05</div>
+      <div class="value-content">
+        <h4>Integralidad</h4>
+        <p>Enfoque holístico en la salud de la piel, más allá de la estética. Buscamos el bienestar integral de las personas porque la piel saludable es un reflejo de la salud total.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 03 LOGO ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">03 — Logotipo</div>
+  </div>
+  <div class="section-label">Identidad visual</div>
+  <div class="section-title">El logotipo:<br>ciencia con accesibilidad</div>
+  <div class="divider"></div>
+  <p class="section-body">Tipografía sans-serif moderna en minúsculas que evoca accesibilidad y cercanía. Las letras estilizadas transmiten precisión acorde a la naturaleza científica de la marca.</p>
+  <div class="logo-display">
+    <div style="text-align:center">
+      <div class="logo-main">skin<span>doctors</span></div>
+      <div style="font-size:.75rem;color:var(--earth);opacity:.5;margin-top:.5rem;letter-spacing:.15em;text-transform:uppercase">Ciencia aplicada a la belleza</div>
+    </div>
+  </div>
+  <div class="logo-rules">
+    <div class="logo-rule">
+      <h4>✅ Uso correcto</h4>
+      <p>Sobre fondos claros (blanco, beige, crema). Mantener las proporciones originales. Respetar la zona de exclusión mínima equivalente a la altura de la "s".</p>
+    </div>
+    <div class="logo-rule">
+      <h4>❌ Usos incorrectos</h4>
+      <p>No estirar, distorsionar ni rotar el logotipo. No cambiar los colores de forma arbitraria. No colocar sobre fondos que comprometan la legibilidad.</p>
+    </div>
+  </div>
+  <div class="logo-sizes">
+    <h4>Tamaños mínimos</h4>
+    <div class="sizes-grid">
+      <div class="size-item"><strong>Logo principal — Digital</strong>115 px de ancho mínimo</div>
+      <div class="size-item"><strong>Logo principal — Impresión</strong>40 mm de ancho mínimo</div>
+      <div class="size-item"><strong>Logo secundario — Digital</strong>80 px de ancho mínimo</div>
+      <div class="size-item"><strong>Logo secundario — Impresión</strong>20 mm de ancho mínimo</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 04 COLORES ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">04 — Paleta de colores</div>
+  </div>
+  <div class="section-label">Identidad visual</div>
+  <div class="section-title">Paleta cromática:<br>piel y naturaleza</div>
+  <div class="divider"></div>
+  <p class="section-body">Inspirada en los tonos de la piel humana. Transmite calidez, naturalidad y enfoque científico. Cada color tiene un rol específico en la jerarquía visual.</p>
+  <div class="colors-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#E0C3AE"></div>
+      <div class="color-info">
+        <div class="color-name">Beige Piel · Primario</div>
+        <div class="color-hex">#E0C3AE</div>
+        <div class="color-codes">Pantone 4675C · RGB 224, 195, 174<br>CMYK 12% · 23% · 29% · 0%</div>
+        <div class="color-emo">Profesional, limpio, confiable</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FFAF83"></div>
+      <div class="color-info">
+        <div class="color-name">Durazno Cálido · Acento 1</div>
+        <div class="color-hex">#FFAF83</div>
+        <div class="color-codes">Pantone 7410C · RGB 255, 175, 131<br>CMYK 0% · 38% · 48% · 0%</div>
+        <div class="color-emo">Inspirador, humano, cálido</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#FF7671"></div>
+      <div class="color-info">
+        <div class="color-name">Coral Activo · Acento 2</div>
+        <div class="color-hex">#FF7671</div>
+        <div class="color-codes">Pantone 805C · RGB 255, 118, 113<br>CMYK 0% · 68% · 47% · 0%</div>
+        <div class="color-emo">Creativo, activo, dinámico</div>
+      </div>
+    </div>
+    <div class="color-card" style="grid-column:span 3">
+      <div style="height:80px;background:#8F6149"></div>
+      <div class="color-info" style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="color-name">Tierra Profunda · Base</div>
+          <div class="color-hex">#8F6149</div>
+          <div class="color-codes">Pantone 7525C · RGB 143, 97, 73 · CMYK 36% · 60% · 71% · 21%</div>
+        </div>
+        <div class="color-emo" style="text-align:right">Auténtico · estable · profesional · cercano</div>
+      </div>
+    </div>
+  </div>
+  <div class="colors-support">
+    <div class="support-card">
+      <div class="support-dot" style="background:#FFFFFF;border:1px solid rgba(0,0,0,.1)"></div>
+      <div class="support-info"><div class="color-name">Blanco · Soporte</div><div class="color-hex">#FFFFFF</div></div>
+    </div>
+    <div class="support-card">
+      <div class="support-dot" style="background:#231F20"></div>
+      <div class="support-info"><div class="color-name">Negro Marca · Soporte</div><div class="color-hex">#231F20</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 05 TIPOGRAFÍA ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">05 — Tipografía</div>
+  </div>
+  <div class="section-label">Identidad visual</div>
+  <div class="section-title">Sistema tipográfico:<br>autoridad y calidez</div>
+  <div class="divider"></div>
+  <div class="font-showcase">
+    <div class="font-block">
+      <div class="font-label">Fuente principal</div>
+      <div class="font-name">Noto Serif Display — Títulos y encabezados</div>
+      <div class="font-sample-serif">La ciencia al servicio<br><em>de tu piel</em></div>
+      <div class="font-weights">
+        <span class="weight-item" style="font-family:'Noto Serif Display';font-weight:300">Light 300</span>
+        <span class="weight-item" style="font-family:'Noto Serif Display';font-weight:400">Regular 400</span>
+        <span class="weight-item" style="font-family:'Noto Serif Display';font-weight:600">Semibold 600</span>
+        <span class="weight-item" style="font-family:'Noto Serif Display';font-weight:400;font-style:italic">Italic</span>
+      </div>
+    </div>
+    <div class="font-block">
+      <div class="font-label">Fuente complementaria</div>
+      <div class="font-name">Quicksand — Cuerpo de texto y elementos secundarios</div>
+      <div class="font-sample-sans">Formulada por dermatólogos para la piel latinoamericana</div>
+      <div class="font-weights">
+        <span class="weight-item" style="font-weight:300">Light 300</span>
+        <span class="weight-item" style="font-weight:400">Regular 400</span>
+        <span class="weight-item" style="font-weight:600">Semibold 600</span>
+        <span class="weight-item" style="font-weight:700">Bold 700</span>
+      </div>
+    </div>
+  </div>
+  <table class="hierarchy-table">
+    <thead><tr><th>Elemento</th><th>Fuente</th><th>Muestra</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ht-label">Encabezado</div><div class="ht-family">Noto Serif Display · Regular</div></td><td><div class="ht-family">Principal</div></td><td><div class="ht-sample-h">Ciencia para tu piel</div></td></tr>
+      <tr><td><div class="ht-label">Título</div><div class="ht-family">Noto Serif Display · Semibold</div></td><td><div class="ht-family">Principal</div></td><td><div class="ht-sample-t">Crema Facial con CBD</div></td></tr>
+      <tr><td><div class="ht-label">Subtítulo</div><div class="ht-family">Quicksand · Bold</div></td><td><div class="ht-family">Complementaria</div></td><td><div class="ht-sample-s">Beneficios comprobados</div></td></tr>
+      <tr><td><div class="ht-label">Texto cuerpo</div><div class="ht-family">Quicksand · Regular</div></td><td><div class="ht-family">Complementaria</div></td><td><div class="ht-sample-b">Formulada para la piel latinoamericana expuesta al sol intenso y el calor tropical.</div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════ 06 VOZ ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">06 — Voz y tono</div>
+  </div>
+  <div class="section-label">Comunicación</div>
+  <div class="section-title">Cómo habla<br>Skindoctors</div>
+  <div class="divider"></div>
+  <p class="section-body">La voz de marca combina dos arquetipos que se complementan: la autoridad científica del Sabio con la capacidad transformadora del Mago. El resultado es una comunicación cercana pero experta, inspiradora pero honesta.</p>
+  <div class="archetype-grid">
+    <div class="archetype-card sage">
+      <div class="archetype-icon">🧬</div>
+      <div class="archetype-name">El Sabio</div>
+      <p class="archetype-desc">Comunica con base científica, educa e informa. Posiciona la marca como fuente de conocimiento dermatológico. Paciente, detallado, confiable.</p>
+      <div class="archetype-traits">
+        <span class="trait">Profesional</span>
+        <span class="trait">Confiable</span>
+        <span class="trait">Educativo</span>
+        <span class="trait">Científico</span>
+      </div>
+    </div>
+    <div class="archetype-card magician">
+      <div class="archetype-icon">✨</div>
+      <div class="archetype-name">El Mago</div>
+      <p class="archetype-desc">Inspiracional y visionario. Apela a la emoción y la aspiración. Destaca la capacidad transformadora de los productos. Enfocado en el cambio personal.</p>
+      <div class="archetype-traits">
+        <span class="trait">Aspiracional</span>
+        <span class="trait">Transformador</span>
+        <span class="trait">Valiente</span>
+        <span class="trait">Emotivo</span>
+      </div>
+    </div>
+  </div>
+  <div class="voice-examples">
+    <div class="voice-ex">
+      <div class="voice-ex-label">Ejemplo — Producto</div>
+      <p>"El CBD actúa sobre los receptores endocannabinoides de tu piel para regular la producción de sebo y calmar la inflamación. Ciencia real, resultados visibles."</p>
+    </div>
+    <div class="voice-ex">
+      <div class="voice-ex-label">Ejemplo — Campaña</div>
+      <p>"Tu piel merece ciencia real. No promesas, no magia — dermociencia formulada para la piel que vive bajo nuestro sol."</p>
+    </div>
+    <div class="voice-ex">
+      <div class="voice-ex-label">Ejemplo — Redes sociales</div>
+      <p>"¿Sabías que la piel latinoamericana tiene necesidades únicas? 🌿 Por eso nuestros productos están formulados específicamente para ti — no adaptados, creados para ti."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 07 FOTOGRAFÍA ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">07 — Fotografía e imagen</div>
+  </div>
+  <div class="section-label">Identidad visual</div>
+  <div class="section-title">El lenguaje visual<br>de la marca</div>
+  <div class="divider"></div>
+  <p class="section-body">La fotografía de Skindoctors habla en dos registros: la precisión científica del producto y la calidez humana del resultado. Ambos se unen bajo una estética minimalista y luminosa.</p>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <h3>📦 Fotografía de producto</h3>
+      <ul>
+        <li>Enfoque minimalista y sofisticado</li>
+        <li>Iluminación suave y difusa</li>
+        <li>Colores cálidos, fondos simples y despejados</li>
+        <li>Presentación limpia y simétrica del producto</li>
+        <li>Tonos pastel en armonía con la paleta de marca</li>
+        <li>Atmósfera relajante y acogedora</li>
+        <li>Luz suave que destaca la luminosidad del packaging</li>
+      </ul>
+    </div>
+    <div class="photo-card">
+      <h3>🌿 Fotografía lifestyle</h3>
+      <ul>
+        <li>Énfasis en diversidad de rostros y texturas de piel</li>
+        <li>Naturalidad, belleza y salud cutánea óptima</li>
+        <li>Primeros planos íntimos de detalles de piel</li>
+        <li>Composición que resalta beneficios emocionales</li>
+        <li>Iluminación difusa, sin sombras duras</li>
+        <li>Planos de zonas específicas: labios, ojos, manos</li>
+        <li>Conexión táctil y vínculo visual-emocional</li>
+      </ul>
+    </div>
+  </div>
+  <div class="photo-principles">
+    <div class="principle">
+      <h4>Limpieza</h4>
+      <p>Eliminar el exceso visual para que el producto y la piel sean los protagonistas</p>
+    </div>
+    <div class="principle">
+      <h4>Claridad</h4>
+      <p>Cada imagen guía al consumidor sin esfuerzo hacia la emoción o el beneficio</p>
+    </div>
+    <div class="principle">
+      <h4>Coherencia</h4>
+      <p>Todas las imágenes deben poder convivir sin romper la identidad visual</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ 08 APLICACIONES ═══ -->
+<div class="page inner">
+  <div class="page-header">
+    <div class="page-brand">skin<span>doctors</span></div>
+    <div class="page-num">08 — Aplicaciones de marca</div>
+  </div>
+  <div class="section-label">Uso en medios</div>
+  <div class="section-title">Dónde y cómo<br>vive la marca</div>
+  <div class="divider"></div>
+  <p class="section-body">La identidad de Skindoctors se aplica con coherencia en todos los puntos de contacto con el cliente, desde el empaque hasta la presencia digital, proyectando siempre ciencia, elegancia y cercanía.</p>
+  <div class="apps-grid">
+    <div class="app-card" style="background:var(--cream);border-color:rgba(224,195,174,.4)">
+      <div class="app-icon">🌐</div>
+      <h3>Sitio web y e-commerce</h3>
+      <p>Diseño en cuadrícula que optimiza la navegación. Jerarquía visual clara con el logotipo como ancla. Paleta beige/coral predominante. CTA siempre en color coral activo (#FF7671).</p>
+    </div>
+    <div class="app-card" style="background:var(--cream);border-color:rgba(224,195,174,.4)">
+      <div class="app-icon">📱</div>
+      <h3>Redes sociales</h3>
+      <p>Descripciones breves de producto que enfatizan características y beneficios principales. Logo discreto pero visible. Contenido educativo sobre ingredientes, especialmente para CBD y activos clave.</p>
+    </div>
+    <div class="app-card" style="background:var(--cream);border-color:rgba(224,195,174,.4)">
+      <div class="app-icon">📦</div>
+      <h3>Empaque y etiquetado</h3>
+      <p>Dirección minimalista y profesional. Refuerza el concepto "Ciencia aplicada a la belleza". Proyecta confianza, ciencia y elegancia. Diseñado para entornos retail y clínicas dermatológicas.</p>
+    </div>
+    <div class="app-card" style="background:var(--cream);border-color:rgba(224,195,174,.4)">
+      <div class="app-icon">📋</div>
+      <h3>Material impreso</h3>
+      <p>Papelería y colateral con alineación coherente a la identidad. Transmite precisión y cuidado. Atractivo para clientes que valoran tanto la estética como la eficacia clínica demostrada.</p>
+    </div>
+    <div class="app-card" style="background:var(--cream);border-color:rgba(224,195,174,.4)">
+      <div class="app-icon">🖱️</div>
+      <h3>UI / Elementos digitales</h3>
+      <p>Botones modernos, minimalistas, con bordes suaves y redondeados. Elementos geométricos simples (flechas, círculos). Siempre en tonos coral para acciones primarias y tierra para secundarias.</p>
+    </div>
+    <div class="app-card" style="background:rgba(255,118,113,.06);border-color:rgba(255,118,113,.2)">
+      <div class="app-icon">⚡</div>
+      <h3>Regla de oro</h3>
+      <p style="color:var(--earth)">Cualquier pieza de comunicación debe poder responder "sí" a estas tres preguntas: ¿Es limpia? ¿Es clara? ¿Es coherente con la marca? Si una falla, rediseñar.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CONTRAPORTADA ═══ -->
+<div class="page back-cover">
+  <div class="back-circle">
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+      <circle cx="40" cy="40" r="25" stroke="#8F6149" stroke-width="1" stroke-opacity=".4"/>
+      <circle cx="40" cy="40" r="12" stroke="#8F6149" stroke-width="1" stroke-opacity=".6"/>
+      <circle cx="40" cy="40" r="4" fill="#FF7671"/>
+      <circle cx="40" cy="15" r="2.5" fill="#FFAF83"/>
+      <circle cx="65" cy="40" r="2.5" fill="#E0C3AE"/>
+      <circle cx="40" cy="65" r="2.5" fill="#8F6149"/>
+    </svg>
+  </div>
+  <div class="back-logo">skin<span>doctors</span></div>
+  <div class="back-line"></div>
+  <div class="back-tagline">"Ciencia aplicada a la belleza"</div>
+  <div class="back-copy">Libro de Marca · Manual de Identidad Visual y Comunicación</div>
+  <div class="back-year">Edición 2025 · Confidencial</div>
+</div>
+
+</body>
+</html>
